@@ -7,6 +7,7 @@ TODO: Write a gem description
 Add this line to your application's Gemfile:
 
     gem 'rets'
+	gem 'rets', :path => "~/Projects/github/rets"
 
 And then execute:
 

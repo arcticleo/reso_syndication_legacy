@@ -1,5 +1,5 @@
 require "rets/version"
+require 'rets/engine' if defined?(Rails)
 
 module Rets
-  # Your code goes here...
 end

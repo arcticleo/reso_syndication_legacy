@@ -1,0 +1,726 @@
+name,type
+A Frame,ArchitecturalStyle
+Art Deco,ArchitecturalStyle
+Bungalow,ArchitecturalStyle
+Cape Cod,ArchitecturalStyle
+Colonial,ArchitecturalStyle
+Contemporary,ArchitecturalStyle
+Conventional,ArchitecturalStyle
+Cottage,ArchitecturalStyle
+Craftsman,ArchitecturalStyle
+Creole,ArchitecturalStyle
+Dome,ArchitecturalStyle
+Dutch Colonial,ArchitecturalStyle
+English,ArchitecturalStyle
+Federal,ArchitecturalStyle
+French,ArchitecturalStyle
+French Provincial,ArchitecturalStyle
+Georgian,ArchitecturalStyle
+Gothic Revival,ArchitecturalStyle
+Greek Revival,ArchitecturalStyle
+High Rise,ArchitecturalStyle
+Historical,ArchitecturalStyle
+International,ArchitecturalStyle
+Italianate,ArchitecturalStyle
+Loft,ArchitecturalStyle
+Mansion,ArchitecturalStyle
+Mediterranean,ArchitecturalStyle
+Modern,ArchitecturalStyle
+Monterey,ArchitecturalStyle
+Mountain,ArchitecturalStyle
+National,ArchitecturalStyle
+Neoclassical,ArchitecturalStyle
+New Traditional,ArchitecturalStyle
+Other,ArchitecturalStyle
+Prairie,ArchitecturalStyle
+Pueblo,ArchitecturalStyle
+Queen Anne,ArchitecturalStyle
+Rambler,ArchitecturalStyle
+Ranch,ArchitecturalStyle
+Regency,ArchitecturalStyle
+Rustic,ArchitecturalStyle
+Saltbox,ArchitecturalStyle
+Santa Fe,ArchitecturalStyle
+Second Empire,ArchitecturalStyle
+Shed,ArchitecturalStyle
+Shingle,ArchitecturalStyle
+Shotgun,ArchitecturalStyle
+Spanish,ArchitecturalStyle
+Spanish Eclectic,ArchitecturalStyle
+Split Level,ArchitecturalStyle
+Stick,ArchitecturalStyle
+Tudor,ArchitecturalStyle
+Victorian,ArchitecturalStyle
+Barbeque or Grill,Appliance
+Coffee System,Appliance
+Coffee System - Rough in,Appliance
+Cooktop,Appliance
+Cooktop - Electric,Appliance
+Cooktop - Electric 2 burner,Appliance
+Cooktop - Electric 6 burner,Appliance
+Cooktop - Gas,Appliance
+Cooktop - Gas 2 burner,Appliance
+Cooktop - Gas 5 burner,Appliance
+Cooktop - Gas 6 burner,Appliance
+Cooktop - Gas Custom,Appliance
+Cooktop - Induction,Appliance
+Cooktop - Induction 2 burner,Appliance
+Cooktop - Induction 6 burner,Appliance
+Dishwasher,Appliance
+Dishwasher - Drawer,Appliance
+Dishwasher - Two or more,Appliance
+Dryer,Appliance
+Dryer - Dual fuel,Appliance
+Dryer - Electric 110V,Appliance
+Dryer - Electric 220V,Appliance
+Dryer - Gas,Appliance
+Dryer - Gas rough in,Appliance
+Freezer,Appliance
+Freezer - Compact,Appliance
+Freezer - Upright,Appliance
+Garbage Disposer,Appliance
+Ice Maker,Appliance
+Microwave,Appliance
+None,Appliance
+Other,Appliance
+Oven,Appliance
+Oven - Convection,Appliance
+Oven - Double,Appliance
+Oven - Double Electric,Appliance
+Oven - Double Gas,Appliance
+Oven - Gas,Appliance
+Oven - Gas 3 wide,Appliance
+Oven - Self-Cleaning,Appliance
+Oven - Steam,Appliance
+Oven - Twin,Appliance
+Oven - Twin Electric,Appliance
+Oven - Twin Gas,Appliance
+Oven - Twin Gas 3 wide,Appliance
+Oven - Twin Mixed,Appliance
+Range,Appliance
+Range - Built In,Appliance
+Range - Dual,Appliance
+Range - Dual 10 burner,Appliance
+Range - Dual 6 burner,Appliance
+Range - Dual 8 burner,Appliance
+Range - Electric,Appliance
+Range - Gas,Appliance
+Range - Gas 10 burner,Appliance
+Range - Gas 6 burner,Appliance
+Range - Gas 8 burner,Appliance
+Range - Induction,Appliance
+Range - Other,Appliance
+Rangetop - Electric,Appliance
+Rangetop - Electric 2 burner,Appliance
+Rangetop - Electric 6 burner,Appliance
+Rangetop - Gas,Appliance
+Rangetop - Gas 10 burner,Appliance
+Rangetop - Gas 2 burner,Appliance
+Rangetop - Gas 4 burner compact,Appliance
+Rangetop - Gas 6 burner,Appliance
+Rangetop - Gas 8 burner,Appliance
+Rangetop - Gas Custom,Appliance
+Rangetop - Induction,Appliance
+Rangetop - Induction 2 burner,Appliance
+Rangetop - Induction 6 burner,Appliance
+Refrigerator,Appliance
+Refrigerator - Bar,Appliance
+Refrigerator - Built-in,Appliance
+Refrigerator - Built-in With Plumbing,Appliance
+Refrigerator - Drawer,Appliance
+Refrigerator - Side by Side,Appliance
+Refrigerator - Undercounter,Appliance
+Refrigerator - Wine Storage,Appliance
+Refrigerator - With Plumbing,Appliance
+Trash Compactor,Appliance
+Vacuum System,Appliance
+Vacuum System - Rough in,Appliance
+Vent Hood,Appliance
+Vent Hood 10 burner,Appliance
+Vent Hood 6 burner,Appliance
+Vent Hood 8 burner,Appliance
+Warming Drawer,Appliance
+Washer,Appliance
+Washer - Front load,Appliance
+Washer - Steamer,Appliance
+Washer - Top load,Appliance
+Washer/Dryer Combo,Appliance
+Washer/Dryer Stack,Appliance
+Water - Filter,Appliance
+Water - Instant Hot,Appliance
+Water - Purifier,Appliance
+Water - Softener,Appliance
+acre,AreaUnit
+hectare,AreaUnit
+squareCentimeter,AreaUnit
+squareFoot,AreaUnit
+squareMeter,AreaUnit
+squareYard,AreaUnit
+unknown,AreaUnit
+Attic Fan,CoolingSystem
+Ceiling Fan(s),CoolingSystem
+Central A/C,CoolingSystem
+Central Evaporative,CoolingSystem
+Central Fan,CoolingSystem
+Chilled Water,CoolingSystem
+Dehumidifiers,CoolingSystem
+Dessicant Cooler,CoolingSystem
+Evaporative,CoolingSystem
+Heat Pumps,CoolingSystem
+None,CoolingSystem
+Other,CoolingSystem
+Partial,CoolingSystem
+Radiant Floor,CoolingSystem
+Radiant Floor Ground Loop,CoolingSystem
+Refrigerator/Evaporative,CoolingSystem
+Solar A/C-Active,CoolingSystem
+Solar A/C-Passive,CoolingSystem
+Unknown,CoolingSystem
+Wall Unit(s) A/C,CoolingSystem
+Wall Unit(s) Evaporative,CoolingSystem
+Window Unit(s) A/C,CoolingSystem
+Window Unit(s) Evaporative,CoolingSystem
+Zoned A/C,CoolingSystem
+Annually,CurrencyPeriod
+Bi-Monthly,CurrencyPeriod
+Bi-Weekly,CurrencyPeriod
+Daily,CurrencyPeriod
+Month,CurrencyPeriod
+Quarterly,CurrencyPeriod
+Seasonal,CurrencyPeriod
+Semi-Annually,CurrencyPeriod
+Week,CurrencyPeriod
+AC Maintenance Fee,ExpenseCategory
+Accounting Fee,ExpenseCategory
+Additional Pet Fee,ExpenseCategory
+Amenity Fee,ExpenseCategory
+Annual Operating Expenses,ExpenseCategory
+Application Fee,ExpenseCategory
+Beach Fee,ExpenseCategory
+Boat Fee,ExpenseCategory
+Broadband Fee,ExpenseCategory
+Building Insurance,ExpenseCategory
+Building Maintenance Fee,ExpenseCategory
+Bus Service Fee,ExpenseCategory
+Cable Fee,ExpenseCategory
+Capital Improvements Fee,ExpenseCategory
+Carpet Cleaning Fee,ExpenseCategory
+Cleaning Deposit,ExpenseCategory
+Cleaning Fee,ExpenseCategory
+Closing Cost,ExpenseCategory
+Club Fee,ExpenseCategory
+Club Membership Fee,ExpenseCategory
+Co-Op Fee,ExpenseCategory
+Cold Water Fee,ExpenseCategory
+Common Area Maintenance Fee,ExpenseCategory
+Community Development District Fee,ExpenseCategory
+Community/Master Home Owner Fee,ExpenseCategory
+Concierge Fee,ExpenseCategory
+Condo Management Fee,ExpenseCategory
+Condo/Co-Op Fee,ExpenseCategory
+Contingency Fund Fee,ExpenseCategory
+Cook Fee,ExpenseCategory
+Day Care Fee,ExpenseCategory
+Dock Fee,ExpenseCategory
+Doorman Fee,ExpenseCategory
+Dredging Fee,ExpenseCategory
+Electric Fee,ExpenseCategory
+Elevator Use Fee,ExpenseCategory
+Equestrian Fee,ExpenseCategory
+Exterminator Fee,ExpenseCategory
+Facilities Fee,ExpenseCategory
+Fire Department Dues,ExpenseCategory
+Fire Insurance Fee,ExpenseCategory
+Firewood Fee,ExpenseCategory
+First Months Rent,ExpenseCategory
+First Two Months Rent,ExpenseCategory
+Fitness Center Fee,ExpenseCategory
+Front Foot Fee,ExpenseCategory
+Gardener Fee,ExpenseCategory
+Gas Fee,ExpenseCategory
+Green Fee,ExpenseCategory
+Ground Maintenance Fee,ExpenseCategory
+Ground Rent,ExpenseCategory
+Gutter Cleaning Fee,ExpenseCategory
+Health Fee,ExpenseCategory
+Home Owner Assessments Fee,ExpenseCategory
+Home Owner Transfer Fee,ExpenseCategory
+Horse Care Fee,ExpenseCategory
+Initiation Fee,ExpenseCategory
+Key Deposit,ExpenseCategory
+Land Assessment Fee,ExpenseCategory
+Land Fee,ExpenseCategory
+Last Months Rent,ExpenseCategory
+Lawn Maintenance Fee,ExpenseCategory
+Legal Fee,ExpenseCategory
+Lifeguard Fee,ExpenseCategory
+Light Bulbs/Filters/Fuses/Alarm Care Fee,ExpenseCategory
+Light Fee,ExpenseCategory
+Maid Service Fee,ExpenseCategory
+Maintenance on Pool/Tennis/Club Fee,ExpenseCategory
+Management Fee,ExpenseCategory
+Marina Fee,ExpenseCategory
+Mello-Roos Community Facilities District Fee,ExpenseCategory
+MH Park Fees,ExpenseCategory
+Move in Fee,ExpenseCategory
+Move out Fee,ExpenseCategory
+Oil Fee,ExpenseCategory
+Onsite Parking Fee,ExpenseCategory
+Origination Fee,ExpenseCategory
+Other,ExpenseCategory
+Owner Pays,ExpenseCategory
+Park Fee,ExpenseCategory
+Parking Fee,ExpenseCategory
+Pet Addendum Fee,ExpenseCategory
+Pet Application Fee,ExpenseCategory
+Pet Deposit,ExpenseCategory
+Phone Fee,ExpenseCategory
+Pier/Dock Maintenance Fee,ExpenseCategory
+Planned Area Development Fee,ExpenseCategory
+POA Fee,ExpenseCategory
+Pool/Spa Fee,ExpenseCategory
+Processing Fee,ExpenseCategory
+Ranch Fee,ExpenseCategory
+Re-Key Fee,ExpenseCategory
+Recapture Fee,ExpenseCategory
+Recreation Fee,ExpenseCategory
+Recycling Fee,ExpenseCategory
+Regime Fee,ExpenseCategory
+Repair Deductible,ExpenseCategory
+Reservation Fee,ExpenseCategory
+Resort Fee,ExpenseCategory
+Roof Maintenance Fee,ExpenseCategory
+Roof Repair Fee,ExpenseCategory
+Roof Replacement Fee,ExpenseCategory
+RV Fee,ExpenseCategory
+RV Parking Fee,ExpenseCategory
+Security Deposit,ExpenseCategory
+Security Light Fee,ExpenseCategory
+Security Monitoring Fee,ExpenseCategory
+Security Service Fee,ExpenseCategory
+Security Staff Fee,ExpenseCategory
+Security System Fee,ExpenseCategory
+Septic Inspection Fee,ExpenseCategory
+Sewer Fee,ExpenseCategory
+Sewer Tap Fee,ExpenseCategory
+Snow Removal Fee,ExpenseCategory
+Social Fee,ExpenseCategory
+Special Assessment Fee,ExpenseCategory
+Storm Water Fee,ExpenseCategory
+Street Lighting Fee,ExpenseCategory
+Street Maintenance Fee,ExpenseCategory
+Street Parking Fee,ExpenseCategory
+Structural Maintenance Fee,ExpenseCategory
+Tenant Pays,ExpenseCategory
+Tennis Fee,ExpenseCategory
+Trash Fee,ExpenseCategory
+Triple Net Fee,ExpenseCategory
+Utilities Fee,ExpenseCategory
+Walking Trail Fee,ExpenseCategory
+Water FeeWater Heater Fee,ExpenseCategory
+Water Irrigation Fee,ExpenseCategory
+Water Pipe Fee,ExpenseCategory
+Water Rights Fee,ExpenseCategory
+Water Tap Fee,ExpenseCategory
+Water Treatment Fee,ExpenseCategory
+Water Use Fee,ExpenseCategory
+Water/Sewer Hookup Fee,ExpenseCategory
+Waterfront Fee,ExpenseCategory
+Window Cleaning Fee,ExpenseCategory
+Yard Care Fee,ExpenseCategory
+Adobe,ExteriorType
+Aluminum Siding,ExteriorType
+Asbestos,ExteriorType
+Asphalt,ExteriorType
+Block,ExteriorType
+Board and Batten,ExteriorType
+Brick,ExteriorType
+Brick and Wood,ExteriorType
+Brick Veneer,ExteriorType
+Cedar Siding,ExteriorType
+Comb,ExteriorType
+Composition,ExteriorType
+Composition Shingles,ExteriorType
+Concrete,ExteriorType
+Concrete Block,ExteriorType
+EIFS,ExteriorType
+Fiberglass,ExteriorType
+Glass,ExteriorType
+Hardboard,ExteriorType
+Log,ExteriorType
+Log Siding,ExteriorType
+Masonite,ExteriorType
+Masonry,ExteriorType
+Metal,ExteriorType
+Metal Siding,ExteriorType
+None,ExteriorType
+Other,ExteriorType
+Poured Concrete,ExteriorType
+Shingles (Not Wood),ExteriorType
+Stone,ExteriorType
+Stone Veneer,ExteriorType
+Stucco,ExteriorType
+Stucco - Synthetic,ExteriorType
+Tile,ExteriorType
+Tilt-up (Pre-Cast Concrete),ExteriorType
+Unknown,ExteriorType
+Vinyl Siding,ExteriorType
+Wood,ExteriorType
+Wood Shingle,ExteriorType
+Wood Siding,ExteriorType
+Bamboo,FlooringMaterial
+Brick,FlooringMaterial
+Carpet,FlooringMaterial
+Carpet - FullCarpet - Partial,FlooringMaterial
+Concrete,FlooringMaterial
+Concrete - Bare,FlooringMaterial
+Concrete - Painted,FlooringMaterial
+Cork,FlooringMaterial
+Drainage,FlooringMaterial
+Engineered Wood,FlooringMaterial
+Glass,FlooringMaterial
+Granite,FlooringMaterial
+Hardwood,FlooringMaterial
+Laminate,FlooringMaterial
+Linoleum,FlooringMaterial
+Load Restriction,FlooringMaterial
+Marble,FlooringMaterial
+None,FlooringMaterial
+Other,FlooringMaterial
+Parquet Wood,FlooringMaterial
+Rough-in,FlooringMaterial
+Slate,FlooringMaterial
+Soft Wood,FlooringMaterial
+Solid Wood,FlooringMaterial
+Specialty,FlooringMaterial
+Specialty Concrete,FlooringMaterial
+Tile,FlooringMaterial
+Tile - Ceramic,FlooringMaterial
+Tile - Porcelain,FlooringMaterial
+Tile - Stone,FlooringMaterial
+Tile or Stone,FlooringMaterial
+Unknown,FlooringMaterial
+Vinyl,FlooringMaterial
+Wood,FlooringMaterial
+Foreclosure - Other,ForeclosureStatus
+Lis Pendens (Pre-Foreclosure),ForeclosureStatus
+Notice of Default (Pre-Foreclosure),ForeclosureStatus
+Notice of Foreclosure Sale (Auction),ForeclosureStatus
+Notice of Trustee Sale (Auction),ForeclosureStatus
+Other,ForeclosureStatus
+REO - Bank Owned,ForeclosureStatus
+Butane Gas,HeatingFuel
+Coal,HeatingFuel
+Electric,HeatingFuel
+Geothermal,HeatingFuel
+Kerosene,HeatingFuel
+Natural Gas,HeatingFuel
+None,HeatingFuel
+Oil,HeatingFuel
+Other,HeatingFuel
+Passive Heat Pump,HeatingFuel
+Passive Solar,HeatingFuel
+Pellet,HeatingFuel
+Propane Gas,HeatingFuel
+Solar,HeatingFuel
+Solar Panel,HeatingFuel
+Unknown,HeatingFuel
+Wood,HeatingFuel
+Baseboard,HeatingSystem
+Central Furnace,HeatingSystem
+Electric Air Filter,HeatingSystem
+Fireplace,HeatingSystem
+Fireplace - Insert,HeatingSystem
+Floor Furnace,HeatingSystem
+Floor Wall,HeatingSystem
+Forced Air,HeatingSystem
+Geothermal,HeatingSystem
+Gravity Air,HeatingSystem
+Gravity Hot Water,HeatingSystem
+Heat Pump,HeatingSystem
+Hot Water,HeatingSystem
+Hot Water Radiant Floor,HeatingSystem
+Humidifier,HeatingSystem
+None,HeatingSystem
+Other,HeatingSystem
+Pellet Stove,HeatingSystem
+Radiant,HeatingSystem
+Radiant Ceiling,HeatingSystem
+Radiant Floor,HeatingSystem
+Radiator,HeatingSystem
+S-W Changeover,HeatingSystem
+Solar Active,HeatingSystem
+Solar Active and Passive,HeatingSystem
+Solar Passive,HeatingSystem
+Space Heater,HeatingSystem
+Steam,HeatingSystem
+Stove,HeatingSystem
+Unknown,HeatingSystem
+Wall Unit,HeatingSystem
+Zoned,HeatingSystem
+HasAttic,HomeFeature
+HasBarbecueArea,HomeFeature
+HasBasement,HomeFeature
+HasCeilingFan,HomeFeature
+HasDeck,HomeFeature
+HasDisabledAccess,HomeFeature
+HasDock,HomeFeature
+HasDoorman,HomeFeature
+HasDoublePaneWindows,HomeFeature
+HasElevator,HomeFeature
+HasFireplace,HomeFeature
+HasGarden,HomeFeature
+HasGatedEntry,HomeFeature
+HasGreenhouse,HomeFeature
+HasHotTubSpa,HomeFeature
+HasJettedBathTub,HomeFeature
+HasLawn,HomeFeature
+HasMotherInLaw,HomeFeature
+HasPatio,HomeFeature
+HasPond,HomeFeature
+HasPool,HomeFeature
+HasPorch,HomeFeature
+HasRVParking,HomeFeature
+HasSauna,HomeFeature
+HasSecuritySystem,HomeFeature
+HasSkylight,HomeFeature
+HasSportsCourt,HomeFeature
+HasSprinklerSystem,HomeFeature
+HasVaultedCeiling,HomeFeature
+HasWetBar,HomeFeature
+Intercom,HomeFeature
+IsCableReady,HomeFeature
+IsNewConstruction,HomeFeature
+IsWaterfront,HomeFeature
+IsWired,HomeFeature
+Apprentice Inspector,LicenseCategory
+Auctioneer,LicenseCategory
+Certified General Appraiser,LicenseCategory
+Certified Residential Appraiser,LicenseCategory
+Leasing Agent,LicenseCategory
+Licensed Appraiser,LicenseCategory
+Licensed Inspector,LicenseCategory
+Mortgage Broker,LicenseCategory
+Other,LicenseCategory
+Property Management,LicenseCategory
+Real Estate Broker,LicenseCategory
+Registered Appraiser,LicenseCategory
+Registered Inspector,LicenseCategory
+Rental Property Management,LicenseCategory
+Salesperson,LicenseCategory
+Unknown,LicenseCategory
+Lease,ListingCategory
+Purchase,ListingCategory
+Rent,ListingCategory
+Active,ListingStatus
+Cancelled,ListingStatus
+Closed,ListingStatus
+Expired,ListingStatus
+Pending,ListingStatus
+Withdrawn,ListingStatus
+Alley,Parking
+Assigned,Parking
+Boat,Parking
+Built-in,Parking
+Carport,Parking
+Commercial,Parking
+Covered,Parking
+Driveway,Parking
+Fee,Parking
+Fenced,Parking
+Garage,Parking
+Garage - Attached,Parking
+Garage - Detached,Parking
+Gated,Parking
+Golf Cart,Parking
+Guest,Parking
+Heated,Parking
+Leased,Parking
+Mechanics,Parking
+Meter,Parking
+Mixed,Parking
+None,Parking
+Off Alley,Parking
+Off Street,Parking
+Offsite,Parking
+On Street,Parking
+Open,Parking
+Other,Parking
+Oversized,Parking
+Owned,Parking
+Parking Lot,Parking
+Parking Structure,Parking
+Paved or Surfaced,Parking
+Pole,Parking
+Porte-Cochere,Parking
+Pull-through,Parking
+Ramp,Parking
+RV,Parking
+Secured,Parking
+Side Apron,Parking
+Side by Side,Parking
+Special Needs,Parking
+Stacked,Parking
+Tandem,Parking
+Tuck-Under,Parking
+Unassigned,Parking
+Underground/Basement,Parking
+Unimproved,Parking
+Unknown,Parking
+Valet,Parking
+Workshop,Parking
+Zoned Permit,Parking
+Apartment,PropertySubType
+Boatslip,PropertySubType
+Cabin,PropertySubType
+Condominium,PropertySubType
+Deeded Parking,PropertySubType
+Duplex,PropertySubType
+Farm,PropertySubType
+Manufactured Home,PropertySubType
+Mobile Home,PropertySubType
+Other,PropertySubType
+Own Your Own,PropertySubType
+Quadruplex,PropertySubType
+Single Family Attached,PropertySubType
+Single Family Detached,PropertySubType
+Stock Cooperative,PropertySubType
+Timeshare,PropertySubType
+Townhouse,PropertySubType
+Triplex,PropertySubType
+Commercial,PropertyType
+Common Interest,PropertyType
+Farm And Agriculture,PropertyType
+Lots And Land,PropertyType
+MultiFamily,PropertyType
+Other,PropertyType
+Rental,PropertyType
+Residential,PropertyType
+Aluminum,RoofMaterial
+Asbestos,RoofMaterial
+Asphalt,RoofMaterial
+Built-up,RoofMaterial
+Clay Tile,RoofMaterial
+Composition Shingle,RoofMaterial
+Concrete Tile,RoofMaterial
+Copper,RoofMaterial
+Corrugated Metal,RoofMaterial
+Green,RoofMaterial
+Masonite or Cement Shake,RoofMaterial
+Membrane,RoofMaterial
+Metal,RoofMaterial
+Other,RoofMaterial
+Slate,RoofMaterial
+Solar Panel,RoofMaterial
+Standing Seam,RoofMaterial
+Steel,RoofMaterial
+Tar and Gravel,RoofMaterial
+Thatched,RoofMaterial
+Tile,RoofMaterial
+Unknown,RoofMaterial
+Urethane,RoofMaterial
+Wood Shake,RoofMaterial
+Wood Shingle,RoofMaterial
+Atrium,RoomCategory
+Attic-Finished,RoomCategory
+Attic-Unfinished,RoomCategory
+Basement,RoomCategory
+Basement-Finished,RoomCategory
+Basement-Unfinished,RoomCategory
+Bedroom,RoomCategory
+Bonus Room,RoomCategory
+Breakfast Nook,RoomCategory
+Breakfast Room,RoomCategory
+Crafts Room,RoomCategory
+Den,RoomCategory
+Dining Room,RoomCategory
+Eat-In Kitchen,RoomCategory
+Efficiency,RoomCategory
+Enclosed Patio,RoomCategory
+Family Room,RoomCategory
+Florida Room,RoomCategory
+Formal Dining Room,RoomCategory
+Foyer,RoomCategory
+Full Bath,RoomCategory
+Game Room,RoomCategory
+Great Room,RoomCategory
+Guest House,RoomCategory
+Guest Room,RoomCategory
+Half Bath,RoomCategory
+In-Law Suite,RoomCategory
+Kitchen,RoomCategory
+Kitchenette,RoomCategory
+Laundry Closet,RoomCategory
+Laundry Room,RoomCategory
+Library,RoomCategory
+Living Room,RoomCategory
+Loft,RoomCategory
+Master Bathroom,RoomCategory
+Media Room,RoomCategory
+Mudroom,RoomCategory
+Music Room,RoomCategory
+Office,RoomCategory
+One-Quarter Bath,RoomCategory
+Other,RoomCategory
+Patio,RoomCategory
+Photo Lab,RoomCategory
+Recreational Room,RoomCategory
+Sauna,RoomCategory
+Servant Quarters,RoomCategory
+Sitting Room,RoomCategory
+Solarium,RoomCategory
+Storage,RoomCategory
+Studio,RoomCategory
+Study,RoomCategory
+Sunroom,RoomCategory
+Theatre,RoomCategory
+Three-Quarter Bath,RoomCategory
+Unknown,RoomCategory
+Utility,RoomCategory
+Walk-In Closet,RoomCategory
+Walk-In Pantry,RoomCategory
+Wok Kitchen,RoomCategory
+Workshop,RoomCategory
+Elementary,SchoolCategory
+High,SchoolCategory
+JuniorHigh,SchoolCategory
+Middle,SchoolCategory
+Other,SchoolCategory
+Primary,SchoolCategory
+Secondary,SchoolCategory
+Aggregator,SourceProviderCategory
+Broker,SourceProviderCategory
+Franchiser,SourceProviderCategory
+HomeBuilder,SourceProviderCategory
+Member,SourceProviderCategory
+MLS,SourceProviderCategory
+Other,SourceProviderCategory
+Owner,SourceProviderCategory
+Publisher,SourceProviderCategory
+Unknown,SourceProviderCategory
+Airport,View
+Average,View
+Bluff,View
+Bridge,View
+Canyon,View
+City,View
+Desert,View
+Forest,View
+Golf Course,View
+Harbor,View
+Hills,View
+Lake,View
+Marina,View
+Mountain,View
+None,View
+Ocean,View
+Other,View
+Panorama,View
+Park,View
+Ravine,View
+River,View
+Territorial,View
+Unknown,View
+Valley,View
+Vista,View
+Water,View
