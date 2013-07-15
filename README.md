@@ -1,21 +1,31 @@
 # Rets
 
-TODO: Write a gem description
+This gem provides data models and database structure based on the RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. 
+
+Read more here:
+http://www.reso.org/schemas-for-syndication
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'rets'
 	gem 'rets', :path => "~/Projects/github/rets"
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Run the generator to copy migrations to your app:
 
-    $ gem install rets
+    $ rails g rets:install
+
+Run the migrations:
+
+    $ rake db:migrate
+
+Finally, populate the database with neccessary seed data and an example listing:
+
+	$ rake rets:seed
 
 ## Usage
 
