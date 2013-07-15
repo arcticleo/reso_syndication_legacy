@@ -1,6 +1,9 @@
-# Rets
+# RetsSyndication
 
-This gem provides data models and database structure based on the RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. 
+rets_syndication
+Michael Edlund, 2013
+
+The rets_syndication gem provides models based on the RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. 
 
 Read more here:
 http://www.reso.org/schemas-for-syndication
