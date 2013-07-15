@@ -9,7 +9,7 @@ http://www.reso.org/schemas-for-syndication
 
 Add this line to your application's Gemfile:
 
-	gem 'rets', :path => "~/Projects/github/rets"
+	gem 'rets_syndication', :path => "~/Projects/github/rets"
 
 And then execute:
 
