@@ -15,6 +15,11 @@ namespace :rets do
 	task :import_example_xml => [:environment] do
 	    require 'nokogiri'
 
+      Enumeral.first
+      Place.first
+      Business.first
+      ListingMedia.first
+
 	    @doc = Nokogiri::XML(f = File.open("#{Rails.root}/db/example.xml"))
 
     @doc.css('Listing').each do |p|
@@ -264,7 +269,7 @@ namespace :rets do
       end
 
      if @listing.save!
-       puts @listing.listing_title
+       puts "Imported: #{@listing.listing_title}"
      else
        puts "FAILED"
      end
@@ -272,7 +277,7 @@ namespace :rets do
   end
 
 	desc "Populate database with seed data."
-	task :seed => [:import_example_xml] do
+	task :seed => [:load_enumerals, :import_example_xml] do
 	end
   
   
