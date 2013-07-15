@@ -1,0 +1,2 @@
+class Parking < Enumeral
+end

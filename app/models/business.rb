@@ -6,13 +6,3 @@ class Business < ActiveRecord::Base
   validates_presence_of :type
 
 end
-
-class Brokerage < Business
-end
-
-class Builder < Business
-end
-
-class Franchise < Business
-end
-

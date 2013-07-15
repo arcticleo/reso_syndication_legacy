@@ -1,0 +1,2 @@
+class ListingStatus < Enumeral
+end

@@ -1,0 +1,2 @@
+class FlooringMaterial < Enumeral
+end

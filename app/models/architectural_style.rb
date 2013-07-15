@@ -1,0 +1,2 @@
+class ArchitecturalStyle < Enumeral
+end

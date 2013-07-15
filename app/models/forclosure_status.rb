@@ -1,0 +1,2 @@
+class ForeclosureStatus < Enumeral
+end

@@ -1,0 +1,2 @@
+class ListingParticipantRole < Enumeral
+end

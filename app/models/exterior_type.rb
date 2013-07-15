@@ -1,0 +1,2 @@
+class ExteriorType < Enumeral
+end

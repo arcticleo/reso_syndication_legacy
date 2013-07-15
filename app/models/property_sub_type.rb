@@ -1,0 +1,2 @@
+class PropertySubType < Enumeral
+end

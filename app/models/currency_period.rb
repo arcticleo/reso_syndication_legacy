@@ -1,0 +1,2 @@
+class CurrencyPeriod < Enumeral
+end

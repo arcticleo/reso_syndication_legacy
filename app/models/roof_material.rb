@@ -1,0 +1,2 @@
+class RoofMaterial < Enumeral
+end

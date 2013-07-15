@@ -1,0 +1,2 @@
+class Brokerage < Business
+end

@@ -1,0 +1,2 @@
+class HomeFeature < Enumeral
+end

@@ -1,0 +1,2 @@
+class ListingCategory < Enumeral
+end

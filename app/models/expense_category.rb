@@ -1,0 +1,2 @@
+class ExpenseCategory < Enumeral
+end

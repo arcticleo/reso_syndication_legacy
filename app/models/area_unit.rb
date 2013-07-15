@@ -1,0 +1,2 @@
+class AreaUnit < Enumeral
+end

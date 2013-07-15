@@ -15,11 +15,6 @@ namespace :rets do
 	task :import_example_xml => [:environment] do
 	    require 'nokogiri'
 
-      Enumeral.first
-      Place.first
-      Business.first
-      ListingMedia.first
-
 	    @doc = Nokogiri::XML(f = File.open("#{Rails.root}/db/example.xml"))
 
     @doc.css('Listing').each do |p|
