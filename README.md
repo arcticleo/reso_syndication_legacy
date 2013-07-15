@@ -12,7 +12,7 @@ http://www.reso.org/schemas-for-syndication
 
 Add this line to your application's Gemfile:
 
-	gem 'rets_syndication', :path => "~/Projects/github/rets"
+	gem 'rets_syndication', :path => "~/Projects/github/rets_syndication"
 
 And then execute:
 
@@ -32,7 +32,44 @@ Finally, populate the database with neccessary seed data and an example listing:
 
 ## Usage
 
-TODO: Write usage instructions here
+Fetch the demo listing:
+
+	@listing = Listing.first
+
+Access its data:
+
+	@listing.addresses
+	@listing.appliances
+	@listing.architectural_style
+	@listing.brokerages
+	@listing.builders
+	@listing.communities
+	@listing.cooling_systems
+	@listing.county
+	@listing.expenses
+	@listing.exterior_types
+	@listing.flooring_materials
+	@listing.foreclosure_status
+	@listing.franchises
+	@listing.heating_fuels
+	@listing.heating_systems
+	@listing.home_features
+	@listing.listing_category
+	@listing.listing_participants
+	@listing.listing_provider
+	@listing.listing_services
+	@listing.listing_status
+	@listing.neighborhood
+	@listing.office
+	@listing.open_houses
+	@listing.parking
+	@listing.property_sub_type
+	@listing.property_type
+	@listing.roof_materials
+	@listing.rooms
+	@listing.schools
+	@listing.taxes
+	@listing.views
 
 ## Contributing
 

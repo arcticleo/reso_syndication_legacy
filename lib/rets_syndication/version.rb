@@ -1,3 +1,3 @@
-module Rets
+module RetsSyndication
   VERSION = "0.0.1.alpha"
 end
