@@ -20,7 +20,7 @@ And then execute:
 
 Run the generator to copy migrations to your app:
 
-    $ rails g rets:install
+    $ rails g rets_syndication:install
 
 Run the migrations:
 
@@ -28,7 +28,7 @@ Run the migrations:
 
 Finally, populate the database with neccessary seed data and an example listing:
 
-	$ rake rets:seed
+	$ rake rets_syndication:seed
 
 ## Usage
 

@@ -1,0 +1,2 @@
+class VirtualTour < ListingMedia
+end

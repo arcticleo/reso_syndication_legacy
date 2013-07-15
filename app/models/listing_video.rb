@@ -1,0 +1,2 @@
+class ListingVideo < ListingMedia
+end

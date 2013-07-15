@@ -1,0 +1,2 @@
+class ListingPhoto < ListingMedia
+end
