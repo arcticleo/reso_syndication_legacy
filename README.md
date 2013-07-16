@@ -45,7 +45,7 @@ Access its data:
 	@listing.builders
 	@listing.communities
 	@listing.cooling_systems
-	@listing.counties *
+	@listing.county
 	@listing.expenses
 	@listing.exterior_types
 	@listing.flooring_materials

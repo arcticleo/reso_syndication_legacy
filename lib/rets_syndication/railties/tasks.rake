@@ -84,7 +84,7 @@ namespace :rets_syndication do
         )
       end
       p.css('Location County').each do |county|
-        @listing.counties << County.find_or_initialize_by(
+        @listing.county = County.find_or_initialize_by(
           :name => county.try(:inner_text),
           :state_or_province => @listing.addresses.first.state_or_province,
           :country => @listing.addresses.first.country

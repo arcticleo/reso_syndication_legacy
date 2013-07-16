@@ -7,6 +7,7 @@ class Listing < ActiveRecord::Base
   belongs_to :listing_service
   belongs_to :zoning_type
   belongs_to :architectural_style
+  belongs_to :county
   has_many :expenses
   has_many :open_houses
   has_many :rooms
@@ -23,7 +24,6 @@ class Listing < ActiveRecord::Base
   has_and_belongs_to_many :builders, association_foreign_key: "business_id"
   has_and_belongs_to_many :franchises, association_foreign_key: "business_id"
 
-  has_and_belongs_to_many :counties, association_foreign_key: "place_id"
   has_and_belongs_to_many :communities, association_foreign_key: "place_id"
   has_and_belongs_to_many :neighborhoods, association_foreign_key: "place_id"
 
