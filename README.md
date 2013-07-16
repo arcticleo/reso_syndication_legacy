@@ -45,11 +45,11 @@ Access its data:
 	@listing.builders
 	@listing.communities
 	@listing.cooling_systems
-	@listing.county
+	@listing.counties *
 	@listing.expenses
 	@listing.exterior_types
 	@listing.flooring_materials
-	@listing.foreclosure_status
+	@listing.foreclosure_statuses *
 	@listing.franchises
 	@listing.heating_fuels
 	@listing.heating_systems
@@ -57,17 +57,16 @@ Access its data:
 	@listing.listing_category
 	@listing.listing_participants
 	@listing.listing_provider
-	@listing.listing_services
+	@listing.listing_service
 	@listing.listing_status
-	@listing.neighborhood
-	@listing.office
+	@listing.neighborhoods ***
+	@listing.offices ***
 	@listing.open_houses
 	@listing.parking
 	@listing.property_sub_type
 	@listing.property_type
 	@listing.roof_materials
 	@listing.rooms
-	@listing.schools
 	@listing.taxes
 	@listing.views
 

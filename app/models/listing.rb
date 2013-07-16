@@ -36,6 +36,7 @@ class Listing < ActiveRecord::Base
   has_and_belongs_to_many :heating_systems, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :home_features, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :roof_materials, association_foreign_key: "enumeral_id"
+  has_and_belongs_to_many :parking, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :views, association_foreign_key: "enumeral_id"
   
   validates_presence_of :list_price
