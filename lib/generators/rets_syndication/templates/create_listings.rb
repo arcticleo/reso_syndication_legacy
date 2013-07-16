@@ -34,7 +34,7 @@ class CreateListings < ActiveRecord::Migration
       t.integer :partial_bathrooms
       t.decimal :latitude, :precision => 16, :scale => 6
       t.decimal :longitude, :precision => 16, :scale => 6
-#      t.references :county, index: true
+      t.references :county, index: true
 #      t.references :community, index: true
       t.text :directions
       t.string :elevation
@@ -49,7 +49,6 @@ class CreateListings < ActiveRecord::Migration
       t.integer :num_parking_spaces
       t.integer :room_count
       t.text :legal_description
-      t.references :county, index: true
       t.references :architectural_style, index: true
       t.string :modification_timestamp
 
