@@ -35,7 +35,7 @@ Fetch the demo listing:
 
 	@listing = Listing.first
 
-Access its direct attributes:
+Access direct attributes:
 
 	@listing.list_price
 	@listing.list_price_low
@@ -77,7 +77,7 @@ Access its direct attributes:
 	@listing.room_count
 	@listing.legal_description
 
-Access its data through relationships:
+Access related models:
 
 	@listing.addresses
 	@listing.appliances
