@@ -35,7 +35,7 @@ class CreateListings < ActiveRecord::Migration
       t.decimal :latitude, :precision => 16, :scale => 6
       t.decimal :longitude, :precision => 16, :scale => 6
       t.references :county, index: true
-#      t.references :community, index: true
+      t.references :community, index: true
       t.text :directions
       t.string :elevation
       t.string :geocode_options

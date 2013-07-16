@@ -91,14 +91,14 @@ namespace :rets_syndication do
         )
       end
       p.css('Location Community').each do |community|
-        @community = @listing.communities.find_or_initialize_by(
+        @listing.community = Community.find_or_initialize_by(
           :name => community.at_css('commons|Subdivision').try(:inner_text),
           :city => @listing.addresses.first.city,
           :state_or_province => @listing.addresses.first.state_or_province,
           :country => @listing.addresses.first.country
         )
         p.css('commons|Schools commons|School').each do |school|
-          @community.schools << School.find_or_initialize_by(
+          @listing.community.schools << School.find_or_initialize_by(
             :name => school.at_css('commons|Name').try(:inner_text),
             :school_category => SchoolCategory.find_by(:name => school.at_css('commons|SchoolCategory').try(:inner_text)),
             :district => school.at_css('commons|District').try(:inner_text)
