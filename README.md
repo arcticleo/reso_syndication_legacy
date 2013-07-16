@@ -97,9 +97,11 @@ Access its data through relationships:
 	@listing.home_features
 	@listing.listing_category
 	@listing.listing_participants
+	@listing.listing_photos
 	@listing.listing_provider
 	@listing.listing_service
 	@listing.listing_status
+	@listing.listing_videos
 	@listing.neighborhoods
 	@listing.offices
 	@listing.open_houses
@@ -110,6 +112,7 @@ Access its data through relationships:
 	@listing.rooms
 	@listing.taxes
 	@listing.views
+	@listing.virtual_tours
 
 ## TODO
 
