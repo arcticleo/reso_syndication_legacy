@@ -8,6 +8,8 @@ class Listing < ActiveRecord::Base
   belongs_to :zoning_type
   belongs_to :architectural_style
   belongs_to :county
+  belongs_to :foreclosure_status
+
   has_many :expenses
   has_many :open_houses
   has_many :rooms
@@ -31,7 +33,6 @@ class Listing < ActiveRecord::Base
   has_and_belongs_to_many :cooling_systems, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :exterior_types, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :flooring_materials, association_foreign_key: "enumeral_id"
-  has_and_belongs_to_many :foreclosure_statuses, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :heating_fuels, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :heating_systems, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :home_features, association_foreign_key: "enumeral_id"

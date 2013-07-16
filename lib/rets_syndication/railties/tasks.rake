@@ -221,8 +221,7 @@ namespace :rets_syndication do
       end
       @enumerals = Enumeral.all
       p.css('ForeclosureStatus').each do |foreclosure_status|
-        @foreclosure_status = ForeclosureStatus.find_or_create_by(:name => foreclosure_status.try(:inner_text))
-        @listing.foreclosure_statuses << @foreclosure_status unless @listing.foreclosure_statuses.map(&:id).include?(@foreclosure_status.id)
+        @listing.foreclosure_status = ForeclosureStatus.find_or_create_by(:name => foreclosure_status.try(:inner_text))
       end
       p.children.css('Appliances Appliance').each do |appliance|
         @appliance = Appliance.find_or_create_by(:name => appliance.try(:inner_text))

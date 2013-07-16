@@ -49,7 +49,7 @@ Access its data:
 	@listing.expenses
 	@listing.exterior_types
 	@listing.flooring_materials
-	@listing.foreclosure_statuses *
+	@listing.foreclosure_status
 	@listing.franchises
 	@listing.heating_fuels
 	@listing.heating_systems
