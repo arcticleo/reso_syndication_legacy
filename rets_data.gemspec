@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rets_syndication/version'
+require 'rets_data/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "rets_syndication"
-  spec.version       = RetsSyndication::VERSION
+  spec.name          = "rets_data"
+  spec.version       = RetsData::VERSION
   spec.authors       = ["Michael Edlund"]
   spec.email         = ["medlund@mac.com"]
   spec.description   = %q{Provides core real estate listing models based on RETS syndication specification.}
   spec.summary       = %q{Provides core real estate listing models based on RETS syndication specification.}
-  spec.homepage      = "http://github.com/arcticleo/rets_syndication"
+  spec.homepage      = "http://github.com/arcticleo/rets_data"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

@@ -1,4 +1,4 @@
-module RetsSyndication
+module RetsData
   module Generators
     class InstallGenerator < Rails::Generators::Base
       include Rails::Generators::Migration

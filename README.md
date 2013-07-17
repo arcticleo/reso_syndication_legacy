@@ -1,8 +1,8 @@
-# RetsSyndication
+# RetsData
 
-rets_syndication - Michael Edlund, 2013
+rets_data - Michael Edlund, 2013
 
-The rets_syndication gem provides models based on the National Association of REALTORS(R) RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. 
+The rets_data gem provides models based on the National Association of REALTORS(R) RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. 
 
 Read more here:
 http://www.reso.org/schemas-for-syndication
@@ -11,7 +11,7 @@ http://www.reso.org/schemas-for-syndication
 
 Add this line to your application's Gemfile:
 
-	gem 'rets_syndication', :path => "~/Projects/github/rets_syndication"
+	gem 'rets_data', :path => "~/Projects/github/rets_data"
 
 And then execute:
 
@@ -19,7 +19,7 @@ And then execute:
 
 Run the generator to copy migrations to your app:
 
-    $ rails g rets_syndication:install
+    $ rails g rets_data:install
 
 Run the migrations:
 
@@ -27,7 +27,7 @@ Run the migrations:
 
 Finally, populate the database with neccessary seed data and an example listing:
 
-	$ rake rets_syndication:seed
+	$ rake rets_data:seed
 
 ## Usage
 

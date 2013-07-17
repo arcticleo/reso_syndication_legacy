@@ -1,4 +1,4 @@
-namespace :rets_syndication do
+namespace :rets_data do
 
 	task :load_enumerals => [:environment] do
 		require "csv"
