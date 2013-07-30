@@ -28,6 +28,8 @@ class Listing < ActiveRecord::Base
   has_and_belongs_to_many :listing_participants
   has_and_belongs_to_many :offices
 
+  accepts_nested_attributes_for :addresses, allow_destroy: true
+
   has_and_belongs_to_many :brokerages, association_foreign_key: "business_id"
   has_and_belongs_to_many :builders, association_foreign_key: "business_id"
   has_and_belongs_to_many :franchises, association_foreign_key: "business_id"
