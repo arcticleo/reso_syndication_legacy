@@ -19,7 +19,9 @@ class Listing < ActiveRecord::Base
   has_many :listing_videos, :dependent => :destroy
   has_many :virtual_tours, :dependent => :destroy
 
+  accepts_nested_attributes_for :expenses, allow_destroy: true
   accepts_nested_attributes_for :rooms, allow_destroy: true
+  accepts_nested_attributes_for :taxes, allow_destroy: true
   
   has_and_belongs_to_many :addresses
   has_and_belongs_to_many :listing_participants

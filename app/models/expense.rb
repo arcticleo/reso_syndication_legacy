@@ -5,6 +5,9 @@ class Expense < ActiveRecord::Base
   
   validates_presence_of :expense_category
   validates_presence_of :currency_period
-  validates_presence_of :expense_value
+
+  validates :expense_value, :numericality => true,
+                            :presence => true
+
   
 end
