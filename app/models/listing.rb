@@ -20,6 +20,7 @@ class Listing < ActiveRecord::Base
   has_many :virtual_tours, :dependent => :destroy
 
   accepts_nested_attributes_for :expenses, allow_destroy: true
+  accepts_nested_attributes_for :open_houses, allow_destroy: true
   accepts_nested_attributes_for :rooms, allow_destroy: true
   accepts_nested_attributes_for :taxes, allow_destroy: true
   
