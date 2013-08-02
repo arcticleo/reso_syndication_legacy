@@ -98,16 +98,16 @@ namespace :rets_data do
           :country => @listing.addresses.first.country
         )
         p.css('commons|Schools commons|School').each do |school|
-          @listing.community.schools << School.find_or_initialize_by(
+          @school = School.find_or_initialize_by(
             :name => school.at_css('commons|Name').try(:inner_text),
             :school_category => SchoolCategory.find_by(:name => school.at_css('commons|SchoolCategory').try(:inner_text)),
             :district => school.at_css('commons|District').try(:inner_text)
-# county, state, country, find_or_create_by
           )
+          @listing.community.schools << @school unless @listing.community.schools.include? @school
         end
       end
       p.css('ListingParticipants Participant').each do |participant|
-        @listing.listing_participants << @listing_participant = ListingParticipant.find_or_initialize_by(
+        @listing_participant = ListingParticipant.find_or_initialize_by(
 # find_or_create_by
           :participant_key => participant.at_css('ParticipantKey').try(:inner_text),
           :participant_identifier => participant.at_css('ParticipantId').try(:inner_text),
@@ -120,6 +120,7 @@ namespace :rets_data do
           :fax => participant.at_css('Fax').try(:inner_text),
           :website_url => participant.at_css('WebsiteURL').try(:inner_text)
         )
+        @listing.listing_participants << @listing_participant
         participant.css('Licenses License').each do |license|
 #puts license.inspect
 #          @listing_participant.listing_participant_licenses << ListingParticipantLicense.find_or_initialize_by(
@@ -132,7 +133,7 @@ namespace :rets_data do
       end
       %w[brokerage builder franchise].each do |b|
         p.css(b.classify).each do |business|
-          @b = b.classify.constantize.find_or_initialize_by(
+          @business = b.classify.constantize.find_or_initialize_by(
             :type => b.classify,
             :name => business.at_css('Name').try(:inner_text),
             :phone => business.at_css('Phone').try(:inner_text),  
@@ -141,10 +142,10 @@ namespace :rets_data do
             :website_url => business.at_css('WebsiteURL').try(:inner_text),
             :logo_url => business.at_css('LogoURL').try(:inner_text)
           )
-          @listing.send(b.pluralize) << @b
+          @listing.send(b.pluralize) << @business
 
           business.css('Address').each do |address|
-            @b.addresses << Address.find_or_initialize_by(
+            @address = @business.addresses.find_or_initialize_by(
               :preference_order => address.at_css('commons|preference-order').try(:inner_text),
               :address_preference_order => address.at_css('commons|address-preference-order').try(:inner_text),
               :full_street_address => address.at_css('commons|FullStreetAddress').try(:inner_text),
@@ -154,11 +155,12 @@ namespace :rets_data do
               :postal_code => address.at_css('commons|PostalCode').try(:inner_text),
               :country => address.at_css('commons|Country').try(:inner_text)
             )
+            @business.addresses << @address unless @business.addresses.include? @address
           end
         end
       end
       p.css('Offices Office').each do |office|
-        @listing.offices <<  @office = Office.find_or_initialize_by(
+        @office = Office.find_or_initialize_by(
           :office_key => office.at_css('OfficeKey').try(:inner_text),
           :office_identifier => office.at_css('OfficeId').try(:inner_text),
           :office_code_identifier => office.at_css('OfficeCode OfficeCodeId').try(:inner_text),
@@ -169,6 +171,7 @@ namespace :rets_data do
           :phone_number => office.at_css('PhoneNumber').try(:inner_text),
           :website => office.at_css('Website').try(:inner_text),
         )
+        @listing.offices <<  @office
         office.css('Address').each do |address|
           @office.addresses.find_or_initialize_by(
             :preference_order => address.at_css('commons|preference-order').try(:inner_text),
@@ -183,21 +186,23 @@ namespace :rets_data do
         end
       end
       p.css('Neighborhoods Neighborhood').each do |neighborhood|
-        @listing.neighborhoods << Neighborhood.find_or_initialize_by(
+        @neighborhood = Neighborhood.find_or_initialize_by(
           :name => neighborhood.at_css('Name').try(:inner_text), 
           :description => neighborhood.at_css('Description').try(:inner_text),
           :city => @listing.addresses.first.city,
           :state_or_province => @listing.addresses.first.state_or_province,
           :country => @listing.addresses.first.country
         )
+        @listing.neighborhoods << @neighborhood
       end
       p.children.css('Photos Photo').each do |photo|
-        @listing.listing_photos << ListingPhoto.new(
+        @listing_photo = ListingPhoto.find_or_initialize_by(
           :media_url => photo.at_css('MediaURL').try(:inner_text), 
           :media_modification_timestamp => photo.at_css('MediaModificationTimestamp').try(:inner_text),
           :media_caption => photo.at_css('MediaCaption').try(:inner_text),
           :media_description => photo.at_css('MediaDescription').try(:inner_text)
         )
+        @listing.listing_photos << @listing_photo
       end
       p.children.css('OpenHouses OpenHouse').each do |oh|
         @listing.open_houses << OpenHouse.new(
@@ -208,11 +213,12 @@ namespace :rets_data do
         )
       end
       p.children.css('Taxes Tax').each do |tax|
-        @listing.taxes << Tax.new(
+        @tax = @listing.taxes.find_or_initialize_by(
           :year => tax.at_css('Year').try(:inner_text), 
           :amount => tax.at_css('Amount').try(:inner_text),
           :description => tax.at_css('TaxDescription').try(:inner_text)
         )
+        @listing.taxes << @tax
       end
       p.children.css('Expenses Expense').each do |expense|
 #        @listing.expenses << Expense.new(
