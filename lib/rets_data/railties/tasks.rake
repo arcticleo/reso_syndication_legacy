@@ -132,7 +132,7 @@ namespace :rets_data do
       end
       %w[brokerage builder franchise].each do |b|
         p.css(b.classify).each do |business|
-          @b = @listing.send(b.pluralize).find_or_initialize_by(
+          @b = b.classify.constantize.find_or_initialize_by(
             :type => b.classify,
             :name => business.at_css('Name').try(:inner_text),
             :phone => business.at_css('Phone').try(:inner_text),  
@@ -141,6 +141,8 @@ namespace :rets_data do
             :website_url => business.at_css('WebsiteURL').try(:inner_text),
             :logo_url => business.at_css('LogoURL').try(:inner_text)
           )
+          @listing.send(b.pluralize) << @b
+
           business.css('Address').each do |address|
             @b.addresses << Address.find_or_initialize_by(
               :preference_order => address.at_css('commons|preference-order').try(:inner_text),
