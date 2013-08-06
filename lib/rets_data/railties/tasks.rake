@@ -13,9 +13,9 @@ namespace :rets_data do
     end
 
 	task :import_example_xml => [:environment] do
-	    require 'nokogiri'
+	  require 'nokogiri'
 
-	    @doc = Nokogiri::XML(f = File.open("#{Rails.root}/db/example.xml"))
+	  @doc = Nokogiri::XML(f = File.open("#{Rails.root}/db/example.xml"))
 
     @doc.css('Listing').each do |p|
       @listing = Listing.find_by(:listing_key => p.children.at_css('ListingKey').try(:inner_text))
