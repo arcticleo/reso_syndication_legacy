@@ -1,4 +1,7 @@
 class Listing < ActiveRecord::Base
+  
+  before_destroy :destroy_addresses
+  
   belongs_to :listing_provider
   belongs_to :property_type
   belongs_to :property_sub_type
@@ -65,4 +68,11 @@ class Listing < ActiveRecord::Base
   validates_presence_of :listing_category
   validates_presence_of :listing_status
   
+  def destroy_addresses
+    self.addresses.each do |address|
+      address.destroy
+    end
+  end
+  
 end
+
