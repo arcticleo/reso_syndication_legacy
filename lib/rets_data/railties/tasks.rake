@@ -19,7 +19,12 @@ namespace :rets_data do
 
     @doc.css('Listing').each do |p|
       @listing = Listing.find_by(:listing_key => p.children.at_css('ListingKey').try(:inner_text))
-      if @listing.blank? 
+      if (@listing.blank? || @listing.modification_timestamp != p.children.at_css('ModificationTimestamp').try(:inner_text))
+
+        if @listing.modification_timestamp != p.children.at_css('ModificationTimestamp').try(:inner_text)
+          puts "Deleting outdated: #{@listing.listing_title}"
+          @listing.destroy
+        end
 
         @listing = Listing.new(
           :list_price => p.children.at_css('ListPrice').try(:inner_text), 
