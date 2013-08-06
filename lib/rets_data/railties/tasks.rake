@@ -12,10 +12,12 @@ namespace :rets_data do
         puts ""
     end
 
-	task :import_example_xml => [:environment] do
+	task :import, [:path] => [:environment] do |t, args|
 	  require 'nokogiri'
+    args.with_defaults(:path => "#{Rails.root}/db/example.xml")
+    
 
-	  @doc = Nokogiri::XML(f = File.open("#{Rails.root}/db/example.xml"))
+	  @doc = Nokogiri::XML(f = File.open(args.path))
 
     @doc.css('Listing').each do |p|
       @listing = Listing.find_by(:listing_key => p.children.at_css('ListingKey').try(:inner_text))
@@ -289,10 +291,11 @@ namespace :rets_data do
      end
 
     end
+
   end
 
 	desc "Populate database with seed data."
-	task :seed => [:load_enumerals, :import_example_xml] do
+	task :seed => [:load_enumerals, :import] do
 	end
   
   
