@@ -298,8 +298,8 @@ namespace :rets_data do
     end
     
     existing_listing_keys = Listing.all.select(:listing_key).pluck(:listing_key)
-    (existing_listing_keys - incoming_listing_keys).each do |listing_key|
-      @listing = Listing.find_by(:listing_key => listing_key)
+    (existing_listing_keys - incoming_listing_keys).each do |orphaned_listing_key|
+      @listing = Listing.find_by(:listing_key => orphaned_listing_key)
       puts "Deleting expired: #{@listing.listing_title}"
       @listing.destroy
     end
