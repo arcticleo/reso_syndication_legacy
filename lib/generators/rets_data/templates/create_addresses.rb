@@ -8,7 +8,7 @@ class CreateAddresses < ActiveRecord::Migration
       t.string :city
       t.string :state_or_province
       t.string :postal_code
-      t.string :country, :null => false, :default => "US"
+      t.string :country, :default => "US"
 
       t.timestamps
     end
