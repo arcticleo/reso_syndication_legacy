@@ -28,7 +28,7 @@ namespace :rets_data do
 
         unless @listing.blank?
           if @listing.modification_timestamp != p.children.at_css('ModificationTimestamp').try(:inner_text)
-            puts "Deleting outdated: #{@listing.listing_title}"
+            puts "Deleting outdated: #{@listing.listing_key} - #{@listing.listing_title}"
             @listing.destroy
           end
         end
@@ -286,13 +286,13 @@ namespace :rets_data do
         end
 
        if @listing.save!
-         puts "Imported: #{@listing.listing_title}"
+         puts "Imported: #{@listing.listing_key} - #{@listing.listing_title}"
        else
          puts "FAILED"
        end
 
      else
-       puts "Skipping: #{@listing.listing_title}"
+       puts "Skipping: #{@listing.listing_key} - #{@listing.listing_title}"
      end
 
     end
@@ -300,7 +300,7 @@ namespace :rets_data do
     existing_listing_keys = Listing.all.select(:listing_key).pluck(:listing_key)
     (existing_listing_keys - incoming_listing_keys).each do |orphaned_listing_key|
       @listing = Listing.find_by(:listing_key => orphaned_listing_key)
-      puts "Deleting expired: #{@listing.listing_title}"
+      puts "Deleting expired: #{@listing.listing_key} - #{@listing.listing_title}"
       @listing.destroy
     end
 
