@@ -25,7 +25,7 @@ Run the migrations:
 
     $ rake db:migrate
 
-Populate the database with neccessary seed data:
+Populate the database with necessary seed data:
 
 	$ rake rets_data:seed
 
