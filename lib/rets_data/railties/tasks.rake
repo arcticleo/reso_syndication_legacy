@@ -309,7 +309,7 @@ namespace :rets_data do
   end
 
 	desc "Populate database with seed data."
-	task :seed => [:load_enumerals, :import] do
+	task :seed => [:load_enumerals] do
 	end
   
   

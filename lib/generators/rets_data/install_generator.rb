@@ -14,40 +14,26 @@ module RetsData
       def create_model_file
         template "enumerals.csv", "db/enumerals.csv"
         template "example.xml", "db/example.xml"
-
-        migration_template "create_addresses.rb", "db/migrate/create_addresses.rb"
-        sleep 1
-        migration_template "create_businesses.rb", "db/migrate/create_businesses.rb"
-        sleep 1
-        migration_template "create_enumerals.rb", "db/migrate/create_enumerals.rb"
-        sleep 1
-        migration_template "create_expenses.rb", "db/migrate/create_expenses.rb"
-        sleep 1
-        migration_template "create_listing_media.rb", "db/migrate/create_listing_media.rb"
-        sleep 1
-        migration_template "create_listing_participants.rb", "db/migrate/create_listing_participants.rb"
-        sleep 1
-        migration_template "create_listing_participant_licenses.rb", "db/migrate/create_listing_participant_licenses.rb"
-        sleep 1
-        migration_template "create_listing_providers.rb", "db/migrate/create_listing_providers.rb"
-        sleep 1
-        migration_template "create_listing_services.rb", "db/migrate/create_listing_services.rb"
-        sleep 1
-        migration_template "create_listings.rb", "db/migrate/create_listings.rb"
-        sleep 1
-        migration_template "create_offices.rb", "db/migrate/create_offices.rb"
-        sleep 1
-        migration_template "create_open_houses.rb", "db/migrate/create_open_houses.rb"
-        sleep 1
-        migration_template "create_places.rb", "db/migrate/create_places.rb"
-        sleep 1
-        migration_template "create_rooms.rb", "db/migrate/create_rooms.rb"
-        sleep 1
-        migration_template "create_schools.rb", "db/migrate/create_schools.rb"
-        sleep 1
-        migration_template "create_taxes.rb", "db/migrate/create_taxes.rb"
-        sleep 1
-        migration_template "create_join_tables.rb", "db/migrate/create_join_tables.rb"
+        %w[addresses 
+           businesses 
+           enumerals 
+           expenses 
+           listing_media 
+           listing_participants 
+           listing_participant_licenses 
+           listing_providers 
+           listing_services
+           listings
+           offices
+           open_houses
+           places
+           rooms
+           schools
+           taxes
+           join_tables].each do |name|
+             migration_template "'create_#{name}.rb', 'db/migrate/create_#{name}.rb'"
+             sleep 1
+           end
       end
 
     end

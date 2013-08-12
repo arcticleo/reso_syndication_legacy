@@ -25,13 +25,22 @@ Run the migrations:
 
     $ rake db:migrate
 
-Finally, populate the database with neccessary seed data and an example listing:
+Populate the database with neccessary seed data:
 
 	$ rake rets_data:seed
 
+Optionally, you might want to populate the database with an example listing:
+
+	$ rake rets_data:import
+
+Alternatively, if you have an XML data file in the RETS syndication format, you can import it by specifying the path to it:
+
+	$ rake rets_data:import[/Users/medlund/Downloads/somefile.xml]
+
+
 ## Usage
 
-Fetch the demo listing:
+Fetch a listing:
 
 	@listing = Listing.first
 
