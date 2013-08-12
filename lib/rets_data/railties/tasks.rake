@@ -236,11 +236,12 @@ namespace :rets_data do
           @listing.taxes << @tax
         end
         p.children.css('Expenses Expense').each do |expense|
-  #        @listing.expenses << Expense.new(
-  #          :expense_category => ExpenseCategory.find_by(:name => expense.at_css('commons|ExpenseCategory').try(:inner_text)),
-  #          :currency_period => CurrencyPeriod.find_by(:name => expense.at_css('commons|ExpenseValue').attributes['currencyPeriod'].try(:value)),
-  #          :expense_value => expense.at_css('commons|ExpenseValue').try(:inner_text)
-  #        )
+          @expense = @listing.expenses.find_or_initialize_by(
+            :expense_category => ExpenseCategory.find_by(:name => expense.at_css('commons|ExpenseCategory').try(:inner_text)),
+            :currency_period => CurrencyPeriod.find_by(:name => expense.at_css('commons|ExpenseValue').attributes['currencyPeriod'].try(:value)),
+            :expense_value => expense.at_css('commons|ExpenseValue').try(:inner_text)
+          )
+          @listing.expenses << @expense
         end
         @enumerals = Enumeral.all
         p.css('ForeclosureStatus').each do |foreclosure_status|
