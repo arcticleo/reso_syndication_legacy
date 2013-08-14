@@ -166,7 +166,6 @@ class Listing < ActiveRecord::Base
     end
     p.css('ListingParticipants Participant').each do |participant|
       @listing_participant = ListingParticipant.find_or_initialize_by(
-  # find_or_create_by
         :participant_key => participant.at_css('ParticipantKey').try(:inner_text),
         :participant_identifier => participant.at_css('ParticipantId').try(:inner_text),
         :first_name => participant.at_css('FirstName').try(:inner_text),
@@ -254,7 +253,7 @@ class Listing < ActiveRecord::Base
       @listing.neighborhoods << @neighborhood
     end
     p.children.css('Photos Photo').each do |photo|
-      @listing_photo = ListingPhoto.find_or_initialize_by(
+      @listing_photo = ListingPhoto.new(
         :media_url => photo.at_css('MediaURL').try(:inner_text), 
         :media_modification_timestamp => photo.at_css('MediaModificationTimestamp').try(:inner_text),
         :media_caption => photo.at_css('MediaCaption').try(:inner_text),
