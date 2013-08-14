@@ -28,13 +28,7 @@ namespace :rets_data do
       incoming_listing_keys << p.children.at_css('ListingKey').try(:inner_text)
       @listing = Listing.find_by(:listing_key => p.children.at_css('ListingKey').try(:inner_text))
       if (@listing.blank? || @listing.modification_timestamp != p.children.at_css('ModificationTimestamp').try(:inner_text))
-        unless @listing.blank?
-          if @listing.modification_timestamp != p.children.at_css('ModificationTimestamp').try(:inner_text)
-            puts "Deleting outdated: #{@listing.listing_key} - #{@listing.listing_title}"
-            @listing.destroy
-          end
-        end
-       if Listing::import_item(p)
+       if Listing::import_or_update_item(p)
          puts "Imported: #{p.children.at_css('ListingKey').try(:inner_text)} - #{p.children.at_css('ListingTitle').try(:inner_text)}"
        else
          puts "FAILED: #{p.children.at_css('ListingKey').try(:inner_text)} - #{p.children.at_css('ListingTitle').try(:inner_text)}"

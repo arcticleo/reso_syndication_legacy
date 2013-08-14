@@ -73,8 +73,9 @@ class Listing < ActiveRecord::Base
     end
   end
     
-  def self.import_item(p)
-    @listing = Listing.new(
+  def self.import_or_update_item(p)
+    @listing = Listing.find_or_initialize_by(:listing_key => p.children.at_css('ListingKey').try(:inner_text))
+    @listing.assign_attributes({
       :list_price => p.children.at_css('ListPrice').try(:inner_text), 
       :list_price_low => p.children.at_css('ListPriceLow').try(:inner_text),
       :listing_url => p.children.at_css('ListingURL').try(:inner_text),
@@ -126,9 +127,10 @@ class Listing < ActiveRecord::Base
       :num_parking_spaces => p.children.at_css('NumParkingSpaces').try(:inner_text), 
       :room_count => p.children.at_css('RoomCount').try(:inner_text), 
       :modification_timestamp => p.children.at_css('ModificationTimestamp').try(:inner_text)
-    )
+    })
+    @listing.addresses.each{|address| address.destroy }
     p.css('/Address').each do |address|
-      @listing.addresses << Address.new(
+      @address = @listing.addresses.find_or_initialize_by(
         :preference_order => address.at_css('commons|preference-order').try(:inner_text),
         :address_preference_order => address.at_css('commons|address-preference-order').try(:inner_text),
         :full_street_address => address.at_css('commons|FullStreetAddress').try(:inner_text),
@@ -138,6 +140,7 @@ class Listing < ActiveRecord::Base
         :postal_code => address.at_css('commons|PostalCode').try(:inner_text),
         :country => address.at_css('commons|Country').try(:inner_text)
       )
+      @listing.addresses << @address
     end
     p.css('Location County').each do |county|
       @listing.county = County.find_or_initialize_by(
@@ -153,6 +156,7 @@ class Listing < ActiveRecord::Base
         :state_or_province => @listing.addresses.first.state_or_province,
         :country => @listing.addresses.first.country
       )
+      @listing.community.schools.each{|school| school.delete }
       p.css('commons|Schools commons|School').each do |school|
         @school = School.find_or_initialize_by(
           :name => school.at_css('commons|Name').try(:inner_text),
@@ -162,9 +166,10 @@ class Listing < ActiveRecord::Base
         @listing.community.schools << @school unless @listing.community.schools.include? @school
       end
     end
+    @listing.listing_participants.each{|lp| lp.delete }
     p.css('ListingParticipants Participant').each do |participant|
-      @listing_participant = ListingParticipant.find_or_initialize_by(
-        :participant_key => participant.at_css('ParticipantKey').try(:inner_text),
+      @listing_participant = ListingParticipant.find_or_initialize_by(:participant_key => participant.at_css('ParticipantKey').try(:inner_text))
+      @listing_participant.assign_attributes({
         :participant_identifier => participant.at_css('ParticipantId').try(:inner_text),
         :first_name => participant.at_css('FirstName').try(:inner_text),
         :last_name => participant.at_css('LastName').try(:inner_text),
@@ -174,8 +179,8 @@ class Listing < ActiveRecord::Base
         :email => participant.at_css('Email').try(:inner_text),
         :fax => participant.at_css('Fax').try(:inner_text),
         :website_url => participant.at_css('WebsiteURL').try(:inner_text)
-      )
-      @listing.listing_participants << @listing_participant
+      })
+      @listing.listing_participants << @listing_participant unless @listing.listing_participants.include? @listing_participant
       participant.css('Licenses License').each do |license|
   #puts license.inspect
   #          @listing_participant.listing_participant_licenses << ListingParticipantLicense.find_or_initialize_by(
@@ -197,7 +202,7 @@ class Listing < ActiveRecord::Base
           :website_url => business.at_css('WebsiteURL').try(:inner_text),
           :logo_url => business.at_css('LogoURL').try(:inner_text)
         )
-        @listing.send(b.pluralize) << @business
+        @listing.send(b.pluralize) << @business unless @listing.send(b.pluralize).include? @business
 
         business.css('Address').each do |address|
           @address = @business.addresses.find_or_initialize_by(
@@ -215,8 +220,9 @@ class Listing < ActiveRecord::Base
       end
     end
     p.css('Offices Office').each do |office|
-      @office = Office.find_or_initialize_by(
-        :office_key => office.at_css('OfficeKey').try(:inner_text),
+      @listing.offices.each{|o| o.delete }
+      @office = Office.find_or_initialize_by(:office_key => office.at_css('OfficeKey').try(:inner_text))
+      @office.assign_attributes({  
         :office_identifier => office.at_css('OfficeId').try(:inner_text),
         :office_code_identifier => office.at_css('OfficeCode OfficeCodeId').try(:inner_text),
         :main_office_identifier => office.at_css('MainOfficeId').try(:inner_text),
@@ -225,7 +231,7 @@ class Listing < ActiveRecord::Base
         :broker_identifier => office.at_css('BrokerId').try(:inner_text),
         :phone_number => office.at_css('PhoneNumber').try(:inner_text),
         :website => office.at_css('Website').try(:inner_text),
-      )
+      })
       @listing.offices <<  @office
       office.css('Address').each do |address|
         @office.addresses.find_or_initialize_by(
@@ -240,6 +246,7 @@ class Listing < ActiveRecord::Base
         )
       end
     end
+    @listing.neighborhoods.each{|neighborhood| neighborhood.delete }
     p.css('Neighborhoods Neighborhood').each do |neighborhood|
       @neighborhood = Neighborhood.find_or_initialize_by(
         :name => neighborhood.at_css('Name').try(:inner_text), 
@@ -248,17 +255,19 @@ class Listing < ActiveRecord::Base
         :state_or_province => @listing.addresses.first.state_or_province,
         :country => @listing.addresses.first.country
       )
-      @listing.neighborhoods << @neighborhood
+      @listing.neighborhoods << @neighborhood unless @listing.neighborhoods.include? @neighborhood
     end
+    @listing.listing_photos.each{|photo| photo.delete }
     p.children.css('Photos Photo').each do |photo|
-      @listing_photo = ListingPhoto.new(
-        :media_url => photo.at_css('MediaURL').try(:inner_text), 
+      @listing_photo = ListingPhoto.find_or_initialize_by(:media_url => photo.at_css('MediaURL').try(:inner_text))
+      @listing_photo.assign_attributes({   
         :media_modification_timestamp => photo.at_css('MediaModificationTimestamp').try(:inner_text),
         :media_caption => photo.at_css('MediaCaption').try(:inner_text),
         :media_description => photo.at_css('MediaDescription').try(:inner_text)
-      )
+      })
       @listing.listing_photos << @listing_photo
     end
+    @listing.open_houses.each{|oh| oh.destroy }
     p.children.css('OpenHouses OpenHouse').each do |oh|
       @listing.open_houses << OpenHouse.new(
         :showing_date => oh.at_css('Date').try(:inner_text), 
@@ -273,7 +282,7 @@ class Listing < ActiveRecord::Base
         :amount => tax.at_css('Amount').try(:inner_text),
         :description => tax.at_css('TaxDescription').try(:inner_text)
       )
-      @listing.taxes << @tax
+      @listing.taxes << @tax unless @listing.taxes.include? @tax
     end
     p.children.css('Expenses Expense').each do |expense|
       @expense = @listing.expenses.find_or_initialize_by(
@@ -281,7 +290,7 @@ class Listing < ActiveRecord::Base
         :currency_period => CurrencyPeriod.find_by(:name => expense.at_css('commons|ExpenseValue').attributes['currencyPeriod'].try(:value)),
         :expense_value => expense.at_css('commons|ExpenseValue').try(:inner_text)
       )
-      @listing.expenses << @expense
+      @listing.expenses << @expense unless @listing.expenses.include? @expense
     end
     @enumerals = Enumeral.all
     p.css('ForeclosureStatus').each do |foreclosure_status|
@@ -289,39 +298,41 @@ class Listing < ActiveRecord::Base
     end
     p.children.css('Appliances Appliance').each do |appliance|
       @appliance = Appliance.find_or_create_by(:name => appliance.try(:inner_text))
-      @listing.appliances << @appliance unless @listing.appliances.map(&:id).include?(@appliance.id)
+      @listing.appliances << @appliance unless @listing.appliances.include? @appliance
     end
     p.children.css('CoolingSystems CoolingSystem').each do |cooling_system|
       @cooling_system = CoolingSystem.find_or_create_by(:name => cooling_system.try(:inner_text))
-      @listing.cooling_systems << @cooling_system unless @listing.cooling_systems.map(&:id).include?(@cooling_system.id)
+      @listing.cooling_systems << @cooling_system unless @listing.cooling_systems.include? @cooling_system
     end
     p.children.css('ExteriorTypes ExteriorType').each do |exterior_type|
       @exterior_type = ExteriorType.find_or_create_by(:name => exterior_type.try(:inner_text))
-      @listing.exterior_types << @exterior_type unless @listing.exterior_types.map(&:id).include?(@exterior_type.id)
+      @listing.exterior_types << @exterior_type unless @listing.exterior_types.include? @exterior_type
     end
     p.children.css('FloorCoverings FloorCovering').each do |flooring_material|
       @flooring_material = FlooringMaterial.find_or_create_by(:name => flooring_material.try(:inner_text))
-      @listing.flooring_materials << @flooring_material unless @listing.flooring_materials.map(&:id).include?(@flooring_material.id)
+      @listing.flooring_materials << @flooring_material unless @listing.flooring_materials.include? @flooring_material
     end
     p.children.css('HeatingFuels HeatingFuel').each do |heating_fuel|
       @heating_fuel = HeatingFuel.find_or_create_by(:name => heating_fuel.try(:inner_text))
-      @listing.heating_fuels << @heating_fuel unless @listing.heating_fuels.map(&:id).include?(@heating_fuel.id)
+      @listing.heating_fuels << @heating_fuel unless @listing.heating_fuels.include? @heating_fuel
     end
     p.children.css('HeatingSystems HeatingSystem').each do |heating_system|
       @heating_system = HeatingSystem.find_or_create_by(:name => heating_system.try(:inner_text))
-      @listing.heating_systems << @heating_system unless @listing.heating_systems.map(&:id).include?(@heating_system.id)
+      @listing.heating_systems << @heating_system unless @listing.heating_systems.include? @heating_system
     end
     p.css('RoofTypes RoofType').each do |roof_material|
       @roof_material = RoofMaterial.find_or_create_by(:name => roof_material.try(:inner_text))
-      @listing.roof_materials << @roof_material unless @listing.roof_materials.map(&:id).include?(@roof_material.id)
+      @listing.roof_materials << @roof_material unless @listing.roof_materials.include? @roof_material
     end
     p.css('ViewTypes ViewType').each do |view_type|
       @view_type = View.find_or_create_by(:name => view_type.try(:inner_text))
-      @listing.views << @view_type unless @listing.views.map(&:id).include?(@view_type.id)
+      @listing.views << @view_type unless @listing.views.include? @view_type
     end
+    @listing.rooms.each{|room| room.destroy }
     p.css('Rooms Room').each do |room|
       @listing.rooms << Room.create(:room_category => RoomCategory.find_or_create_by(:name => room.try(:inner_text)))
     end
+    @listing.home_features.each{|hf| hf.delete }
     %w[HasAttic HasBarbecueArea HasBasement HasCeilingFan HasDeck HasDisabledAccess HasDock HasDoorman HasDoublePaneWindows HasElevator HasFireplace HasGarden HasGatedEntry HasGreenhouse HasHotTubSpa HasJettedBathTub HasLawn HasMotherInLaw HasPatio HasPond HasPool HasPorch HasRVParking HasSauna HasSecuritySystem HasSkylight HasSportsCourt HasSprinklerSystem HasVaultedCeiling HasWetBar Intercom IsCableReady IsNewConstruction IsWaterfront IsWired].each do |feature|
       @listing.home_features << @enumerals.detect{ |e| (e.name == feature && e.type == 'HomeFeature')} if p.at_css(feature).try(:inner_text).try(:downcase).eql? "true"
     end
