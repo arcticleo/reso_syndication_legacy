@@ -63,11 +63,9 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :parking
   accepts_nested_attributes_for :views
   
-  validates_presence_of :list_price
   validates_presence_of :property_type
   validates_presence_of :property_sub_type
   validates_presence_of :listing_category
-  validates_presence_of :listing_status
   
   def destroy_addresses
     self.addresses.each do |address|
