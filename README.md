@@ -123,8 +123,5 @@ Access related models:
 	@listing.views
 	@listing.virtual_tours
 
-## TODO
-
-	Zoning
 
 
