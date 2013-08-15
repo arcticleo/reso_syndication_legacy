@@ -123,6 +123,7 @@ Access related models:
 
 ## License
 
-RETS Data is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+MIT License. Copyright 2013 Michael Edlund, medlund@mac.com.
+
   
 
