@@ -74,59 +74,59 @@ class Listing < ActiveRecord::Base
   end
     
   def self.import_or_update_item(p)
-    @listing = Listing.find_or_initialize_by(:listing_key => p.children.at_css('ListingKey').try(:inner_text))
+    @listing = Listing.find_or_initialize_by(:listing_key => p.at_css('ListingKey').try(:inner_text))
     @listing.assign_attributes({
-      :list_price => p.children.at_css('ListPrice').try(:inner_text), 
-      :list_price_low => p.children.at_css('ListPriceLow').try(:inner_text),
-      :listing_url => p.children.at_css('ListingURL').try(:inner_text),
+      :list_price => p.at_css('ListPrice').try(:inner_text), 
+      :list_price_low => p.at_css('ListPriceLow').try(:inner_text),
+      :listing_url => p.at_css('ListingURL').try(:inner_text),
+      :lead_routing_email => p.at_css('LeadRoutingEmail').try(:inner_text),
+      :bedrooms => p.at_css('Bedrooms').try(:inner_text),
+      :bathrooms => p.at_css('Bathrooms').try(:inner_text),
+      :property_type => PropertyType.find_by_name(p.at_css('PropertyType').try(:inner_text)), 
+      :property_sub_type => PropertySubType.find_by_name(p.at_css('PropertySubType').try(:inner_text)), 
+      :listing_key => p.at_css('ListingKey').try(:inner_text),
+      :listing_category => ListingCategory.find_by_name(p.at_css('ListingCategory').try(:inner_text)), 
+      :listing_status => ListingStatus.find_by_name(p.at_css('ListingStatus').try(:inner_text)),
       :listing_provider => ListingProvider.find_or_initialize_by(
-        :name => p.children.at_css('ProviderName').try(:inner_text), 
-        :url => p.children.at_css('ProviderURL').try(:inner_text), 
-        :source_provider_category => SourceProviderCategory.find_by_name(p.children.at_css('ProviderCategory').try(:inner_text))
+        :name => p.at_css('ProviderName').try(:inner_text), 
+        :url => p.at_css('ProviderURL').try(:inner_text), 
+        :source_provider_category => SourceProviderCategory.find_by_name(p.at_css('ProviderCategory').try(:inner_text))
       ),
-      :lead_routing_email => p.children.at_css('LeadRoutingEmail').try(:inner_text),
-      :bedrooms => p.children.at_css('Bedrooms').try(:inner_text),
-      :bathrooms => p.children.at_css('Bathrooms').try(:inner_text),
-      :property_type => PropertyType.find_by_name(p.children.at_css('PropertyType').try(:inner_text)), 
-      :property_sub_type => PropertySubType.find_by_name(p.children.at_css('PropertySubType').try(:inner_text)), 
-      :listing_key => p.children.at_css('ListingKey').try(:inner_text),
-      :listing_category => ListingCategory.find_by_name(p.children.at_css('ListingCategory').try(:inner_text)), 
-      :listing_status => ListingStatus.find_by_name(p.children.at_css('ListingStatus').try(:inner_text)),
+      :listing_service => ListingService.find_or_initialize_by(
+        :identifier => p.at_css('MlsId').try(:inner_text),
+        :name => p.at_css('MlsName').try(:inner_text)
+      ),
       :permit_address_on_internet => p.at_css("commons|PermitAddressOnInternet").try(:inner_text),
       :vow_address_display => p.at_css("commons|VOWAddressDisplay").try(:inner_text),
       :vow_automated_valuation_display => p.at_css("commons|VOWAutomatedValuationDisplay").try(:inner_text),
       :vow_consumer_comment => p.at_css("commons|VOWConsumerComment").try(:inner_text),
-      :disclose_address => p.children.at_css('DiscloseAddress').try(:inner_text),
-      :short_sale => p.children.at_css('ShortSale').try(:inner_text),
-      :listing_description => p.children.at_css('ListingDescription').try(:inner_text),
-      :listing_service => ListingService.find_or_initialize_by(
-        :identifier => p.children.at_css('MlsId').try(:inner_text),
-        :name => p.children.at_css('MlsName').try(:inner_text)
-      ),
-      :listing_service_identifier => p.children.at_css('MlsNumber').try(:inner_text),
-      :living_area => p.children.at_css('LivingArea').try(:inner_text),
-      :lot_size => p.children.at_css('LotSize').try(:inner_text),
-      :year_built => p.children.at_css('YearBuilt').try(:inner_text),
-      :year_updated => p.children.at_css('YearUpdated').try(:inner_text), 
-      :listing_date => p.children.at_css('ListingDate').try(:inner_text),
-      :listing_title => p.children.at_css('ListingTitle').try(:inner_text),
-      :full_bathrooms => p.children.at_css('FullBathrooms').try(:inner_text),
-      :three_quarter_bathrooms => p.children.at_css('ThreeQuarterBathrooms').try(:inner_text),
-      :half_bathrooms => p.children.at_css('HalfBathrooms').try(:inner_text),
-      :one_quarter_bathrooms => p.children.at_css('OneQuarterBathrooms').try(:inner_text),
-      :latitude => p.children.at_css('Latitude').try(:inner_text),
-      :longitude => p.children.at_css('Longitude').try(:inner_text),
-      :elevation => p.children.at_css('Elevation').try(:inner_text),
-      :directions => p.children.at_css('Directions').try(:inner_text),
-      :geocode_options => p.children.at_css('GeocodeOptions').try(:inner_text),
-      :parcel_info => p.children.at_css('ParcelId').try(:inner_text),
-      :building_unit_count => p.children.at_css('BuildingUnitCount').try(:inner_text),
-      :condo_floor_num => p.children.at_css('CondoFloorNum').try(:inner_text),
-      :legal_description => p.children.at_css('LegalDescription').try(:inner_text),
-      :num_floors => p.children.at_css('NumFloors').try(:inner_text), 
-      :num_parking_spaces => p.children.at_css('NumParkingSpaces').try(:inner_text), 
-      :room_count => p.children.at_css('RoomCount').try(:inner_text), 
-      :modification_timestamp => p.children.at_css('ModificationTimestamp').try(:inner_text)
+      :disclose_address => p.at_css('DiscloseAddress').try(:inner_text),
+      :short_sale => p.at_css('ShortSale').try(:inner_text),
+      :listing_description => p.at_css('ListingDescription').try(:inner_text),
+      :listing_service_identifier => p.at_css('MlsNumber').try(:inner_text),
+      :living_area => p.at_css('LivingArea').try(:inner_text),
+      :lot_size => p.at_css('LotSize').try(:inner_text),
+      :year_built => p.at_css('YearBuilt').try(:inner_text),
+      :year_updated => p.at_css('YearUpdated').try(:inner_text), 
+      :listing_date => p.at_css('ListingDate').try(:inner_text),
+      :listing_title => p.at_css('ListingTitle').try(:inner_text),
+      :full_bathrooms => p.at_css('FullBathrooms').try(:inner_text),
+      :three_quarter_bathrooms => p.at_css('ThreeQuarterBathrooms').try(:inner_text),
+      :half_bathrooms => p.at_css('HalfBathrooms').try(:inner_text),
+      :one_quarter_bathrooms => p.at_css('OneQuarterBathrooms').try(:inner_text),
+      :latitude => p.at_css('Latitude').try(:inner_text),
+      :longitude => p.at_css('Longitude').try(:inner_text),
+      :elevation => p.at_css('Elevation').try(:inner_text),
+      :directions => p.at_css('Directions').try(:inner_text),
+      :geocode_options => p.at_css('GeocodeOptions').try(:inner_text),
+      :parcel_info => p.at_css('ParcelId').try(:inner_text),
+      :building_unit_count => p.at_css('BuildingUnitCount').try(:inner_text),
+      :condo_floor_num => p.at_css('CondoFloorNum').try(:inner_text),
+      :legal_description => p.at_css('LegalDescription').try(:inner_text),
+      :num_floors => p.at_css('NumFloors').try(:inner_text), 
+      :num_parking_spaces => p.at_css('NumParkingSpaces').try(:inner_text), 
+      :room_count => p.at_css('RoomCount').try(:inner_text), 
+      :modification_timestamp => p.at_css('ModificationTimestamp').try(:inner_text)
     })
     @listing.addresses.each{|address| address.destroy }
     p.css('/Address').each do |address|
@@ -140,7 +140,7 @@ class Listing < ActiveRecord::Base
         :postal_code => address.at_css('commons|PostalCode').try(:inner_text),
         :country => address.at_css('commons|Country').try(:inner_text)
       )
-      @listing.addresses << @address
+      @listing.addresses << @address unless @listing.addresses.include? @address
     end
     p.css('Location County').each do |county|
       @listing.county = County.find_or_initialize_by(
@@ -258,7 +258,7 @@ class Listing < ActiveRecord::Base
       @listing.neighborhoods << @neighborhood unless @listing.neighborhoods.include? @neighborhood
     end
     @listing.listing_photos.each{|photo| photo.delete }
-    p.children.css('Photos Photo').each do |photo|
+    p.css('Photos Photo').each do |photo|
       @listing_photo = ListingPhoto.find_or_initialize_by(:media_url => photo.at_css('MediaURL').try(:inner_text))
       @listing_photo.assign_attributes({   
         :media_modification_timestamp => photo.at_css('MediaModificationTimestamp').try(:inner_text),
@@ -268,7 +268,7 @@ class Listing < ActiveRecord::Base
       @listing.listing_photos << @listing_photo
     end
     @listing.open_houses.each{|oh| oh.destroy }
-    p.children.css('OpenHouses OpenHouse').each do |oh|
+    p.css('OpenHouses OpenHouse').each do |oh|
       @listing.open_houses << OpenHouse.new(
         :showing_date => oh.at_css('Date').try(:inner_text), 
         :start_time => oh.at_css('StartTime').try(:inner_text),
@@ -276,7 +276,7 @@ class Listing < ActiveRecord::Base
         :description => oh.at_css('Description').try(:inner_text)
       )
     end
-    p.children.css('Taxes Tax').each do |tax|
+    p.css('Taxes Tax').each do |tax|
       @tax = @listing.taxes.find_or_initialize_by(
         :year => tax.at_css('Year').try(:inner_text), 
         :amount => tax.at_css('Amount').try(:inner_text),
@@ -284,7 +284,7 @@ class Listing < ActiveRecord::Base
       )
       @listing.taxes << @tax unless @listing.taxes.include? @tax
     end
-    p.children.css('Expenses Expense').each do |expense|
+    p.css('Expenses Expense').each do |expense|
       @expense = @listing.expenses.find_or_initialize_by(
         :expense_category => ExpenseCategory.find_by(:name => expense.at_css('commons|ExpenseCategory').try(:inner_text)),
         :currency_period => CurrencyPeriod.find_by(:name => expense.at_css('commons|ExpenseValue').attributes['currencyPeriod'].try(:value)),
@@ -296,27 +296,27 @@ class Listing < ActiveRecord::Base
     p.css('ForeclosureStatus').each do |foreclosure_status|
       @listing.foreclosure_status = ForeclosureStatus.find_or_create_by(:name => foreclosure_status.try(:inner_text))
     end
-    p.children.css('Appliances Appliance').each do |appliance|
+    p.css('Appliances Appliance').each do |appliance|
       @appliance = Appliance.find_or_create_by(:name => appliance.try(:inner_text))
       @listing.appliances << @appliance unless @listing.appliances.include? @appliance
     end
-    p.children.css('CoolingSystems CoolingSystem').each do |cooling_system|
+    p.css('CoolingSystems CoolingSystem').each do |cooling_system|
       @cooling_system = CoolingSystem.find_or_create_by(:name => cooling_system.try(:inner_text))
       @listing.cooling_systems << @cooling_system unless @listing.cooling_systems.include? @cooling_system
     end
-    p.children.css('ExteriorTypes ExteriorType').each do |exterior_type|
+    p.css('ExteriorTypes ExteriorType').each do |exterior_type|
       @exterior_type = ExteriorType.find_or_create_by(:name => exterior_type.try(:inner_text))
       @listing.exterior_types << @exterior_type unless @listing.exterior_types.include? @exterior_type
     end
-    p.children.css('FloorCoverings FloorCovering').each do |flooring_material|
+    p.css('FloorCoverings FloorCovering').each do |flooring_material|
       @flooring_material = FlooringMaterial.find_or_create_by(:name => flooring_material.try(:inner_text))
       @listing.flooring_materials << @flooring_material unless @listing.flooring_materials.include? @flooring_material
     end
-    p.children.css('HeatingFuels HeatingFuel').each do |heating_fuel|
+    p.css('HeatingFuels HeatingFuel').each do |heating_fuel|
       @heating_fuel = HeatingFuel.find_or_create_by(:name => heating_fuel.try(:inner_text))
       @listing.heating_fuels << @heating_fuel unless @listing.heating_fuels.include? @heating_fuel
     end
-    p.children.css('HeatingSystems HeatingSystem').each do |heating_system|
+    p.css('HeatingSystems HeatingSystem').each do |heating_system|
       @heating_system = HeatingSystem.find_or_create_by(:name => heating_system.try(:inner_text))
       @listing.heating_systems << @heating_system unless @listing.heating_systems.include? @heating_system
     end
