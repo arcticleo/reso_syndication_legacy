@@ -1,8 +1,8 @@
 class CreateListingParticipants < ActiveRecord::Migration
   def change
-    create_table :listing_participants do |t|
-      t.string :participant_key, :null => false
-      t.string :participant_identifier, :null => false
+    create_table :listing_participants, :options => 'DEFAULT CHARSET=utf8' do |t|
+      t.string :participant_key
+      t.string :participant_identifier
       t.string :first_name
       t.string :last_name
       t.string :role
@@ -15,5 +15,7 @@ class CreateListingParticipants < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :listing_participants, :participant_key
+    add_index :listing_participants, :participant_identifier
   end
 end

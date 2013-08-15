@@ -1,6 +1,6 @@
 class CreateTaxes < ActiveRecord::Migration
   def change
-    create_table :taxes do |t|
+    create_table :taxes, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.integer :year
       t.decimal :amount, :null => false
       t.string :description

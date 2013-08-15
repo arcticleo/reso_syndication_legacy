@@ -1,6 +1,6 @@
 class CreateListings < ActiveRecord::Migration
   def change
-    create_table :listings do |t|
+    create_table :listings, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.integer :list_price, :limit => 8
       t.integer :list_price_low, :limit => 8
       t.string :listing_url
@@ -21,7 +21,7 @@ class CreateListings < ActiveRecord::Migration
       t.boolean :short_sale
       t.text :listing_description
       t.references :listing_service, index: true
-      t.integer :listing_service_identifier
+      t.string :listing_service_identifier
       t.integer :living_area
       t.float :lot_size
       t.string :lot_size_unit
@@ -56,6 +56,8 @@ class CreateListings < ActiveRecord::Migration
       t.timestamps
     end
     add_index :listings, :list_price
+    add_index :listings, :listing_key
+    add_index :listings, :listing_service_identifier
     add_index :listings, :bedrooms
     add_index :listings, :bathrooms
     add_index :listings, :living_area

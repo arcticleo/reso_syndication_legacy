@@ -1,6 +1,6 @@
 class CreateListingParticipantLicenses < ActiveRecord::Migration
   def change
-    create_table :listing_participant_licenses do |t|
+    create_table :listing_participant_licenses, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.references :license_category, index: true, :null => false
       t.string :license_number
       t.string :jurisdiction

@@ -1,6 +1,6 @@
 class CreatePlaces < ActiveRecord::Migration
   def change
-    create_table :places do |t|
+    create_table :places, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.string :name, :null => false
       t.string :city
       t.string :state_or_province

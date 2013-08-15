@@ -1,6 +1,6 @@
 class CreateListingMedia < ActiveRecord::Migration
   def change
-    create_table :listing_media do |t|
+    create_table :listing_media, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.string :media_url, :null => false
       t.string :media_caption
       t.text :media_description
@@ -11,5 +11,6 @@ class CreateListingMedia < ActiveRecord::Migration
       t.timestamps
     end
     add_index :listing_media, :type
+    add_index :listing_media, :media_url
   end
 end
