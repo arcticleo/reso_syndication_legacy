@@ -292,7 +292,6 @@ class Listing < ActiveRecord::Base
       )
       @listing.expenses << @expense unless @listing.expenses.include? @expense
     end
-    @enumerals = Enumeral.all
     p.css('ForeclosureStatus').each do |foreclosure_status|
       @listing.foreclosure_status = ForeclosureStatus.find_or_create_by(:name => foreclosure_status.try(:inner_text))
     end
@@ -332,6 +331,7 @@ class Listing < ActiveRecord::Base
     p.css('Rooms Room').each do |room|
       @listing.rooms << Room.create(:room_category => RoomCategory.find_or_create_by(:name => room.try(:inner_text)))
     end
+    @enumerals = Enumeral.all
     @listing.home_features.each{|hf| hf.delete }
     %w[HasAttic HasBarbecueArea HasBasement HasCeilingFan HasDeck HasDisabledAccess HasDock HasDoorman HasDoublePaneWindows HasElevator HasFireplace HasGarden HasGatedEntry HasGreenhouse HasHotTubSpa HasJettedBathTub HasLawn HasMotherInLaw HasPatio HasPond HasPool HasPorch HasRVParking HasSauna HasSecuritySystem HasSkylight HasSportsCourt HasSprinklerSystem HasVaultedCeiling HasWetBar Intercom IsCableReady IsNewConstruction IsWaterfront IsWired].each do |feature|
       @listing.home_features << @enumerals.detect{ |e| (e.name == feature && e.type == 'HomeFeature')} if p.at_css(feature).try(:inner_text).try(:downcase).eql? "true"
