@@ -1,6 +1,6 @@
-class CreateOffices < ActiveRecord::Migration
+class CreateListingOffices < ActiveRecord::Migration
   def change
-    create_table :offices, :options => 'DEFAULT CHARSET=utf8' do |t|
+    create_table :listing_offices, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.string :office_key, :null => false
       t.string :office_identifier, :null => false
       t.string :level
@@ -16,10 +16,10 @@ class CreateOffices < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :offices, :office_key
-    add_index :offices, :office_identifier
-    add_index :offices, :office_code_identifier
-    add_index :offices, :broker_identifier
-    add_index :offices, :main_office_identifier
+    add_index :listing_offices, :office_key
+    add_index :listing_offices, :office_identifier
+    add_index :listing_offices, :office_code_identifier
+    add_index :listing_offices, :broker_identifier
+    add_index :listing_offices, :main_office_identifier
   end
 end

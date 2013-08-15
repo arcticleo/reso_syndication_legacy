@@ -22,9 +22,9 @@ module RetsData
            listing_participants 
            listing_participant_licenses 
            listing_providers 
+           listing_offices
            listing_services
            listings
-           offices
            open_houses
            places
            rooms

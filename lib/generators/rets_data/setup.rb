@@ -12,7 +12,6 @@ class RetsData < Rails::Generators::Base
   end
 
   def create_model_file
-#    template "comment.rb", "app/models/comment.rb"
     migration_template "create_addresses.rb", "db/migrate/create_addresses.rb"
     migration_template "create_businesses.rb", "db/migrate/create_businesses.rb"
     migration_template "create_enumerals.rb", "db/migrate/create_enumerals.rb"
@@ -21,9 +20,9 @@ class RetsData < Rails::Generators::Base
     migration_template "create_listing_participants.rb", "db/migrate/create_listing_participants.rb"
     migration_template "create_listing_participant_licenses.rb", "db/migrate/create_listing_participant_licenses.rb"
     migration_template "create_listing_providers.rb", "db/migrate/create_listing_providers.rb"
+    migration_template "create_listing_offices.rb", "db/migrate/create_listing_offices.rb"
     migration_template "create_listing_services.rb", "db/migrate/create_listing_services.rb"
     migration_template "create_listings.rb", "db/migrate/create_listings.rb"
-    migration_template "create_offices.rb", "db/migrate/create_offices.rb"
     migration_template "create_open_houses.rb", "db/migrate/create_open_houses.rb"
     migration_template "create_places.rb", "db/migrate/create_places.rb"
     migration_template "create_rooms.rb", "db/migrate/create_rooms.rb"

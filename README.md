@@ -1,7 +1,5 @@
 # RetsData
 
-Michael Edlund, 2013
-
 The rets_data gem provides models and data import based on the National Association of REALTORS(R) RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. 
 
 Read more here:
@@ -107,12 +105,12 @@ Access related models:
 	@listing.listing_category
 	@listing.listing_participants
 	@listing.listing_photos
+	@listing.listing_offices
 	@listing.listing_provider
 	@listing.listing_service
 	@listing.listing_status
 	@listing.listing_videos
 	@listing.neighborhoods
-	@listing.offices
 	@listing.open_houses
 	@listing.parking
 	@listing.property_sub_type

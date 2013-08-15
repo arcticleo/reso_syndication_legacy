@@ -30,7 +30,7 @@ class Listing < ActiveRecord::Base
   
   has_and_belongs_to_many :addresses
   has_and_belongs_to_many :listing_participants
-  has_and_belongs_to_many :offices
+  has_and_belongs_to_many :listing_offices
 
   accepts_nested_attributes_for :addresses, allow_destroy: true
   accepts_nested_attributes_for :listing_participants, allow_destroy: true
@@ -220,8 +220,8 @@ class Listing < ActiveRecord::Base
       end
     end
     p.css('Offices Office').each do |office|
-      @listing.offices.each{|o| o.delete }
-      @office = Office.find_or_initialize_by(:office_key => office.at_css('OfficeKey').try(:inner_text))
+      @listing.listing_offices.each{|o| o.delete }
+      @office = ListingOffice.find_or_initialize_by(:office_key => office.at_css('OfficeKey').try(:inner_text))
       @office.assign_attributes({  
         :office_identifier => office.at_css('OfficeId').try(:inner_text),
         :office_code_identifier => office.at_css('OfficeCode OfficeCodeId').try(:inner_text),
@@ -232,7 +232,7 @@ class Listing < ActiveRecord::Base
         :phone_number => office.at_css('PhoneNumber').try(:inner_text),
         :website => office.at_css('Website').try(:inner_text),
       })
-      @listing.offices <<  @office
+      @listing.listing_offices <<  @office
       office.css('Address').each do |address|
         @office.addresses.find_or_initialize_by(
           :preference_order => address.at_css('commons|preference-order').try(:inner_text),
