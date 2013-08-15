@@ -1,8 +1,8 @@
 # RetsData
 
-rets_data - Michael Edlund, 2013
+Michael Edlund, 2013
 
-The rets_data gem provides models based on the National Association of REALTORS(R) RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. 
+The rets_data gem provides models and data import based on the National Association of REALTORS(R) RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. 
 
 Read more here:
 http://www.reso.org/schemas-for-syndication
@@ -11,9 +11,9 @@ http://www.reso.org/schemas-for-syndication
 
 Add this line to your application's Gemfile:
 
-	gem 'rets_data', :path => "~/Projects/github/rets_data"
+	gem 'rets_data'
 
-And then execute:
+And then install:
 
     $ bundle
 
@@ -29,7 +29,7 @@ Populate the database with necessary seed data:
 
 	$ rake rets_data:seed
 
-Optionally, you might want to populate the database with an example listing:
+You might want to populate the database with an example listing:
 
 	$ rake rets_data:import
 
