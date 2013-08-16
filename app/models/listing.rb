@@ -48,7 +48,7 @@ class Listing < ActiveRecord::Base
   has_and_belongs_to_many :heating_fuels, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :heating_systems, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :home_features, association_foreign_key: "enumeral_id"
-  has_and_belongs_to_many :roof_materials, association_foreign_key: "enumeral_id"
+  has_and_belongs_to_many :roof_types, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :parking, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :views, association_foreign_key: "enumeral_id"
   
@@ -59,7 +59,7 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :heating_fuels
   accepts_nested_attributes_for :heating_systems
   accepts_nested_attributes_for :home_features
-  accepts_nested_attributes_for :roof_materials
+  accepts_nested_attributes_for :roof_types
   accepts_nested_attributes_for :parking
   accepts_nested_attributes_for :views
   
@@ -336,20 +336,13 @@ class Listing < ActiveRecord::Base
       @listing.foreclosure_status = ForeclosureStatus.find_or_create_by(:name => foreclosure_status.try(:inner_text))
     end
 
-    # Appliances, Cooling Systems, Exterior Types, Heating Fuels, Heating System, Floor Coverings
+    # Appliances, Cooling Systems, Exterior Types, Heating Fuels, Heating System, Floor Coverings, Roof Type
 
-    %w[appliance cooling_system exterior_type heating_fuel heating_system floor_covering].each do |feature|
+    %w[appliance cooling_system exterior_type heating_fuel heating_system floor_covering roof_type].each do |feature|
       p.css("#{feature.classify.pluralize} #{feature.classify}").each do |item|
         @item = feature.classify.constantize.find_or_create_by(:name => item.try(:inner_text))
         @listing.send(feature.pluralize) << @item unless @listing.send(feature.pluralize).include? @item
       end
-    end
-
-    # Roof Type
-
-    p.css('RoofTypes RoofType').each do |roof_material|
-      @roof_material = RoofMaterial.find_or_create_by(:name => roof_material.try(:inner_text))
-      @listing.roof_materials << @roof_material unless @listing.roof_materials.include? @roof_material
     end
 
     # Views

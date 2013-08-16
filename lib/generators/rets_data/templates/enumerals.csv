@@ -596,31 +596,31 @@ MultiFamily,PropertyType
 Other,PropertyType
 Rental,PropertyType
 Residential,PropertyType
-Aluminum,RoofMaterial
-Asbestos,RoofMaterial
-Asphalt,RoofMaterial
-Built-up,RoofMaterial
-Clay Tile,RoofMaterial
-Composition Shingle,RoofMaterial
-Concrete Tile,RoofMaterial
-Copper,RoofMaterial
-Corrugated Metal,RoofMaterial
-Green,RoofMaterial
-Masonite or Cement Shake,RoofMaterial
-Membrane,RoofMaterial
-Metal,RoofMaterial
-Other,RoofMaterial
-Slate,RoofMaterial
-Solar Panel,RoofMaterial
-Standing Seam,RoofMaterial
-Steel,RoofMaterial
-Tar and Gravel,RoofMaterial
-Thatched,RoofMaterial
-Tile,RoofMaterial
-Unknown,RoofMaterial
-Urethane,RoofMaterial
-Wood Shake,RoofMaterial
-Wood Shingle,RoofMaterial
+Aluminum,RoofType
+Asbestos,RoofType
+Asphalt,RoofType
+Built-up,RoofType
+Clay Tile,RoofType
+Composition Shingle,RoofType
+Concrete Tile,RoofType
+Copper,RoofType
+Corrugated Metal,RoofType
+Green,RoofType
+Masonite or Cement Shake,RoofType
+Membrane,RoofType
+Metal,RoofType
+Other,RoofType
+Slate,RoofType
+Solar Panel,RoofType
+Standing Seam,RoofType
+Steel,RoofType
+Tar and Gravel,RoofType
+Thatched,RoofType
+Tile,RoofType
+Unknown,RoofType
+Urethane,RoofType
+Wood Shake,RoofType
+Wood Shingle,RoofType
 Atrium,RoomCategory
 Attic-Finished,RoomCategory
 Attic-Unfinished,RoomCategory

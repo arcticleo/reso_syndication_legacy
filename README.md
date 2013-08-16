@@ -115,7 +115,7 @@ Access related models:
 	@listing.parking
 	@listing.property_sub_type
 	@listing.property_type
-	@listing.roof_materials
+	@listing.roof_types
 	@listing.rooms
 	@listing.taxes
 	@listing.views
