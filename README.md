@@ -118,7 +118,7 @@ Access related models:
 	@listing.roof_types
 	@listing.rooms
 	@listing.taxes
-	@listing.views
+	@listing.view_types
 	@listing.virtual_tours
 
 ## License
