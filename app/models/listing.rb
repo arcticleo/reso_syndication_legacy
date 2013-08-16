@@ -74,6 +74,9 @@ class Listing < ActiveRecord::Base
   end
     
   def self.import_or_update_item(p)
+
+    # Listing
+
     @listing = Listing.find_or_initialize_by(:listing_key => p.at_css('ListingKey').try(:inner_text))
     @listing.assign_attributes({
       :list_price => p.at_css('ListPrice').try(:inner_text), 
@@ -128,6 +131,9 @@ class Listing < ActiveRecord::Base
       :room_count => p.at_css('RoomCount').try(:inner_text), 
       :modification_timestamp => p.at_css('ModificationTimestamp').try(:inner_text)
     })
+
+    # Listing Addresses
+
     @listing.addresses.each{|address| address.destroy }
     p.css('/Address').each do |address|
       @address = @listing.addresses.find_or_initialize_by(
@@ -142,6 +148,9 @@ class Listing < ActiveRecord::Base
       )
       @listing.addresses << @address unless @listing.addresses.include? @address
     end
+
+    # County
+
     p.css('Location County').each do |county|
       @listing.county = County.find_or_initialize_by(
         :name => county.try(:inner_text),
@@ -149,6 +158,9 @@ class Listing < ActiveRecord::Base
         :country => @listing.addresses.first.country
       )
     end
+
+    # Communities
+
     p.css('Location Community').each do |community|
       @listing.community = Community.find_or_initialize_by(
         :name => community.at_css('commons|Subdivision').try(:inner_text),
@@ -166,6 +178,9 @@ class Listing < ActiveRecord::Base
         @listing.community.schools << @school unless @listing.community.schools.include? @school
       end
     end
+
+    # Listing Participants
+
     @listing.listing_participants.each{|lp| lp.delete }
     p.css('ListingParticipants Participant').each do |participant|
       @listing_participant = ListingParticipant.find_or_initialize_by(:participant_key => participant.at_css('ParticipantKey').try(:inner_text))
@@ -191,6 +206,9 @@ class Listing < ActiveRecord::Base
   #          )
       end
     end
+
+    # Businesses
+
     %w[brokerage builder franchise].each do |b|
       p.css(b.classify).each do |business|
         @business = b.classify.constantize.find_or_initialize_by(
@@ -219,6 +237,9 @@ class Listing < ActiveRecord::Base
         end
       end
     end
+
+    # Listing Offices
+
     p.css('Offices Office').each do |office|
       @listing.listing_offices.each{|o| o.delete }
       @office = ListingOffice.find_or_initialize_by(:office_key => office.at_css('OfficeKey').try(:inner_text))
@@ -246,6 +267,9 @@ class Listing < ActiveRecord::Base
         )
       end
     end
+
+    # Neighborhoods
+
     @listing.neighborhoods.each{|neighborhood| neighborhood.delete }
     p.css('Neighborhoods Neighborhood').each do |neighborhood|
       @neighborhood = Neighborhood.find_or_initialize_by(
@@ -257,6 +281,9 @@ class Listing < ActiveRecord::Base
       )
       @listing.neighborhoods << @neighborhood unless @listing.neighborhoods.include? @neighborhood
     end
+
+    # Listing Photos
+
     @listing.listing_photos.each{|photo| photo.delete }
     p.css('Photos Photo').each do |photo|
       @listing_photo = ListingPhoto.find_or_initialize_by(:media_url => photo.at_css('MediaURL').try(:inner_text))
@@ -267,6 +294,9 @@ class Listing < ActiveRecord::Base
       })
       @listing.listing_photos << @listing_photo
     end
+
+    # Open Houses
+
     @listing.open_houses.each{|oh| oh.destroy }
     p.css('OpenHouses OpenHouse').each do |oh|
       @listing.open_houses << OpenHouse.new(
@@ -276,6 +306,9 @@ class Listing < ActiveRecord::Base
         :description => oh.at_css('Description').try(:inner_text)
       )
     end
+
+    # Taxes
+
     p.css('Taxes Tax').each do |tax|
       @tax = @listing.taxes.find_or_initialize_by(
         :year => tax.at_css('Year').try(:inner_text), 
@@ -284,57 +317,94 @@ class Listing < ActiveRecord::Base
       )
       @listing.taxes << @tax unless @listing.taxes.include? @tax
     end
+
+    # Expenses
+
+    @listing.expenses.each{|expense| expense.destroy}
     p.css('Expenses Expense').each do |expense|
-      @expense = @listing.expenses.find_or_initialize_by(
+      @expense = @listing.expenses.new(
         :expense_category => ExpenseCategory.find_by(:name => expense.at_css('commons|ExpenseCategory').try(:inner_text)),
         :currency_period => CurrencyPeriod.find_by(:name => expense.at_css('commons|ExpenseValue').attributes['currencyPeriod'].try(:value)),
         :expense_value => expense.at_css('commons|ExpenseValue').try(:inner_text)
       )
       @listing.expenses << @expense unless @listing.expenses.include? @expense
     end
+
+    # Foreclosure Status
+
     p.css('ForeclosureStatus').each do |foreclosure_status|
       @listing.foreclosure_status = ForeclosureStatus.find_or_create_by(:name => foreclosure_status.try(:inner_text))
     end
+
+    # Appliances
+
     p.css('Appliances Appliance').each do |appliance|
       @appliance = Appliance.find_or_create_by(:name => appliance.try(:inner_text))
       @listing.appliances << @appliance unless @listing.appliances.include? @appliance
     end
+
+    # Cooling Systems
+
     p.css('CoolingSystems CoolingSystem').each do |cooling_system|
       @cooling_system = CoolingSystem.find_or_create_by(:name => cooling_system.try(:inner_text))
       @listing.cooling_systems << @cooling_system unless @listing.cooling_systems.include? @cooling_system
     end
+
+    # Exterior Types
+
     p.css('ExteriorTypes ExteriorType').each do |exterior_type|
       @exterior_type = ExteriorType.find_or_create_by(:name => exterior_type.try(:inner_text))
       @listing.exterior_types << @exterior_type unless @listing.exterior_types.include? @exterior_type
     end
+
+    # Floor Coverings
+
     p.css('FloorCoverings FloorCovering').each do |flooring_material|
       @flooring_material = FlooringMaterial.find_or_create_by(:name => flooring_material.try(:inner_text))
       @listing.flooring_materials << @flooring_material unless @listing.flooring_materials.include? @flooring_material
     end
+
+    # Heating Fuels
+
     p.css('HeatingFuels HeatingFuel').each do |heating_fuel|
       @heating_fuel = HeatingFuel.find_or_create_by(:name => heating_fuel.try(:inner_text))
       @listing.heating_fuels << @heating_fuel unless @listing.heating_fuels.include? @heating_fuel
     end
+
+    # Heating System
+
     p.css('HeatingSystems HeatingSystem').each do |heating_system|
       @heating_system = HeatingSystem.find_or_create_by(:name => heating_system.try(:inner_text))
       @listing.heating_systems << @heating_system unless @listing.heating_systems.include? @heating_system
     end
+
+    # Roof Type
+
     p.css('RoofTypes RoofType').each do |roof_material|
       @roof_material = RoofMaterial.find_or_create_by(:name => roof_material.try(:inner_text))
       @listing.roof_materials << @roof_material unless @listing.roof_materials.include? @roof_material
     end
+
+    # Views
+
     p.css('ViewTypes ViewType').each do |view_type|
       @view_type = View.find_or_create_by(:name => view_type.try(:inner_text))
       @listing.views << @view_type unless @listing.views.include? @view_type
     end
+
+    # Rooms
+
     @listing.rooms.each{|room| room.destroy }
     p.css('Rooms Room').each do |room|
       @listing.rooms << Room.create(:room_category => RoomCategory.find_or_create_by(:name => room.try(:inner_text)))
     end
+
+    # Home Features
+
     @enumerals = Enumeral.all
-    @listing.home_features.each{|hf| hf.delete }
     %w[HasAttic HasBarbecueArea HasBasement HasCeilingFan HasDeck HasDisabledAccess HasDock HasDoorman HasDoublePaneWindows HasElevator HasFireplace HasGarden HasGatedEntry HasGreenhouse HasHotTubSpa HasJettedBathTub HasLawn HasMotherInLaw HasPatio HasPond HasPool HasPorch HasRVParking HasSauna HasSecuritySystem HasSkylight HasSportsCourt HasSprinklerSystem HasVaultedCeiling HasWetBar Intercom IsCableReady IsNewConstruction IsWaterfront IsWired].each do |feature|
-      @listing.home_features << @enumerals.detect{ |e| (e.name == feature && e.type == 'HomeFeature')} if p.at_css(feature).try(:inner_text).try(:downcase).eql? "true"
+      @home_feature = @enumerals.detect{ |e| (e.name == feature && e.type == 'HomeFeature')}
+      @listing.home_features << @home_feature if p.at_css(feature).try(:inner_text).try(:downcase).eql? "true" unless @listing.home_features.include? @home_feature
     end
     
     @listing.save! ? true : false
