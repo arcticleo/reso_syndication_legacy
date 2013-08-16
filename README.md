@@ -96,7 +96,7 @@ Access related models:
 	@listing.county
 	@listing.expenses
 	@listing.exterior_types
-	@listing.flooring_materials
+	@listing.floor_coverings
 	@listing.foreclosure_status
 	@listing.franchises
 	@listing.heating_fuels

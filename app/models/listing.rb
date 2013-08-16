@@ -44,7 +44,7 @@ class Listing < ActiveRecord::Base
   has_and_belongs_to_many :appliances, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :cooling_systems, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :exterior_types, association_foreign_key: "enumeral_id"
-  has_and_belongs_to_many :flooring_materials, association_foreign_key: "enumeral_id"
+  has_and_belongs_to_many :floor_coverings, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :heating_fuels, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :heating_systems, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :home_features, association_foreign_key: "enumeral_id"
@@ -55,7 +55,7 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :appliances
   accepts_nested_attributes_for :cooling_systems
   accepts_nested_attributes_for :exterior_types
-  accepts_nested_attributes_for :flooring_materials
+  accepts_nested_attributes_for :floor_coverings
   accepts_nested_attributes_for :heating_fuels
   accepts_nested_attributes_for :heating_systems
   accepts_nested_attributes_for :home_features
@@ -336,20 +336,13 @@ class Listing < ActiveRecord::Base
       @listing.foreclosure_status = ForeclosureStatus.find_or_create_by(:name => foreclosure_status.try(:inner_text))
     end
 
-    # Appliances, Cooling Systems, Exterior Types, Heating Fuels, Heating System
+    # Appliances, Cooling Systems, Exterior Types, Heating Fuels, Heating System, Floor Coverings
 
-    %w[appliance cooling_system exterior_type heating_fuel heating_system].each do |feature|
+    %w[appliance cooling_system exterior_type heating_fuel heating_system floor_covering].each do |feature|
       p.css("#{feature.classify.pluralize} #{feature.classify}").each do |item|
         @item = feature.classify.constantize.find_or_create_by(:name => item.try(:inner_text))
         @listing.send(feature.pluralize) << @item unless @listing.send(feature.pluralize).include? @item
       end
-    end
-
-    # Floor Coverings
-
-    p.css('FloorCoverings FloorCovering').each do |flooring_material|
-      @flooring_material = FlooringMaterial.find_or_create_by(:name => flooring_material.try(:inner_text))
-      @listing.flooring_materials << @flooring_material unless @listing.flooring_materials.include? @flooring_material
     end
 
     # Roof Type

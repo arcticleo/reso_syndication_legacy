@@ -368,40 +368,40 @@ Vinyl Siding,ExteriorType
 Wood,ExteriorType
 Wood Shingle,ExteriorType
 Wood Siding,ExteriorType
-Bamboo,FlooringMaterial
-Brick,FlooringMaterial
-Carpet,FlooringMaterial
-Carpet - FullCarpet - Partial,FlooringMaterial
-Concrete,FlooringMaterial
-Concrete - Bare,FlooringMaterial
-Concrete - Painted,FlooringMaterial
-Cork,FlooringMaterial
-Drainage,FlooringMaterial
-Engineered Wood,FlooringMaterial
-Glass,FlooringMaterial
-Granite,FlooringMaterial
-Hardwood,FlooringMaterial
-Laminate,FlooringMaterial
-Linoleum,FlooringMaterial
-Load Restriction,FlooringMaterial
-Marble,FlooringMaterial
-None,FlooringMaterial
-Other,FlooringMaterial
-Parquet Wood,FlooringMaterial
-Rough-in,FlooringMaterial
-Slate,FlooringMaterial
-Soft Wood,FlooringMaterial
-Solid Wood,FlooringMaterial
-Specialty,FlooringMaterial
-Specialty Concrete,FlooringMaterial
-Tile,FlooringMaterial
-Tile - Ceramic,FlooringMaterial
-Tile - Porcelain,FlooringMaterial
-Tile - Stone,FlooringMaterial
-Tile or Stone,FlooringMaterial
-Unknown,FlooringMaterial
-Vinyl,FlooringMaterial
-Wood,FlooringMaterial
+Bamboo,FloorCovering
+Brick,FloorCovering
+Carpet,FloorCovering
+Carpet - FullCarpet - Partial,FloorCovering
+Concrete,FloorCovering
+Concrete - Bare,FloorCovering
+Concrete - Painted,FloorCovering
+Cork,FloorCovering
+Drainage,FloorCovering
+Engineered Wood,FloorCovering
+Glass,FloorCovering
+Granite,FloorCovering
+Hardwood,FloorCovering
+Laminate,FloorCovering
+Linoleum,FloorCovering
+Load Restriction,FloorCovering
+Marble,FloorCovering
+None,FloorCovering
+Other,FloorCovering
+Parquet Wood,FloorCovering
+Rough-in,FloorCovering
+Slate,FloorCovering
+Soft Wood,FloorCovering
+Solid Wood,FloorCovering
+Specialty,FloorCovering
+Specialty Concrete,FloorCovering
+Tile,FloorCovering
+Tile - Ceramic,FloorCovering
+Tile - Porcelain,FloorCovering
+Tile - Stone,FloorCovering
+Tile or Stone,FloorCovering
+Unknown,FloorCovering
+Vinyl,FloorCovering
+Wood,FloorCovering
 Foreclosure - Other,ForeclosureStatus
 Lis Pendens (Pre-Foreclosure),ForeclosureStatus
 Notice of Default (Pre-Foreclosure),ForeclosureStatus
