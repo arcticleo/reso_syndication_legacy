@@ -336,25 +336,13 @@ class Listing < ActiveRecord::Base
       @listing.foreclosure_status = ForeclosureStatus.find_or_create_by(:name => foreclosure_status.try(:inner_text))
     end
 
-    # Appliances
+    # Appliances, Cooling Systems, Exterior Types, Heating Fuels, Heating System
 
-    p.css('Appliances Appliance').each do |appliance|
-      @appliance = Appliance.find_or_create_by(:name => appliance.try(:inner_text))
-      @listing.appliances << @appliance unless @listing.appliances.include? @appliance
-    end
-
-    # Cooling Systems
-
-    p.css('CoolingSystems CoolingSystem').each do |cooling_system|
-      @cooling_system = CoolingSystem.find_or_create_by(:name => cooling_system.try(:inner_text))
-      @listing.cooling_systems << @cooling_system unless @listing.cooling_systems.include? @cooling_system
-    end
-
-    # Exterior Types
-
-    p.css('ExteriorTypes ExteriorType').each do |exterior_type|
-      @exterior_type = ExteriorType.find_or_create_by(:name => exterior_type.try(:inner_text))
-      @listing.exterior_types << @exterior_type unless @listing.exterior_types.include? @exterior_type
+    %w[appliance cooling_system exterior_type heating_fuel heating_system].each do |feature|
+      p.css("#{feature.classify.pluralize} #{feature.classify}").each do |item|
+        @item = feature.classify.constantize.find_or_create_by(:name => item.try(:inner_text))
+        @listing.send(feature.pluralize) << @item unless @listing.send(feature.pluralize).include? @item
+      end
     end
 
     # Floor Coverings
@@ -362,20 +350,6 @@ class Listing < ActiveRecord::Base
     p.css('FloorCoverings FloorCovering').each do |flooring_material|
       @flooring_material = FlooringMaterial.find_or_create_by(:name => flooring_material.try(:inner_text))
       @listing.flooring_materials << @flooring_material unless @listing.flooring_materials.include? @flooring_material
-    end
-
-    # Heating Fuels
-
-    p.css('HeatingFuels HeatingFuel').each do |heating_fuel|
-      @heating_fuel = HeatingFuel.find_or_create_by(:name => heating_fuel.try(:inner_text))
-      @listing.heating_fuels << @heating_fuel unless @listing.heating_fuels.include? @heating_fuel
-    end
-
-    # Heating System
-
-    p.css('HeatingSystems HeatingSystem').each do |heating_system|
-      @heating_system = HeatingSystem.find_or_create_by(:name => heating_system.try(:inner_text))
-      @listing.heating_systems << @heating_system unless @listing.heating_systems.include? @heating_system
     end
 
     # Roof Type
@@ -407,7 +381,7 @@ class Listing < ActiveRecord::Base
       @listing.home_features << @home_feature if p.at_css(feature).try(:inner_text).try(:downcase).eql? "true" unless @listing.home_features.include? @home_feature
     end
     
-    @listing.save! ? true : false
+    @listing.save ? true : false
     
   end
   
