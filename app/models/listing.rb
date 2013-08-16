@@ -50,7 +50,7 @@ class Listing < ActiveRecord::Base
   has_and_belongs_to_many :home_features, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :roof_types, association_foreign_key: "enumeral_id"
   has_and_belongs_to_many :parking, association_foreign_key: "enumeral_id"
-  has_and_belongs_to_many :views, association_foreign_key: "enumeral_id"
+  has_and_belongs_to_many :view_types, association_foreign_key: "enumeral_id"
   
   accepts_nested_attributes_for :appliances
   accepts_nested_attributes_for :cooling_systems
@@ -61,7 +61,7 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :home_features
   accepts_nested_attributes_for :roof_types
   accepts_nested_attributes_for :parking
-  accepts_nested_attributes_for :views
+  accepts_nested_attributes_for :view_types
   
   validates_presence_of :property_type
   validates_presence_of :property_sub_type
@@ -132,6 +132,23 @@ class Listing < ActiveRecord::Base
       :modification_timestamp => p.at_css('ModificationTimestamp').try(:inner_text)
     })
 
+    # Appliances, Cooling Systems, Exterior Types, Heating Fuels, Heating System, Floor Coverings, Roof Types, Views
+
+    %w[appliance cooling_system exterior_type heating_fuel heating_system floor_covering roof_type view_type].each do |feature|
+      p.css("#{feature.classify.pluralize} #{feature.classify}").each do |item|
+        @item = feature.classify.constantize.find_or_create_by(:name => item.try(:inner_text))
+        @listing.send(feature.pluralize) << @item unless @listing.send(feature.pluralize).include? @item
+      end
+    end
+
+    # Home Features
+
+    @enumerals = Enumeral.all
+    %w[HasAttic HasBarbecueArea HasBasement HasCeilingFan HasDeck HasDisabledAccess HasDock HasDoorman HasDoublePaneWindows HasElevator HasFireplace HasGarden HasGatedEntry HasGreenhouse HasHotTubSpa HasJettedBathTub HasLawn HasMotherInLaw HasPatio HasPond HasPool HasPorch HasRVParking HasSauna HasSecuritySystem HasSkylight HasSportsCourt HasSprinklerSystem HasVaultedCeiling HasWetBar Intercom IsCableReady IsNewConstruction IsWaterfront IsWired].each do |feature|
+      @home_feature = @enumerals.detect{ |e| (e.name == feature && e.type == 'HomeFeature')}
+      @listing.home_features << @home_feature if p.at_css(feature).try(:inner_text).try(:downcase).eql? "true" unless @listing.home_features.include? @home_feature
+    end
+    
     # Listing Addresses
 
     @listing.addresses.each{|address| address.destroy }
@@ -336,22 +353,6 @@ class Listing < ActiveRecord::Base
       @listing.foreclosure_status = ForeclosureStatus.find_or_create_by(:name => foreclosure_status.try(:inner_text))
     end
 
-    # Appliances, Cooling Systems, Exterior Types, Heating Fuels, Heating System, Floor Coverings, Roof Type
-
-    %w[appliance cooling_system exterior_type heating_fuel heating_system floor_covering roof_type].each do |feature|
-      p.css("#{feature.classify.pluralize} #{feature.classify}").each do |item|
-        @item = feature.classify.constantize.find_or_create_by(:name => item.try(:inner_text))
-        @listing.send(feature.pluralize) << @item unless @listing.send(feature.pluralize).include? @item
-      end
-    end
-
-    # Views
-
-    p.css('ViewTypes ViewType').each do |view_type|
-      @view_type = View.find_or_create_by(:name => view_type.try(:inner_text))
-      @listing.views << @view_type unless @listing.views.include? @view_type
-    end
-
     # Rooms
 
     @listing.rooms.each{|room| room.destroy }
@@ -359,14 +360,6 @@ class Listing < ActiveRecord::Base
       @listing.rooms << Room.create(:room_category => RoomCategory.find_or_create_by(:name => room.try(:inner_text)))
     end
 
-    # Home Features
-
-    @enumerals = Enumeral.all
-    %w[HasAttic HasBarbecueArea HasBasement HasCeilingFan HasDeck HasDisabledAccess HasDock HasDoorman HasDoublePaneWindows HasElevator HasFireplace HasGarden HasGatedEntry HasGreenhouse HasHotTubSpa HasJettedBathTub HasLawn HasMotherInLaw HasPatio HasPond HasPool HasPorch HasRVParking HasSauna HasSecuritySystem HasSkylight HasSportsCourt HasSprinklerSystem HasVaultedCeiling HasWetBar Intercom IsCableReady IsNewConstruction IsWaterfront IsWired].each do |feature|
-      @home_feature = @enumerals.detect{ |e| (e.name == feature && e.type == 'HomeFeature')}
-      @listing.home_features << @home_feature if p.at_css(feature).try(:inner_text).try(:downcase).eql? "true" unless @listing.home_features.include? @home_feature
-    end
-    
     @listing.save ? true : false
     
   end
