@@ -67,6 +67,14 @@ class Listing < ActiveRecord::Base
   validates_presence_of :property_sub_type
   validates_presence_of :listing_category
   
+  def address
+    self.addresses.first
+  end
+  
+  def brokerage
+    self.brokerages.first
+  end
+  
   def destroy_addresses
     self.addresses.each do |address|
       address.destroy
