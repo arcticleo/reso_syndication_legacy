@@ -86,10 +86,10 @@ Access direct attributes:
 
 Access related models:
 
-	@listing.addresses
+	@listing.address
 	@listing.appliances
 	@listing.architectural_style
-	@listing.brokerages
+	@listing.brokerage
 	@listing.builders
 	@listing.community
 	@listing.cooling_systems
