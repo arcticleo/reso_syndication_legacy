@@ -6,4 +6,8 @@ class Business < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :type
 
+  def address
+    self.addresses.first
+  end
+
 end
