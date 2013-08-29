@@ -105,7 +105,7 @@ Access related models:
 	@listing.listing_category
 	@listing.listing_participants
 	@listing.listing_photos
-	@listing.listing_offices
+	@listing.listing_office
 	@listing.listing_provider
 	@listing.listing_service
 	@listing.listing_status
@@ -120,6 +120,12 @@ Access related models:
 	@listing.taxes
 	@listing.view_types
 	@listing.virtual_tours
+
+Other:
+
+  @brokerage.address
+  @builder.address
+  @franchise.address
 
 ## License
 
