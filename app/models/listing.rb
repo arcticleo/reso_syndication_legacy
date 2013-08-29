@@ -75,6 +75,10 @@ class Listing < ActiveRecord::Base
     self.brokerages.first
   end
   
+  def listing_office
+    self.listing_offices.first
+  end
+  
   def destroy_addresses
     self.addresses.each do |address|
       address.destroy
