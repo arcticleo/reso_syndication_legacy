@@ -123,9 +123,9 @@ Access related models:
 
 Other:
 
-  @brokerage.address
-  @builder.address
-  @franchise.address
+	@brokerage.address
+	@builder.address
+	@franchise.address
 
 ## License
 
