@@ -110,6 +110,7 @@ Access related models:
 	@listing.listing_service
 	@listing.listing_status
 	@listing.listing_videos
+	@listing.listing_virtual_tours
 	@listing.neighborhoods
 	@listing.open_houses
 	@listing.parking
@@ -119,7 +120,6 @@ Access related models:
 	@listing.rooms
 	@listing.taxes
 	@listing.view_types
-	@listing.virtual_tours
 
 Other:
 

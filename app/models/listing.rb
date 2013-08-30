@@ -19,8 +19,8 @@ class Listing < ActiveRecord::Base
   has_many :open_houses, :dependent => :destroy
   has_many :rooms, :dependent => :destroy
   has_many :taxes, :dependent => :destroy
-  has_many :listing_photos, :dependent => :destroy
-  has_many :listing_videos, :dependent => :destroy
+  has_many :photos, :dependent => :destroy
+  has_many :videos, :dependent => :destroy
   has_many :virtual_tours, :dependent => :destroy
 
   accepts_nested_attributes_for :expenses, allow_destroy: true
@@ -159,6 +159,27 @@ class Listing < ActiveRecord::Base
     %w[HasAttic HasBarbecueArea HasBasement HasCeilingFan HasDeck HasDisabledAccess HasDock HasDoorman HasDoublePaneWindows HasElevator HasFireplace HasGarden HasGatedEntry HasGreenhouse HasHotTubSpa HasJettedBathTub HasLawn HasMotherInLaw HasPatio HasPond HasPool HasPorch HasRVParking HasSauna HasSecuritySystem HasSkylight HasSportsCourt HasSprinklerSystem HasVaultedCeiling HasWetBar Intercom IsCableReady IsNewConstruction IsWaterfront IsWired].each do |feature|
       @home_feature = @enumerals.detect{ |e| (e.name == feature && e.type == 'HomeFeature')}
       @listing.home_features << @home_feature if p.at_css(feature).try(:inner_text).try(:downcase).eql? "true" unless @listing.home_features.include? @home_feature
+    end
+
+    # Photos, Videos, Virtual Tours
+
+    %w[photo video virtual_tour].each do |media_type|
+      incoming_media_urls = Array.new
+      p.css("#{media_type.classify.pluralize} #{media_type.classify}").each do |item|
+        incoming_media_urls << item.at_css('MediaURL')
+        @item = @listing.send(media_type.pluralize).find_or_initialize_by(:media_url => item.at_css('MediaURL').try(:inner_text))
+        @item.assign_attributes({   
+          :media_modification_timestamp => item.at_css('MediaModificationTimestamp').try(:inner_text),
+          :media_caption => item.at_css('MediaCaption').try(:inner_text),
+          :media_description => item.at_css('MediaDescription').try(:inner_text)
+        })
+        @listing.send(media_type.pluralize) << @item unless @listing.send(media_type.pluralize).include? @item
+      end
+      existing_media_urls = @listing.send(media_type.pluralize).select(:media_url).pluck(:media_url)
+      (existing_media_urls - incoming_media_urls).each do |orphaned_media_url|
+        @item = @listing.send(media_type.pluralize).find_by(:media_url => orphaned_media_url)
+        @item.destroy
+      end
     end
     
     # Listing Addresses
@@ -309,19 +330,6 @@ class Listing < ActiveRecord::Base
         :country => @listing.addresses.first.country
       )
       @listing.neighborhoods << @neighborhood unless @listing.neighborhoods.include? @neighborhood
-    end
-
-    # Listing Photos
-
-    @listing.listing_photos.each{|photo| photo.delete }
-    p.css('Photos Photo').each do |photo|
-      @listing_photo = ListingPhoto.find_or_initialize_by(:media_url => photo.at_css('MediaURL').try(:inner_text))
-      @listing_photo.assign_attributes({   
-        :media_modification_timestamp => photo.at_css('MediaModificationTimestamp').try(:inner_text),
-        :media_caption => photo.at_css('MediaCaption').try(:inner_text),
-        :media_description => photo.at_css('MediaDescription').try(:inner_text)
-      })
-      @listing.listing_photos << @listing_photo
     end
 
     # Open Houses
