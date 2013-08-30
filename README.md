@@ -104,22 +104,22 @@ Access related models:
 	@listing.home_features
 	@listing.listing_category
 	@listing.listing_participants
-	@listing.listing_photos
 	@listing.listing_office
 	@listing.listing_provider
 	@listing.listing_service
 	@listing.listing_status
-	@listing.listing_videos
-	@listing.listing_virtual_tours
 	@listing.neighborhoods
 	@listing.open_houses
 	@listing.parking
+	@listing.photos
 	@listing.property_sub_type
 	@listing.property_type
 	@listing.roof_types
 	@listing.rooms
 	@listing.taxes
+	@listing.videos
 	@listing.view_types
+	@listing.virtual_tours
 
 Other:
 
