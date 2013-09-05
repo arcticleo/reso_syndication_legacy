@@ -12,11 +12,26 @@ namespace :rets_data do
         puts ""
     end
 
+  desc "Validate RETS Syndication data file."
+	task :validate, [:path] => [:environment] do |t, args|
+    require 'nokogiri'
+    require 'open-uri'
+
+    args.with_defaults(:path => "#{Rails.root}/db/example.xml")
+
+    xsd = Nokogiri::XML::Schema(open('http://rets.org/xsd/Syndication/2012-03/Syndication.xsd'))
+    doc = Nokogiri::XML(f = File.open(args.path))
+
+    xsd.validate(doc).each do |error|
+      puts error.message
+    end
+  end
+
 	desc "Populate database with seed data."
 	task :seed => [:load_enumerals] do
 	end
 
-	desc "Import listings in RETS XML format."
+	desc "Import listings in RETS Syndication format."
 	task :import, [:path] => [:environment] do |t, args|
 	  require 'nokogiri'
 	  incoming_listing_keys = Array.new
