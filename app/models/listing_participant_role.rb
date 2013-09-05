@@ -1,2 +1,0 @@
-class ListingParticipantRole < Enumeral
-end

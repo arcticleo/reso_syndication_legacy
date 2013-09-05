@@ -238,7 +238,7 @@ class Listing < ActiveRecord::Base
         :participant_identifier => participant.at_css('ParticipantId').try(:inner_text),
         :first_name => participant.at_css('FirstName').try(:inner_text),
         :last_name => participant.at_css('LastName').try(:inner_text),
-        :role => participant.at_css('Role').try(:inner_text), 
+        :participant_role => ParticipantRole.find_or_initialize_by(:name => participant.at_css('Role').try(:inner_text)), 
         :primary_contact_phone => participant.at_css('PrimaryContactPhone').try(:inner_text),
         :office_phone => participant.at_css('OfficePhone').try(:inner_text),
         :email => participant.at_css('Email').try(:inner_text),

@@ -2,7 +2,7 @@ class CreateListings < ActiveRecord::Migration
   def change
     create_table :listings, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.integer :list_price, :limit => 8
-      t.currency_code :string, :default => "USD"
+      t.string :currency_code, :default => "USD"
       t.integer :list_price_low, :limit => 8
       t.string :listing_url
       t.references :listing_provider, index: true
