@@ -409,6 +409,8 @@ Notice of Foreclosure Sale (Auction),ForeclosureStatus
 Notice of Trustee Sale (Auction),ForeclosureStatus
 Other,ForeclosureStatus
 REO - Bank Owned,ForeclosureStatus
+Female,Gender
+Male,Gender
 Butane Gas,HeatingFuel
 Coal,HeatingFuel
 Electric,HeatingFuel

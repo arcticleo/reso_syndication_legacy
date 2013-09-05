@@ -26,6 +26,7 @@ module RetsData
            listing_services
            listings
            open_houses
+           people
            places
            rooms
            schools
