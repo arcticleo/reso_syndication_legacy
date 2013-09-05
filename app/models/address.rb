@@ -5,6 +5,7 @@ class Address < ActiveRecord::Base
 #  validates_presence_of :full_street_address
 #  validates_presence_of :country
 #
+  belongs_to :address_type
   has_and_belongs_to_many :listings
 
 end

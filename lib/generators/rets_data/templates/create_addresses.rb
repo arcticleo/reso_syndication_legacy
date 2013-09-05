@@ -18,6 +18,7 @@ class CreateAddresses < ActiveRecord::Migration
       t.string :postal_code
       t.string :carrier_route
       t.string :country, :default => "US"
+      t.referencess :address_type
 
       t.timestamps
     end

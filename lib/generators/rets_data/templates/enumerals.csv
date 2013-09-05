@@ -1,4 +1,12 @@
 name,type
+Physical,AddressType
+Display,AddressType
+Mailing,AddressType
+Shipping,AddressType
+Billing,AddressType
+Legal,AddressType
+Tax,AddressType
+Other,AddressType
 A Frame,ArchitecturalStyle
 Art Deco,ArchitecturalStyle
 Bungalow,ArchitecturalStyle
