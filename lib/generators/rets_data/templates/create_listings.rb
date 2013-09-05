@@ -2,6 +2,7 @@ class CreateListings < ActiveRecord::Migration
   def change
     create_table :listings, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.integer :list_price, :limit => 8
+      t.currency_code :string, :default => "USD"
       t.integer :list_price_low, :limit => 8
       t.string :listing_url
       t.references :listing_provider, index: true
@@ -9,8 +10,10 @@ class CreateListings < ActiveRecord::Migration
       t.integer :bedrooms
       t.integer :bathrooms
       t.references :property_type, index: true, :null => false
+      t.string :property_type_description
       t.references :property_sub_type, index: true, :null => false
-      t.string :listing_key
+      t.string :property_sub_type_description
+      t.string :listing_key, :null => false
       t.references :listing_category, index: true, :null => false
       t.references :listing_status, index: true, :null => false
       t.boolean :permit_address_on_internet
@@ -23,9 +26,11 @@ class CreateListings < ActiveRecord::Migration
       t.references :listing_service, index: true
       t.string :listing_service_identifier
       t.integer :living_area
+      t.string :living_area_unit, :default => "SQFT"
       t.float :lot_size
       t.string :lot_size_unit
       t.date :listing_date
+      t.string :tracking_item
       t.text :listing_title
       t.integer :full_bathrooms
       t.integer :three_quarter_bathrooms
@@ -52,6 +57,7 @@ class CreateListings < ActiveRecord::Migration
       t.references :foreclosure_status, index: true
       t.references :architectural_style, index: true
       t.string :modification_timestamp
+      t.string :disclaimer, :default => "Listing information is believed accurate but may contain errors, omissions or changes."
 
       t.timestamps
     end

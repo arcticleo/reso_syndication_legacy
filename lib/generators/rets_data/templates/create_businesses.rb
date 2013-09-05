@@ -8,6 +8,7 @@ class CreateBusinesses < ActiveRecord::Migration
       t.string :email
       t.string :website_url
       t.string :logo_url
+      t.string :business_additional_information
 
       t.timestamps
     end
