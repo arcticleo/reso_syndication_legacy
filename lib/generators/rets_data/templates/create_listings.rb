@@ -37,8 +37,8 @@ class CreateListings < ActiveRecord::Migration
       t.integer :half_bathrooms
       t.integer :one_quarter_bathrooms
       t.integer :partial_bathrooms
-      t.decimal :latitude, :precision => 16, :scale => 6
-      t.decimal :longitude, :precision => 16, :scale => 6
+      t.decimal :latitude, :precision => 10, :scale => 6
+      t.decimal :longitude, :precision => 10, :scale => 6
       t.references :county, index: true
       t.references :community, index: true
       t.text :directions
