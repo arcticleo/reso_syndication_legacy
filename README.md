@@ -103,7 +103,6 @@ Access related models:
 	@listing.heating_systems
 	@listing.home_features
 	@listing.listing_category
-	@listing.listing_participants
 	@listing.listing_office
 	@listing.listing_provider
 	@listing.listing_service
@@ -111,6 +110,7 @@ Access related models:
 	@listing.neighborhoods
 	@listing.open_houses
 	@listing.parking
+	@listing.participants
 	@listing.photos
 	@listing.property_sub_type
 	@listing.property_type

@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = RetsData::VERSION
   spec.authors       = ["Michael Edlund"]
   spec.email         = ["medlund@mac.com"]
-  spec.description   = %q{Provides core real estate listing models based on RETS syndication specification.}
+  spec.description   = %q{RETS syndication specification data models.}
   spec.summary       = %q{Provides core real estate listing models based on RETS syndication specification.}
   spec.homepage      = "http://github.com/arcticleo/rets_data"
   spec.license       = "MIT"

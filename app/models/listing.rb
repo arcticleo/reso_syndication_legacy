@@ -22,6 +22,8 @@ class Listing < ActiveRecord::Base
   has_many :photos, :dependent => :destroy
   has_many :videos, :dependent => :destroy
   has_many :virtual_tours, :dependent => :destroy
+  
+  has_many :people, :through => :participants
 
   accepts_nested_attributes_for :expenses, allow_destroy: true
   accepts_nested_attributes_for :open_houses, allow_destroy: true
@@ -29,11 +31,11 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :taxes, allow_destroy: true
   
   has_and_belongs_to_many :addresses
-  has_and_belongs_to_many :listing_participants
+  has_and_belongs_to_many :participants
   has_and_belongs_to_many :listing_offices
 
   accepts_nested_attributes_for :addresses, allow_destroy: true
-  accepts_nested_attributes_for :listing_participants, allow_destroy: true
+  accepts_nested_attributes_for :participants, allow_destroy: true
 
   has_and_belongs_to_many :brokerages, association_foreign_key: "business_id"
   has_and_belongs_to_many :builders, association_foreign_key: "business_id"
@@ -229,12 +231,12 @@ class Listing < ActiveRecord::Base
       end
     end
 
-    # Listing Participants
+    # Participants
 
-    @listing.listing_participants.each{|lp| lp.delete }
+#    @listing.participants.each{|lp| lp.delete }
     p.css('ListingParticipants Participant').each do |participant|
-      @listing_participant = ListingParticipant.find_or_initialize_by(:participant_key => participant.at_css('ParticipantKey').try(:inner_text))
-      @listing_participant.assign_attributes({
+      @participant = Participant.find_or_initialize_by(:participant_key => participant.at_css('ParticipantKey').try(:inner_text))
+      @participant.assign_attributes({
         :participant_identifier => participant.at_css('ParticipantId').try(:inner_text),
         :first_name => participant.at_css('FirstName').try(:inner_text),
         :last_name => participant.at_css('LastName').try(:inner_text),
@@ -245,7 +247,7 @@ class Listing < ActiveRecord::Base
         :fax => participant.at_css('Fax').try(:inner_text),
         :website_url => participant.at_css('WebsiteURL').try(:inner_text)
       })
-      @listing.listing_participants << @listing_participant unless @listing.listing_participants.include? @listing_participant
+      @listing.participants << @participant unless @listing.participants.include? @participant
       participant.css('Licenses License').each do |license|
   #puts license.inspect
   #          @listing_participant.listing_participant_licenses << ListingParticipantLicense.find_or_initialize_by(

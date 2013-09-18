@@ -1,3 +1,3 @@
 class ParticipantRole < Enumeral
-  has_many :listing_participants
+  has_many :participants
 end
