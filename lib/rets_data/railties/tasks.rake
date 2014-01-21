@@ -44,19 +44,19 @@ namespace :rets_data do
       @listing = Listing.find_by(:listing_key => p.children.at_css('ListingKey').try(:inner_text))
       if (@listing.blank? || @listing.modification_timestamp != p.children.at_css('ModificationTimestamp').try(:inner_text))
        if Listing::import_or_update_item(p)
-         puts "Imported: #{p.children.at_css('ListingKey').try(:inner_text)} - #{p.children.at_css('ListingTitle').try(:inner_text)}"
+         puts "Imported: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:green) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
        else
-         puts "FAILED: #{p.children.at_css('ListingKey').try(:inner_text)} - #{p.children.at_css('ListingTitle').try(:inner_text)}"
+         puts "FAILED: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:red) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
        end
      else
-       puts "Skipping: #{p.children.at_css('ListingKey').try(:inner_text)} - #{p.children.at_css('ListingTitle').try(:inner_text)}"
+       puts "Skipping: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:yellow) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
      end
     end
     
     existing_listing_keys = Listing.all.select(:listing_key).pluck(:listing_key)
     (existing_listing_keys - incoming_listing_keys).each do |orphaned_listing_key|
       @listing = Listing.find_by(:listing_key => orphaned_listing_key)
-      puts "Deleting expired: #{@listing.listing_key} - #{@listing.listing_title}"
+      puts "Deleting expired: #{@listing.listing_key}".color(:red) + " - #{@listing.listing_title}"
       @listing.destroy
     end
 
