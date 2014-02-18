@@ -9,7 +9,7 @@ namespace :rets_data do
       Enumeral.create!(row.to_hash.symbolize_keys)
         puts row.inspect
       end
-      puts ""
+      puts
   end
 
   desc "Validate RETS Syndication data file."
