@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 2.6"
   spec.add_dependency "rails", "~> 4.0.0"
   spec.add_dependency "nokogiri"
-  spec.add_dependency "rainbow"
+  spec.add_dependency "rainbow", "~> 2.0.0"
 end
