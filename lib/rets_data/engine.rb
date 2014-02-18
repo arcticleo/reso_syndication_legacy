@@ -6,8 +6,8 @@ module RetsData
     engine_name :rets_data
 
     rake_tasks do
-        load "rets_data/railties/tasks.rake"
-      end
+      load "rets_data/railties/tasks.rake"
+    end
 
   end
 end
