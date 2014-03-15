@@ -33,8 +33,8 @@ namespace :rets_data do
   desc "Import listings in RETS Syndication format."
   task :import, [:path] => [:environment] do |t, args|
     require 'nokogiri'
-    incoming_listing_keys = Array.new
-    existing_listing_keys = Array.new
+    incoming_listing_keys, existing_listing_keys = [], []
+
     args.with_defaults(:path => "#{Rails.root}/db/example.xml")
     @doc = Nokogiri::XML(f = File.open(args.path))
 
