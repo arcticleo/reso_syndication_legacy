@@ -10,9 +10,9 @@ namespace :rets_data do
     csv.each do |row|
       row = row.to_hash.with_indifferent_access
       Enumeral.create!(row.to_hash.symbolize_keys)
-        puts row.inspect
-      end
-      puts
+      puts row.inspect
+    end
+    puts
   end
 
   desc "Validate RETS Syndication data file."
