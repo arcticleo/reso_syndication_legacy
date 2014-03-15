@@ -1,5 +1,8 @@
 namespace :rets_data do
 
+  desc "Populate database with seed data."
+  task :seed => [:load_enumerals] 
+
   task :load_enumerals => [:environment] do
     require "csv"
     csv_text = File.read("#{Rails.root}/db/enumerals.csv")
@@ -25,10 +28,6 @@ namespace :rets_data do
     xsd.validate(doc).each do |error|
       puts error.message
     end
-  end
-
-  desc "Populate database with seed data."
-  task :seed => [:load_enumerals] do
   end
 
   desc "Import listings in RETS Syndication format."
