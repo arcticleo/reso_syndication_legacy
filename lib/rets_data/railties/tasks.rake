@@ -1,9 +1,9 @@
 namespace :rets_data do
 
   desc "Populate database with seed data."
-  task :seed => [:load_enumerals] 
+  task :seed => :load_enumerals
 
-  task :load_enumerals => [:environment] do
+  task :load_enumerals => :environment do
     require "csv"
     csv_text = File.read("#{Rails.root}/db/enumerals.csv")
     csv = CSV.parse(csv_text, :headers => true)
@@ -16,7 +16,7 @@ namespace :rets_data do
   end
 
   desc "Validate RETS Syndication data file."
-  task :validate, [:path] => [:environment] do |t, args|
+  task :validate, :path => :environment do |t, args|
     require 'nokogiri'
     require 'open-uri'
 
@@ -31,7 +31,7 @@ namespace :rets_data do
   end
 
   desc "Import listings in RETS Syndication format."
-  task :import, [:path] => [:environment] do |t, args|
+  task :import, :path => :environment do |t, args|
     require 'nokogiri'
     incoming_listing_keys, existing_listing_keys = [], []
 
