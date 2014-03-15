@@ -19,6 +19,10 @@ Run the generator to copy migrations to your app:
 
     $ rails g rets_data:install
 
+Create the database:
+
+    $ rake db:create
+
 Run the migrations:
 
     $ rake db:migrate
