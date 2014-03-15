@@ -23,7 +23,7 @@ namespace :rets_data do
     args.with_defaults(:path => "#{Rails.root}/db/example.xml")
 
     xsd = Nokogiri::XML::Schema(open('http://rets.org/xsd/Syndication/2012-03/Syndication.xsd'))
-    doc = Nokogiri::XML(f = File.open(args.path))
+    doc = Nokogiri::XML(File.open(args.path))
 
     xsd.validate(doc).each do |error|
       puts error.message
@@ -36,7 +36,7 @@ namespace :rets_data do
     incoming_listing_keys, existing_listing_keys = [], []
 
     args.with_defaults(:path => "#{Rails.root}/db/example.xml")
-    @doc = Nokogiri::XML(f = File.open(args.path))
+    @doc = Nokogiri::XML(File.open(args.path))
 
     @doc.css('Listing').each do |p|
     incoming_listing_keys << p.children.at_css('ListingKey').try(:inner_text)
