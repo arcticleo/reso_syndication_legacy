@@ -36,9 +36,9 @@ namespace :rets_data do
     incoming_listing_keys, existing_listing_keys = [], []
 
     args.with_defaults(:path => "#{Rails.root}/db/example.xml")
-    @doc = Nokogiri::XML(File.open(args.path))
+    doc = Nokogiri::XML(File.open(args.path))
 
-    @doc.css('Listing').each do |p|
+    doc.css('Listing').each do |p|
     incoming_listing_keys << p.children.at_css('ListingKey').try(:inner_text)
     @listing = Listing.find_by(:listing_key => p.children.at_css('ListingKey').try(:inner_text))
       if (@listing.blank? || @listing.modification_timestamp != p.children.at_css('ModificationTimestamp').try(:inner_text))
