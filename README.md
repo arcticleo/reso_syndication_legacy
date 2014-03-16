@@ -19,6 +19,10 @@ Run the generator to copy migrations to your app:
 
     $ rails g rets_data:install
 
+Create the database:
+
+    $ rake db:create
+
 Run the migrations:
 
     $ rake db:migrate
@@ -31,7 +35,7 @@ You might want to populate the database with an example listing:
 
 	$ rake rets_data:import
 
-Alternatively, if you have an XML data file in the RETS syndication format, you can import it by specifying the path to it:
+Alternatively, if you have an XML data file in the RETS syndication format, you can import it by specifying the absolute path to it:
 
 	$ rake rets_data:import[/Users/medlund/Downloads/somefile.xml]
 
