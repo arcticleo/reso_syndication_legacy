@@ -211,24 +211,24 @@ class Listing < ActiveRecord::Base
       )
     end
 
-    # Communities
+    # Communities and Schools
 
     p.css('Location Community').each do |community|
-      @listing.community = Community.find_or_initialize_by(
+      @community = Community.find_or_create_by(
         :name => community.at_css('commons|Subdivision').try(:inner_text),
         :city => @listing.addresses.first.city,
         :state_or_province => @listing.addresses.first.state_or_province,
         :country => @listing.addresses.first.country
       )
-      @listing.community.schools.each{|school| school.delete }
       p.css('commons|Schools commons|School').each do |school|
-        @school = School.find_or_initialize_by(
+        @school = @community.schools.find_or_create_by(
           :name => school.at_css('commons|Name').try(:inner_text),
           :school_category => SchoolCategory.find_by(:name => school.at_css('commons|SchoolCategory').try(:inner_text)),
           :district => school.at_css('commons|District').try(:inner_text)
         )
-        @listing.community.schools << @school unless @listing.community.schools.include? @school
+        @community.schools << @school unless @listing.community.schools.include? @school
       end
+      @listing.community = @community
     end
 
     # Participants
