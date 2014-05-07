@@ -226,7 +226,7 @@ class Listing < ActiveRecord::Base
           :school_category => SchoolCategory.find_by(:name => school.at_css('commons|SchoolCategory').try(:inner_text)),
           :district => school.at_css('commons|District').try(:inner_text)
         )
-        @community.schools << @school unless @listing.community.schools.include? @school
+        @community.schools << @school unless (@community.schools.include? @school)
       end
       @listing.community = @community
     end
