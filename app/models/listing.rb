@@ -113,10 +113,10 @@ class Listing < ActiveRecord::Base
         :identifier => p.at_css('MlsId').try(:inner_text),
         :name => p.at_css('MlsName').try(:inner_text)
       ),
-      :permit_address_on_internet => p.at_css("commons|PermitAddressOnInternet").try(:inner_text),
-      :vow_address_display => p.at_css("commons|VOWAddressDisplay").try(:inner_text),
-      :vow_automated_valuation_display => p.at_css("commons|VOWAutomatedValuationDisplay").try(:inner_text),
-      :vow_consumer_comment => p.at_css("commons|VOWConsumerComment").try(:inner_text),
+      :permit_address_on_internet => p.at_css("PermitAddressOnInternet").try(:inner_text),
+      :vow_address_display => p.at_css("VOWAddressDisplay").try(:inner_text),
+      :vow_automated_valuation_display => p.at_css("VOWAutomatedValuationDisplay").try(:inner_text),
+      :vow_consumer_comment => p.at_css("VOWConsumerComment").try(:inner_text),
       :disclose_address => p.at_css('DiscloseAddress').try(:inner_text),
       :short_sale => p.at_css('ShortSale').try(:inner_text),
       :listing_description => p.at_css('ListingDescription').try(:inner_text),
@@ -187,16 +187,16 @@ class Listing < ActiveRecord::Base
     # Listing Addresses
 
     @listing.addresses.each{|address| address.destroy }
-    p.css('/Address').each do |address|
+    p.css('Address').each do |address|
       @address = @listing.addresses.find_or_initialize_by(
-        :preference_order => address.at_css('commons|preference-order').try(:inner_text),
-        :address_preference_order => address.at_css('commons|address-preference-order').try(:inner_text),
-        :full_street_address => address.at_css('commons|FullStreetAddress').try(:inner_text),
-        :unit_number => address.at_css('commons|UnitNumber').try(:inner_text),
-        :city => address.at_css('commons|City').try(:inner_text),
-        :state_or_province => address.at_css('commons|StateOrProvince').try(:inner_text),
-        :postal_code => address.at_css('commons|PostalCode').try(:inner_text),
-        :country => address.at_css('commons|Country').try(:inner_text)
+        :preference_order => address.at_css('preference-order').try(:inner_text),
+        :address_preference_order => address.at_css('address-preference-order').try(:inner_text),
+        :full_street_address => address.at_css('FullStreetAddress').try(:inner_text),
+        :unit_number => address.at_css('UnitNumber').try(:inner_text),
+        :city => address.at_css('City').try(:inner_text),
+        :state_or_province => address.at_css('StateOrProvince').try(:inner_text),
+        :postal_code => address.at_css('PostalCode').try(:inner_text),
+        :country => address.at_css('Country').try(:inner_text)
       )
       @listing.addresses << @address unless @listing.addresses.include? @address
     end
@@ -215,16 +215,16 @@ class Listing < ActiveRecord::Base
 
     p.css('Location Community').each do |community|
       @community = Community.find_or_create_by(
-        :name => community.at_css('commons|Subdivision').try(:inner_text),
+        :name => community.at_css('Subdivision').try(:inner_text),
         :city => @listing.addresses.first.city,
         :state_or_province => @listing.addresses.first.state_or_province,
         :country => @listing.addresses.first.country
       )
-      p.css('commons|Schools commons|School').each do |school|
+      p.css('Schools School').each do |school|
         @school = @community.schools.find_or_create_by(
-          :name => school.at_css('commons|Name').try(:inner_text),
-          :school_category => SchoolCategory.find_by(:name => school.at_css('commons|SchoolCategory').try(:inner_text)),
-          :district => school.at_css('commons|District').try(:inner_text)
+          :name => school.at_css('Name').try(:inner_text),
+          :school_category => SchoolCategory.find_by(:name => school.at_css('SchoolCategory').try(:inner_text)),
+          :district => school.at_css('District').try(:inner_text)
         )
         @community.schools << @school unless (@community.schools.include? @school)
       end
@@ -276,14 +276,14 @@ class Listing < ActiveRecord::Base
 
         business.css('Address').each do |address|
           @address = @business.addresses.find_or_initialize_by(
-            :preference_order => address.at_css('commons|preference-order').try(:inner_text),
-            :address_preference_order => address.at_css('commons|address-preference-order').try(:inner_text),
-            :full_street_address => address.at_css('commons|FullStreetAddress').try(:inner_text),
-            :unit_number => address.at_css('commons|UnitNumber').try(:inner_text),
-            :city => address.at_css('commons|City').try(:inner_text),
-            :state_or_province => address.at_css('commons|StateOrProvince').try(:inner_text),
-            :postal_code => address.at_css('commons|PostalCode').try(:inner_text),
-            :country => address.at_css('commons|Country').try(:inner_text)
+            :preference_order => address.at_css('preference-order').try(:inner_text),
+            :address_preference_order => address.at_css('address-preference-order').try(:inner_text),
+            :full_street_address => address.at_css('FullStreetAddress').try(:inner_text),
+            :unit_number => address.at_css('UnitNumber').try(:inner_text),
+            :city => address.at_css('City').try(:inner_text),
+            :state_or_province => address.at_css('StateOrProvince').try(:inner_text),
+            :postal_code => address.at_css('PostalCode').try(:inner_text),
+            :country => address.at_css('Country').try(:inner_text)
           )
           @business.addresses << @address unless @business.addresses.include? @address
         end
@@ -308,14 +308,14 @@ class Listing < ActiveRecord::Base
       @listing.listing_offices <<  @office
       office.css('Address').each do |address|
         @office.addresses.find_or_initialize_by(
-          :preference_order => address.at_css('commons|preference-order').try(:inner_text),
-          :address_preference_order => address.at_css('commons|address-preference-order').try(:inner_text),
-          :full_street_address => address.at_css('commons|FullStreetAddress').try(:inner_text),
-          :unit_number => address.at_css('commons|UnitNumber').try(:inner_text),
-          :city => address.at_css('commons|City').try(:inner_text),
-          :state_or_province => address.at_css('commons|StateOrProvince').try(:inner_text),
-          :postal_code => address.at_css('commons|PostalCode').try(:inner_text),
-          :country => address.at_css('commons|Country').try(:inner_text)
+          :preference_order => address.at_css('preference-order').try(:inner_text),
+          :address_preference_order => address.at_css('address-preference-order').try(:inner_text),
+          :full_street_address => address.at_css('FullStreetAddress').try(:inner_text),
+          :unit_number => address.at_css('UnitNumber').try(:inner_text),
+          :city => address.at_css('City').try(:inner_text),
+          :state_or_province => address.at_css('StateOrProvince').try(:inner_text),
+          :postal_code => address.at_css('PostalCode').try(:inner_text),
+          :country => address.at_css('Country').try(:inner_text)
         )
       end
     end
@@ -362,9 +362,9 @@ class Listing < ActiveRecord::Base
     @listing.expenses.each{|expense| expense.destroy}
     p.css('Expenses Expense').each do |expense|
       @expense = @listing.expenses.new(
-        :expense_category => ExpenseCategory.find_by(:name => expense.at_css('commons|ExpenseCategory').try(:inner_text)),
-        :currency_period => CurrencyPeriod.find_by(:name => expense.at_css('commons|ExpenseValue').attributes['currencyPeriod'].try(:value)),
-        :expense_value => expense.at_css('commons|ExpenseValue').try(:inner_text)
+        :expense_category => ExpenseCategory.find_by(:name => expense.at_css('ExpenseCategory').try(:inner_text)),
+        :currency_period => CurrencyPeriod.find_by(:name => expense.at_css('ExpenseValue').attributes['currencyPeriod'].try(:value)),
+        :expense_value => expense.at_css('ExpenseValue').try(:inner_text)
       )
       @listing.expenses << @expense unless @listing.expenses.include? @expense
     end
