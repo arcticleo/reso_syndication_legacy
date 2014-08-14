@@ -1,10 +1,10 @@
-module RetsData
+module ResoDataDictionary
   module Generators
     class InstallGenerator < Rails::Generators::Base
       include Rails::Generators::Migration
       source_root File.expand_path("../templates", __FILE__)
 
-      desc "Copy RETS Syndication migration files to your application."
+      desc "Copy RESO Data Dictionary migration files to your application."
 
 
       def self.next_migration_number(path)

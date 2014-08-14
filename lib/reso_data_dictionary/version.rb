@@ -1,3 +1,3 @@
-module RetsData
-  VERSION = "0.9.8"
+module ResoDataDictionary
+  VERSION = "0.1.0"
 end

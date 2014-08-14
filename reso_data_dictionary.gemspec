@@ -5,7 +5,7 @@ require 'reso_data_dictionary/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "reso_data_dictionary"
-  spec.version       = RetsData::VERSION
+  spec.version       = ResoDataDictionary::VERSION
   spec.authors       = ["Michael Edlund"]
   spec.email         = ["medlund@mac.com"]
   spec.description   = %q{RESO Data Dictionary data models and import with AWS SQS support.}

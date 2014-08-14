@@ -1,12 +1,12 @@
-require "rets_data"
+require "reso_data_dictionary"
 require "rails"
 
-module RetsData
+module ResoDataDictionary
   class Engine < ::Rails::Engine
-    engine_name :rets_data
+    engine_name :reso_data_dictionary
 
     rake_tasks do
-      load "rets_data/railties/tasks.rake"
+      load "reso_data_dictionary/railties/tasks.rake"
     end
 
   end

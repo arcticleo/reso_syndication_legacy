@@ -1,4 +1,4 @@
-namespace :rets_data do
+namespace :reso do
 
   require 'aws-sdk'
   require 'nokogiri'
@@ -18,7 +18,7 @@ namespace :rets_data do
       puts
   end
 
-  desc "Validate RETS Syndication data file."
+  desc "Validate RETS Syndication Format data file."
   task :validate, [:path] => [:environment] do |t, args|
     require 'nokogiri'
     require 'open-uri'
@@ -57,7 +57,7 @@ namespace :rets_data do
       end
     else
       puts "Could not launch import worker. Make sure AWS_ACCESS_KEY_ID, AWS_SECRET_KEY and aws_queue_name are present.".color(:red)
-      puts "Example: rake rets_data:process_aws_sqs_queue[rets_import_queue]\n".color(:red)
+      puts "Example: rake reso_data_dictionary:process_aws_sqs_queue[some_queue_name]\n".color(:red)
     end
   end
 
