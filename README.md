@@ -1,6 +1,6 @@
 # RETS Data
 
-The rets_data gem provides models and data import based on the National Association of REALTORS(R) RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. Supports AWS SQS (Simple Queue Service) for queuing and parallel processing for fast import of large data sets.
+The reso_data_dictionary gem provides models and data import based on the National Association of REALTORS(R) RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. Supports AWS SQS (Simple Queue Service) for queuing and parallel processing for fast import of large data sets.
 
 Read more here:
 http://www.reso.org/schemas-for-syndication
@@ -9,7 +9,7 @@ http://www.reso.org/schemas-for-syndication
 
 Add this line to your application's Gemfile:
 
-	gem 'rets_data'
+	gem 'reso_data_dictionary'
 
 And then install:
 
@@ -17,7 +17,7 @@ And then install:
 
 Run the generator to copy migrations to your app:
 
-    $ rails g rets_data:install
+    $ rails g reso_data_dictionary:install
 
 Create the database:
 
@@ -29,15 +29,15 @@ Run the migrations:
 
 Populate the database with necessary seed data:
 
-	$ rake rets_data:seed
+	$ rake reso_data_dictionary:seed
 
 You might want to populate the database with an example listing:
 
-	$ rake rets_data:process
+	$ rake reso_data_dictionary:process
 
 Alternatively, if you have an XML data file in the RETS syndication format, you can import it by specifying the absolute path to it:
 
-	$ rake rets_data:process[/Users/medlund/Downloads/somefile.xml]
+	$ rake reso_data_dictionary:process[/Users/medlund/Downloads/somefile.xml]
 
 If your XML data file is large, you can speed up import significantly by setting up an Amazon AWS account and take advantage of AWS SQS (Simple Queue Service) to queue each listing and then launch several import workers that poll the queue and import your listings in parallel.
 
@@ -45,13 +45,13 @@ To do this, first make sure that your application has set values for AWS_ACCESS_
 
 Secondly, add a AWS SQS queue name to the rake task:
 
-	$ rake rets_data:process[/Users/medlund/Downloads/somefile.xml,rets_import_queue]
+	$ rake reso_data_dictionary:process[/Users/medlund/Downloads/somefile.xml,rets_import_queue]
 
 Note the lack of space between path and queue name.
 
 Thirdly, launch as many parallel workers as you see fit:
 
-	$ rake rets_data:process_aws_sqs_queue[rets_import_queue]
+	$ rake reso_data_dictionary:process_aws_sqs_queue[rets_import_queue]
 
 In my own use case with a 350 MB XML data file, import was sped up from ~3.5 hours to ~35 min by using AWS SQS with six import workers.
 
