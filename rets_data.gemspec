@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = RetsData::VERSION
   spec.authors       = ["Michael Edlund"]
   spec.email         = ["medlund@mac.com"]
-  spec.description   = %q{RETS syndication specification data models and import.}
+  spec.description   = %q{RETS syndication specification data models and import with AWS SQS support.}
   spec.summary       = %q{The rets_data gem provides models and data import based on the National Association of REALTORS(R) RETS syndication format for exchange of real estate listing data, as defined by the Real Estate Standards Organization. Supports AWS SQS (Simple Queue Service) for queuing and parallel processing for fast import of large data sets.}
   spec.homepage      = "http://github.com/arcticleo/rets_data"
   spec.license       = "MIT"
