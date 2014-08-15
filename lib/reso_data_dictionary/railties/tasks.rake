@@ -18,21 +18,6 @@ namespace :reso do
       puts
   end
 
-  desc "Validate RETS Syndication Format data file."
-  task :validate, [:path] => [:environment] do |t, args|
-    require 'nokogiri'
-    require 'open-uri'
-
-    args.with_defaults(:path => "#{Rails.root}/db/example.xml")
-
-    xsd = Nokogiri::XML::Schema(open('http://rets.org/xsd/Syndication/2012-03/Syndication.xsd'))
-    doc = Nokogiri::XML(f = File.open(args.path))
-
-    xsd.validate(doc).each do |error|
-      puts error.message
-    end
-  end
-
   desc "Poll and import listings from AWS SQS queue."
   task :process_aws_sqs_queue, [:aws_sqs_queue_name] => [:environment] do |t, args|
     AWS_ACCESS_KEY_ID = nil unless defined? AWS_ACCESS_KEY_ID
