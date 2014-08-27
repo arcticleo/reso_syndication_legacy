@@ -71,7 +71,7 @@ namespace :reso do
         case target
         when "AWS"
           Thread.new{ queue.send_message(p.serialize) }
-          puts "Queued: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:green)
+          puts "AWS Queued: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:green) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
         when "DB"
           if Listing::import_or_update_item(p)
            puts "Imported: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:green) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
