@@ -6,7 +6,5 @@ class CreateEnumerals < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :enumerals, :name
-    add_index :enumerals, :type
   end
 end
