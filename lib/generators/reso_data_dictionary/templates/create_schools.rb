@@ -8,5 +8,6 @@ class CreateSchools < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :schools, [:name, :school_category_id, :district], name: "name_category_district"
   end
 end
