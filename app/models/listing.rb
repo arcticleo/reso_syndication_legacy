@@ -305,7 +305,7 @@ class Listing < ActiveRecord::Base
         :phone_number => office.at_css('PhoneNumber').try(:inner_text),
         :website => office.at_css('Website').try(:inner_text),
       })
-      @listing.listing_offices <<  @office
+      @listing.listing_offices <<  @office unless @listing.listing_office.try(:office_key).eql? @office.office_key
       office.css('Address').each do |address|
         @office.addresses.find_or_initialize_by(
           :preference_order => address.at_css('preference-order').try(:inner_text),
