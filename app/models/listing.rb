@@ -32,7 +32,8 @@ class Listing < ActiveRecord::Base
   
   has_and_belongs_to_many :addresses
   has_and_belongs_to_many :participants
-  has_and_belongs_to_many :listing_offices
+  has_many :listing_offices
+  has_many :offices, :through => :listing_offices
 
   accepts_nested_attributes_for :addresses, allow_destroy: true
   accepts_nested_attributes_for :participants, allow_destroy: true
@@ -78,7 +79,7 @@ class Listing < ActiveRecord::Base
   end
   
   def listing_office
-    self.listing_offices.first
+    self.listing_offices.first.office
   end
   
   def destroy_addresses
@@ -187,19 +188,18 @@ class Listing < ActiveRecord::Base
     # Listing Addresses
 
     @listing.addresses.each{|address| address.destroy }
-    p.css('Address').each do |address|
-      @address = @listing.addresses.find_or_initialize_by(
-        :preference_order => address.at_css('preference-order').try(:inner_text),
-        :address_preference_order => address.at_css('address-preference-order').try(:inner_text),
-        :full_street_address => address.at_css('FullStreetAddress').try(:inner_text),
-        :unit_number => address.at_css('UnitNumber').try(:inner_text),
-        :city => address.at_css('City').try(:inner_text),
-        :state_or_province => address.at_css('StateOrProvince').try(:inner_text),
-        :postal_code => address.at_css('PostalCode').try(:inner_text),
-        :country => address.at_css('Country').try(:inner_text)
-      )
-      @listing.addresses << @address unless @listing.addresses.include? @address
-    end
+    address = p.at_css('Address')
+    @address = @listing.addresses.find_or_initialize_by(
+      :preference_order => address.at_css('preference-order').try(:inner_text),
+      :address_preference_order => address.at_css('address-preference-order').try(:inner_text),
+      :full_street_address => address.at_css('FullStreetAddress').try(:inner_text),
+      :unit_number => address.at_css('UnitNumber').try(:inner_text),
+      :city => address.at_css('City').try(:inner_text),
+      :state_or_province => address.at_css('StateOrProvince').try(:inner_text),
+      :postal_code => address.at_css('PostalCode').try(:inner_text),
+      :country => address.at_css('Country').try(:inner_text)
+    )
+    @listing.addresses << @address unless @listing.addresses.include? @address
 
     # County
 
@@ -294,7 +294,7 @@ class Listing < ActiveRecord::Base
 
     p.css('Offices Office').each do |office|
       @listing.listing_offices.each{|o| o.delete }
-      @office = ListingOffice.find_or_initialize_by(:office_key => office.at_css('OfficeKey').try(:inner_text))
+      @office = Office.find_or_initialize_by(:office_key => office.at_css('OfficeKey').try(:inner_text))
       @office.assign_attributes({  
         :office_identifier => office.at_css('OfficeId').try(:inner_text),
         :office_code_identifier => office.at_css('OfficeCode OfficeCodeId').try(:inner_text),
@@ -305,7 +305,7 @@ class Listing < ActiveRecord::Base
         :phone_number => office.at_css('PhoneNumber').try(:inner_text),
         :website => office.at_css('Website').try(:inner_text),
       })
-      @listing.listing_offices <<  @office unless @listing.listing_office.try(:office_key).eql? @office.office_key
+      @listing.offices <<  @office unless @listing.offices.first.try(:office_key).eql? @office.office_key
       office.css('Address').each do |address|
         @office.addresses.find_or_initialize_by(
           :preference_order => address.at_css('preference-order').try(:inner_text),

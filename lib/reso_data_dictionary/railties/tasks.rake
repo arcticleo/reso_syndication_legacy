@@ -73,8 +73,12 @@ namespace :reso do
           Thread.new{ queue.send_message(p.serialize) }
           puts "AWS Queued: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:green) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
         when "DB"
+          if @listing.blank?
+            puts "Importing: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:green) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
+          else
+            puts "Updating: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:magenta) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
+          end
           if Listing::import_or_update_item(p)
-           puts "Imported: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:green) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
           else
            puts "FAILED: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:red) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
           end

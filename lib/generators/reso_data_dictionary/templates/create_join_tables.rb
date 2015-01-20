@@ -7,8 +7,8 @@ class CreateJoinTables < ActiveRecord::Migration
     add_index(:addresses_listings, [:address_id, :listing_id], :unique => true)
     add_index(:addresses_listings, :listing_id)
 
-    create_join_table :addresses, :listing_offices
-    add_index(:addresses_listing_offices, [:address_id, :listing_office_id], :unique => true, :name => "index_address_offices_address_id_office_id")
+    create_join_table :addresses, :offices
+    add_index(:addresses_offices, [:address_id, :office_id], :unique => true, :name => "index_address_offices_address_id_office_id")
 
     create_join_table :businesses, :listings
     add_index(:businesses_listings, [:business_id, :listing_id], :unique => true)

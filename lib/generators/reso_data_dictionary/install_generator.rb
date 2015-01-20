@@ -24,6 +24,7 @@ module ResoDataDictionary
            listing_services
            listing_offices
            open_houses
+           offices
            people
            participants 
            participant_licenses 

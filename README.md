@@ -128,6 +128,7 @@ Access related models:
 	@listing.listing_service
 	@listing.listing_status
 	@listing.neighborhoods
+        @listing.offices
 	@listing.open_houses
 	@listing.parking
 	@listing.participants

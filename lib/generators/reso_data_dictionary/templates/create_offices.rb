@@ -1,6 +1,6 @@
-class CreateListingOffices < ActiveRecord::Migration
+class CreateOffices < ActiveRecord::Migration
   def change
-    create_table :listing_offices, :options => 'DEFAULT CHARSET=utf8' do |t|
+    create_table :offices, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.string :office_key, :null => false
       t.string :office_identifier, :null => false
       t.string :level
