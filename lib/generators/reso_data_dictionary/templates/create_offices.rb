@@ -22,10 +22,10 @@ class CreateOffices < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :listing_offices, :office_key
-    add_index :listing_offices, :office_identifier
-    add_index :listing_offices, :office_code_identifier
-    add_index :listing_offices, :broker_identifier
-    add_index :listing_offices, :main_office_identifier
+    add_index :offices, :office_key
+    add_index :offices, :office_identifier
+    add_index :offices, :office_code_identifier
+    add_index :offices, :broker_identifier
+    add_index :offices, :main_office_identifier
   end
 end
