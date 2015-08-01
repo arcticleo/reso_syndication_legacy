@@ -63,7 +63,7 @@ class CreateListings < ActiveRecord::Migration
     end
     add_index :listings, :list_price
     add_index :listings, :listing_key
-    add_index :listings, :mls
+    add_index :listings, :mls_number
     add_index :listings, :bedrooms
     add_index :listings, :bathrooms
     add_index :listings, :living_area
