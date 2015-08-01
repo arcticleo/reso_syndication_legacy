@@ -8,7 +8,7 @@ class Listing < ActiveRecord::Base
   belongs_to :property_sub_type
   belongs_to :listing_category
   belongs_to :listing_status
-  belongs_to :listing_service
+  belongs_to :mls
   belongs_to :zoning_type
   belongs_to :architectural_style
   belongs_to :county

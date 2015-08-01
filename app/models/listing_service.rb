@@ -1,4 +1,4 @@
-class ListingService < ActiveRecord::Base
+class Mls < ActiveRecord::Base
 
   has_many :listings
 

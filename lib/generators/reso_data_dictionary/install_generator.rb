@@ -21,8 +21,8 @@ module ResoDataDictionary
            listings
            listing_media 
            listing_providers 
-           listing_services
            listing_offices
+           mls
            open_houses
            offices
            people

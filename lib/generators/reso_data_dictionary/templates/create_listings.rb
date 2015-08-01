@@ -1,7 +1,6 @@
 class CreateListings < ActiveRecord::Migration
   def change
     create_table :listings, options: 'DEFAULT CHARSET=utf8' do |t|
-      #      t.references :listing_provider, index: true
       t.integer    :bathrooms
       t.integer    :bedrooms
       t.string     :currency_code, default: "USD"
@@ -12,20 +11,20 @@ class CreateListings < ActiveRecord::Migration
       t.references :listing_category, index: true, null: false
       t.text       :listing_description
       t.string     :listing_key, null: false
+      t.references :listing_provider, index: true
       t.references :listing_status, index: true, null: false
       t.string     :listing_url
+      t.references :mls, index: true
+      t.string     :mls_number
       t.boolean    :permit_address_on_internet
       t.references :property_sub_type, index: true, null: false
       t.string     :property_sub_type_description
       t.references :property_type, index: true, null: false
       t.string     :property_type_description
-      t.string     :provider_name
       t.boolean    :short_sale
       t.boolean    :vow_address_display
       t.boolean    :vow_automated_valuation_display
       t.boolean    :vow_consumer_comment
-      t.references :listing_service, index: true
-      t.string :listing_service_identifier
       t.integer :living_area
       t.string :living_area_unit, default: "SQFT"
       t.float :lot_size
