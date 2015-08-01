@@ -1,6 +1,8 @@
 class CreateListings < ActiveRecord::Migration
   def change
     create_table :listings, options: 'DEFAULT CHARSET=utf8' do |t|
+      t.references :architecture_style, index: true
+      t.string     :architecture_style_description
       t.integer    :bathrooms
       t.integer    :bedrooms
       t.string     :currency_code, default: "USD"
@@ -55,7 +57,6 @@ class CreateListings < ActiveRecord::Migration
       t.integer :room_count
       t.text :legal_description
       t.references :foreclosure_status, index: true
-      t.references :architecture_style, index: true
       t.string :modification_timestamp
       t.string :disclaimer
 
