@@ -1,28 +1,29 @@
 class CreateListings < ActiveRecord::Migration
   def change
     create_table :listings, options: 'DEFAULT CHARSET=utf8' do |t|
-      t.integer :list_price, limit: 8
-      t.string :currency_code, default: "USD"
-      t.integer :list_price_low, limit: 8
-      t.string :listing_url
-      t.references :listing_provider, index: true
-      t.string :lead_routing_email
-      t.integer :bedrooms
-      t.integer :bathrooms
-      t.references :property_type, index: true, null: false
-      t.string :property_type_description
-      t.references :property_sub_type, index: true, null: false
-      t.string :property_sub_type_description
-      t.string :listing_key, null: false
+      #      t.references :listing_provider, index: true
+      t.integer    :bathrooms
+      t.integer    :bedrooms
+      t.string     :currency_code, default: "USD"
+      t.boolean    :disclose_address
+      t.string     :lead_routing_email
+      t.integer    :list_price, limit: 8
+      t.integer    :list_price_low, limit: 8
       t.references :listing_category, index: true, null: false
+      t.text       :listing_description
+      t.string     :listing_key, null: false
       t.references :listing_status, index: true, null: false
-      t.boolean :permit_address_on_internet
-      t.boolean :vow_address_display
-      t.boolean :vow_automated_valuation_display
-      t.boolean :vow_consumer_comment
-      t.boolean :disclose_address
-      t.boolean :short_sale
-      t.text :listing_description
+      t.string     :listing_url
+      t.boolean    :permit_address_on_internet
+      t.references :property_sub_type, index: true, null: false
+      t.string     :property_sub_type_description
+      t.references :property_type, index: true, null: false
+      t.string     :property_type_description
+      t.string     :provider_name
+      t.boolean    :short_sale
+      t.boolean    :vow_address_display
+      t.boolean    :vow_automated_valuation_display
+      t.boolean    :vow_consumer_comment
       t.references :listing_service, index: true
       t.string :listing_service_identifier
       t.integer :living_area
