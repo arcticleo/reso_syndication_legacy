@@ -7,58 +7,58 @@ Billing,AddressType
 Legal,AddressType
 Tax,AddressType
 Other,AddressType
-A Frame,ArchitecturalStyle
-Art Deco,ArchitecturalStyle
-Bungalow,ArchitecturalStyle
-Cape Cod,ArchitecturalStyle
-Colonial,ArchitecturalStyle
-Contemporary,ArchitecturalStyle
-Conventional,ArchitecturalStyle
-Cottage,ArchitecturalStyle
-Craftsman,ArchitecturalStyle
-Creole,ArchitecturalStyle
-Dome,ArchitecturalStyle
-Dutch Colonial,ArchitecturalStyle
-English,ArchitecturalStyle
-Federal,ArchitecturalStyle
-French,ArchitecturalStyle
-French Provincial,ArchitecturalStyle
-Georgian,ArchitecturalStyle
-Gothic Revival,ArchitecturalStyle
-Greek Revival,ArchitecturalStyle
-High Rise,ArchitecturalStyle
-Historical,ArchitecturalStyle
-International,ArchitecturalStyle
-Italianate,ArchitecturalStyle
-Loft,ArchitecturalStyle
-Mansion,ArchitecturalStyle
-Mediterranean,ArchitecturalStyle
-Modern,ArchitecturalStyle
-Monterey,ArchitecturalStyle
-Mountain,ArchitecturalStyle
-National,ArchitecturalStyle
-Neoclassical,ArchitecturalStyle
-New Traditional,ArchitecturalStyle
-Other,ArchitecturalStyle
-Prairie,ArchitecturalStyle
-Pueblo,ArchitecturalStyle
-Queen Anne,ArchitecturalStyle
-Rambler,ArchitecturalStyle
-Ranch,ArchitecturalStyle
-Regency,ArchitecturalStyle
-Rustic,ArchitecturalStyle
-Saltbox,ArchitecturalStyle
-Santa Fe,ArchitecturalStyle
-Second Empire,ArchitecturalStyle
-Shed,ArchitecturalStyle
-Shingle,ArchitecturalStyle
-Shotgun,ArchitecturalStyle
-Spanish,ArchitecturalStyle
-Spanish Eclectic,ArchitecturalStyle
-Split Level,ArchitecturalStyle
-Stick,ArchitecturalStyle
-Tudor,ArchitecturalStyle
-Victorian,ArchitecturalStyle
+A Frame,ArchitectureStyle
+Art Deco,ArchitectureStyle
+Bungalow,ArchitectureStyle
+Cape Cod,ArchitectureStyle
+Colonial,ArchitectureStyle
+Contemporary,ArchitectureStyle
+Conventional,ArchitectureStyle
+Cottage,ArchitectureStyle
+Craftsman,ArchitectureStyle
+Creole,ArchitectureStyle
+Dome,ArchitectureStyle
+Dutch Colonial,ArchitectureStyle
+English,ArchitectureStyle
+Federal,ArchitectureStyle
+French,ArchitectureStyle
+French Provincial,ArchitectureStyle
+Georgian,ArchitectureStyle
+Gothic Revival,ArchitectureStyle
+Greek Revival,ArchitectureStyle
+High Rise,ArchitectureStyle
+Historical,ArchitectureStyle
+International,ArchitectureStyle
+Italianate,ArchitectureStyle
+Loft,ArchitectureStyle
+Mansion,ArchitectureStyle
+Mediterranean,ArchitectureStyle
+Modern,ArchitectureStyle
+Monterey,ArchitectureStyle
+Mountain,ArchitectureStyle
+National,ArchitectureStyle
+Neoclassical,ArchitectureStyle
+New Traditional,ArchitectureStyle
+Other,ArchitectureStyle
+Prairie,ArchitectureStyle
+Pueblo,ArchitectureStyle
+Queen Anne,ArchitectureStyle
+Rambler,ArchitectureStyle
+Ranch,ArchitectureStyle
+Regency,ArchitectureStyle
+Rustic,ArchitectureStyle
+Saltbox,ArchitectureStyle
+Santa Fe,ArchitectureStyle
+Second Empire,ArchitectureStyle
+Shed,ArchitectureStyle
+Shingle,ArchitectureStyle
+Shotgun,ArchitectureStyle
+Spanish,ArchitectureStyle
+Spanish Eclectic,ArchitectureStyle
+Split Level,ArchitectureStyle
+Stick,ArchitectureStyle
+Tudor,ArchitectureStyle
+Victorian,ArchitectureStyle
 Barbeque or Grill,Appliance
 Coffee System,Appliance
 Coffee System - Rough in,Appliance

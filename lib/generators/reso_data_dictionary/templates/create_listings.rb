@@ -55,7 +55,7 @@ class CreateListings < ActiveRecord::Migration
       t.integer :room_count
       t.text :legal_description
       t.references :foreclosure_status, index: true
-      t.references :architectural_style, index: true
+      t.references :architecture_style, index: true
       t.string :modification_timestamp
       t.string :disclaimer
 

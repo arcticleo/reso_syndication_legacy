@@ -10,7 +10,7 @@ class Listing < ActiveRecord::Base
   belongs_to :listing_status
   belongs_to :mls
   belongs_to :zoning_type
-  belongs_to :architectural_style
+  belongs_to :architecture_style
   belongs_to :county
   belongs_to :community
   belongs_to :foreclosure_status

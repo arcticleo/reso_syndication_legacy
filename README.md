@@ -108,7 +108,7 @@ Access related models:
 
 	@listing.address
 	@listing.appliances
-	@listing.architectural_style
+	@listing.architecture_style
 	@listing.brokerage
 	@listing.builders
 	@listing.community
