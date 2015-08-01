@@ -1,21 +1,21 @@
 class CreateListings < ActiveRecord::Migration
   def change
-    create_table :listings, :options => 'DEFAULT CHARSET=utf8' do |t|
-      t.integer :list_price, :limit => 8
-      t.string :currency_code, :default => "USD"
-      t.integer :list_price_low, :limit => 8
+    create_table :listings, options: 'DEFAULT CHARSET=utf8' do |t|
+      t.integer :list_price, limit: 8
+      t.string :currency_code, default: "USD"
+      t.integer :list_price_low, limit: 8
       t.string :listing_url
       t.references :listing_provider, index: true
       t.string :lead_routing_email
       t.integer :bedrooms
       t.integer :bathrooms
-      t.references :property_type, index: true, :null => false
+      t.references :property_type, index: true, null: false
       t.string :property_type_description
-      t.references :property_sub_type, index: true, :null => false
+      t.references :property_sub_type, index: true, null: false
       t.string :property_sub_type_description
-      t.string :listing_key, :null => false
-      t.references :listing_category, index: true, :null => false
-      t.references :listing_status, index: true, :null => false
+      t.string :listing_key, null: false
+      t.references :listing_category, index: true, null: false
+      t.references :listing_status, index: true, null: false
       t.boolean :permit_address_on_internet
       t.boolean :vow_address_display
       t.boolean :vow_automated_valuation_display
@@ -26,7 +26,7 @@ class CreateListings < ActiveRecord::Migration
       t.references :listing_service, index: true
       t.string :listing_service_identifier
       t.integer :living_area
-      t.string :living_area_unit, :default => "SQFT"
+      t.string :living_area_unit, default: "SQFT"
       t.float :lot_size
       t.string :lot_size_unit
       t.date :listing_date
@@ -37,8 +37,8 @@ class CreateListings < ActiveRecord::Migration
       t.integer :half_bathrooms
       t.integer :one_quarter_bathrooms
       t.integer :partial_bathrooms
-      t.decimal :latitude, :precision => 10, :scale => 6
-      t.decimal :longitude, :precision => 10, :scale => 6
+      t.decimal :latitude, precision: 10, scale: 6
+      t.decimal :longitude, precision: 10, scale: 6
       t.references :county, index: true
       t.references :community, index: true
       t.text :directions
@@ -57,7 +57,7 @@ class CreateListings < ActiveRecord::Migration
       t.references :foreclosure_status, index: true
       t.references :architectural_style, index: true
       t.string :modification_timestamp
-      t.string :disclaimer, :default => "Listing information is believed accurate but may contain errors, omissions or changes."
+      t.string :disclaimer
 
       t.timestamps
     end

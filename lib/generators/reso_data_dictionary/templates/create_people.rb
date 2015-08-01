@@ -10,7 +10,6 @@ class CreatePeople < ActiveRecord::Migration
       t.string :suffix          # Jr., Sr., MD, DDS
       t.date   :birthdate       # 1972-08-20
       t.references :gender      # male
-#      habtm :languages          # en, de, es
       t.string :preferred_locale, :default => "en-US" # en-US
       t.string :modification_timestamp
       t.timestamps
