@@ -23,12 +23,12 @@ class CreateListings < ActiveRecord::Migration
       t.text        :legal_description
       t.integer     :list_price, limit: 8
       t.integer     :list_price_low, limit: 8
-      t.references  :listing_category, index: true, null: false
+      t.references  :listing_category, index: true
       t.date        :listing_date
       t.text        :listing_description
       t.string      :listing_key, null: false
       t.references  :listing_provider, index: true
-      t.references  :listing_status, index: true, null: false
+      t.references  :listing_status, index: true
       t.text        :listing_title
       t.string      :listing_url
       t.integer     :living_area
@@ -45,9 +45,9 @@ class CreateListings < ActiveRecord::Migration
       t.string      :parcel_info
       t.integer     :partial_bathrooms
       t.boolean     :permit_address_on_internet
-      t.references  :property_sub_type, index: true, null: false
+      t.references  :property_sub_type, index: true
       t.string      :property_sub_type_description
-      t.references  :property_type, index: true, null: false
+      t.references  :property_type, index: true
       t.string      :property_type_description
       t.integer     :room_count
       t.boolean     :short_sale
