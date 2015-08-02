@@ -1,6 +1,6 @@
 class CreatePrices < ActiveRecord::Migration
   def change
-    create_table :prices, :options => 'DEFAULT CHARSET=utf8' do |t|
+    create_table :prices, options: 'DEFAULT CHARSET=utf8' do |t|
       t.references  :listing, index: true, null: false
       t.references  :currency_period, index: true
 

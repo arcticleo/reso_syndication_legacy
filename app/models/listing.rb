@@ -15,16 +15,16 @@ class Listing < ActiveRecord::Base
   belongs_to :community
   belongs_to :foreclosure_status
 
-  has_many :alternate_prices, :dependent => :destroy
-  has_many :expenses, :dependent => :destroy
-  has_many :open_houses, :dependent => :destroy
-  has_many :rooms, :dependent => :destroy
-  has_many :taxes, :dependent => :destroy
-  has_many :photos, :dependent => :destroy
-  has_many :videos, :dependent => :destroy
-  has_many :virtual_tours, :dependent => :destroy
+  has_many :alternate_prices, dependent: :destroy
+  has_many :expenses, dependent: :destroy
+  has_many :open_houses, dependent: :destroy
+  has_many :rooms, dependent: :destroy
+  has_many :taxes, dependent: :destroy
+  has_many :photos, dependent: :destroy
+  has_many :videos, dependent: :destroy
+  has_many :virtual_tours, dependent: :destroy
   
-  has_many :people, :through => :participants
+  has_many :people, through: :participants
 
   accepts_nested_attributes_for :alternate_prices, allow_destroy: true
   accepts_nested_attributes_for :expenses, allow_destroy: true
@@ -35,7 +35,7 @@ class Listing < ActiveRecord::Base
   has_and_belongs_to_many :addresses
   has_and_belongs_to_many :participants
   has_many :listing_offices
-  has_many :offices, :through => :listing_offices
+  has_many :offices, through: :listing_offices
 
   accepts_nested_attributes_for :addresses, allow_destroy: true
   accepts_nested_attributes_for :participants, allow_destroy: true
