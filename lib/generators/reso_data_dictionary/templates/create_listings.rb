@@ -32,7 +32,7 @@ class CreateListings < ActiveRecord::Migration
       t.text        :listing_title
       t.string      :listing_url
       t.integer     :living_area
-      t.string      :living_area_unit, default: "SQFT"
+      t.string      :living_area_unit, default: "squareFoot"
       t.decimal     :longitude, precision: 10, scale: 6
       t.float       :lot_size
       t.string      :lot_size_unit
