@@ -9,7 +9,7 @@ class CreateListings < ActiveRecord::Migration
       t.references  :community, index: true
       t.integer     :condo_floor_num
       t.references  :county, index: true
-      t.string      :currency_code, default: "USD"
+      t.string      :currency_code
       t.text        :directions
       t.string      :disclaimer
       t.boolean     :disclose_address
