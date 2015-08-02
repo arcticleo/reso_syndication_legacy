@@ -14,6 +14,7 @@ class Listing < ActiveRecord::Base
   belongs_to :county
   belongs_to :community
   belongs_to :foreclosure_status
+  belongs_to :franchise
 
   has_many :alternate_prices, dependent: :destroy
   has_many :expenses, dependent: :destroy
@@ -42,7 +43,6 @@ class Listing < ActiveRecord::Base
 
   has_and_belongs_to_many :brokerages, association_foreign_key: "business_id"
   has_and_belongs_to_many :builders, association_foreign_key: "business_id"
-  has_and_belongs_to_many :franchises, association_foreign_key: "business_id"
 
   has_and_belongs_to_many :neighborhoods, association_foreign_key: "place_id"
 

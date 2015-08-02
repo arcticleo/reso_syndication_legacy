@@ -15,6 +15,7 @@ class CreateListings < ActiveRecord::Migration
       t.boolean     :disclose_address
       t.string      :elevation
       t.references  :foreclosure_status, index: true
+      t.references  :franchise, index: true
       t.integer     :full_bathrooms
       t.string      :geocode_options
       t.integer     :half_bathrooms
