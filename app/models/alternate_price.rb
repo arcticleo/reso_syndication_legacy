@@ -1,0 +1,2 @@
+class AlternatePrice < Price
+end

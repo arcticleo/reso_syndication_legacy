@@ -29,6 +29,7 @@ module ResoDataDictionary
            participants 
            participant_licenses 
            places
+           prices
            rooms
            schools
            taxes

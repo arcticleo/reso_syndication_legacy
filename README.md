@@ -107,6 +107,7 @@ Access direct attributes:
 Access related models:
 
 	@listing.address
+	@listing.alternate_prices
 	@listing.appliances
 	@listing.architecture_style
 	@listing.brokerage
