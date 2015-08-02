@@ -7,7 +7,7 @@ class CreateParticipants < ActiveRecord::Migration
       t.string :first_name
       t.string :last_name
       t.references :person, null: true
-      t.references :participant_role, null: false, index: true
+      t.references :participant_role, index: true
       t.string :primary_contact_phone
       t.string :office_phone
       t.string :mobile_phone
