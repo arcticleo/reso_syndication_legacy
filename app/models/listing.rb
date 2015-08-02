@@ -67,11 +67,7 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :roof_types
   accepts_nested_attributes_for :parking
   accepts_nested_attributes_for :view_types
-  
-  validates_presence_of :property_type
-  validates_presence_of :property_sub_type
-  validates_presence_of :listing_category
-  
+    
   def address
     self.addresses.first
   end
