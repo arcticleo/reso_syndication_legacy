@@ -5,6 +5,7 @@ class CreateListings < ActiveRecord::Migration
       t.string      :architecture_style_description
       t.integer     :bathrooms
       t.integer     :bedrooms
+      t.references  :brokerage, index: true
       t.integer     :building_unit_count
       t.references  :community, index: true
       t.integer     :condo_floor_num

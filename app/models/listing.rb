@@ -11,6 +11,7 @@ class Listing < ActiveRecord::Base
   belongs_to :mls
   belongs_to :zoning_type
   belongs_to :architecture_style
+  belongs_to :brokerage
   belongs_to :county
   belongs_to :community
   belongs_to :foreclosure_status
@@ -41,7 +42,6 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :addresses, allow_destroy: true
   accepts_nested_attributes_for :participants, allow_destroy: true
 
-  has_and_belongs_to_many :brokerages, association_foreign_key: "business_id"
   has_and_belongs_to_many :builders, association_foreign_key: "business_id"
 
   has_and_belongs_to_many :neighborhoods, association_foreign_key: "place_id"
@@ -70,10 +70,6 @@ class Listing < ActiveRecord::Base
     
   def address
     self.addresses.first
-  end
-  
-  def brokerage
-    self.brokerages.first
   end
   
   def listing_office
