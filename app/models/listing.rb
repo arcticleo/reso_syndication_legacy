@@ -1,8 +1,6 @@
 class Listing < ActiveRecord::Base
   require 'nokogiri'
 
-  before_destroy :destroy_addresses
-  
   belongs_to :listing_provider
   belongs_to :property_type
   belongs_to :property_sub_type
@@ -17,6 +15,8 @@ class Listing < ActiveRecord::Base
   belongs_to :foreclosure_status
   belongs_to :franchise
   belongs_to :office
+
+  has_one :address, as: :addressable
 
   has_many :alternate_prices, dependent: :destroy
   has_many :expenses, dependent: :destroy
@@ -35,10 +35,8 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :rooms, allow_destroy: true
   accepts_nested_attributes_for :taxes, allow_destroy: true
   
-  has_and_belongs_to_many :addresses
   has_and_belongs_to_many :participants
 
-  accepts_nested_attributes_for :addresses, allow_destroy: true
   accepts_nested_attributes_for :participants, allow_destroy: true
 
   has_and_belongs_to_many :builders, association_foreign_key: "business_id"
@@ -66,17 +64,7 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :roof_types
   accepts_nested_attributes_for :parking
   accepts_nested_attributes_for :view_types
-    
-  def address
-    self.addresses.first
-  end
-  
-  def destroy_addresses
-    self.addresses.each do |address|
-      address.destroy
-    end
-  end
-    
+      
   def self.import_or_update_item(p)
 
     # Listing
