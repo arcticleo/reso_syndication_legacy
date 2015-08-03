@@ -20,7 +20,6 @@ class ResoDataDictionary < Rails::Generators::Base
     migration_template "create_participants.rb", "db/migrate/create_participants.rb"
     migration_template "create_participant_licenses.rb", "db/migrate/create_participant_licenses.rb"
     migration_template "create_listing_providers.rb", "db/migrate/create_listing_providers.rb"
-    migration_template "create_listing_offices.rb", "db/migrate/create_listing_offices.rb"
     migration_template "create_listings.rb", "db/migrate/create_listings.rb"
     migration_template "create_mls.rb", "db/migrate/create_mls.rb"
     migration_template "create_offices.rb", "db/migrate/create_offices.rb"

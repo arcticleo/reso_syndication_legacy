@@ -43,6 +43,7 @@ class CreateListings < ActiveRecord::Migration
       t.string      :modification_timestamp
       t.integer     :num_floors
       t.integer     :num_parking_spaces
+      t.references  :office, index: true
       t.integer     :one_quarter_bathrooms
       t.string      :parcel_info
       t.integer     :partial_bathrooms
