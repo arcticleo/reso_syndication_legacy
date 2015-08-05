@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = ResoDataDictionary::VERSION
   spec.authors       = ["Michael Edlund"]
   spec.email         = ["medlund@mac.com"]
-  spec.description   = %q{RESO Data Dictionary data models and import with AWS SQS support.}
+  spec.description   = %q{RESO Data Dictionary data models and import.}
   spec.summary       = %q{The reso_data_dictionary gem provides models and data import based on the Real Estate Standards Organizations RETS Syndication Format for exchange of real estate listing data. Supports AWS SQS (Simple Queue Service) for queuing and parallel processing for fast import of large data sets.}
   spec.homepage      = "http://github.com/arcticleo/reso_data_dictionary"
   spec.license       = "MIT"
