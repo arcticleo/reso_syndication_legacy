@@ -112,22 +112,10 @@ namespace :reso do
           xml = stream[from_here..to_there + (close_tag.length-1)]
           process_item xml, xml_header, import
           stream.gsub!(xml, '')
-          if (l += 1) == 1000
-            puts "#{l} - #{l/(Time.now - start)} listings/s"
-            exit
-          end
         end
       end
       File.delete(filepath)
     end
   end
-
-    
-#    existing_listing_keys = Listing.all.select(:listing_key).pluck(:listing_key)
-#    (existing_listing_keys - incoming_listing_keys).each do |orphaned_listing_key|
-#      @listing = Listing.find_by(:listing_key => orphaned_listing_key)
-#      puts "Deleting expired: #{@listing.listing_key}".color(:red) + " - #{@listing.listing_title}"
-#      @listing.destroy
-#    end
 
 end
