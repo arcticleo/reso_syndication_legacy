@@ -5,6 +5,9 @@ The RESO Data Dictionary gem is an ongoing effort to provide data models and dat
 Read more here:
 http://www.reso.org/schemas-for-syndication
 
+This gem has been written for MySQL. If you test it using another RDBMS, let me know the result.
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
