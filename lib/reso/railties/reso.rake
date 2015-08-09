@@ -62,7 +62,7 @@ namespace :reso do
   end
   
   desc "Populate database with seed data."
-  task :seed => [:seed_imports, :load_enumerals] 
+  task :seed => [:load_enumerals, :seed_imports] 
 
   task :load_enumerals => [:environment] do
     require "csv"
@@ -77,7 +77,14 @@ namespace :reso do
   end
 
   task :seed_imports => [:environment] do
-    imports = [{ name: "ListHub Example", token: "listhub-example", source_format: "reso", repeating_element: "Listing", unique_identifier: "ListingKey", source_url: "https://app.listhub.com/syndication-docs/example.xml"}]
+<<<<<<< HEAD
+    imports = [{ name: "RESO Example", 
+                 token: "reso", 
+                 source_url: "https://app.listhub.com/syndication-docs/example.xml"
+              }]
+=======
+    imports = [{ name: "ListHub Example", token: "listhub-example", import_format_id: ImportFormat.find_by(name: 'reso').id, repeating_element: "Listing", unique_identifier: "ListingKey", source_url: "https://app.listhub.com/syndication-docs/example.xml"}]
+>>>>>>> ImportSourceFormat-Enumeral
   
     imports.each do |import|
       @import = Import.new
@@ -105,29 +112,24 @@ namespace :reso do
 
       start = Time.now
 
-      l = 0
+#      l = 0
       File.foreach(filepath) do |line|
         stream += line
         while (from_here = stream.index(open_tag)) && (to_there = stream.index(close_tag))
           xml = stream[from_here..to_there + (close_tag.length-1)]
           process_item xml, xml_header, import
           stream.gsub!(xml, '')
-          if (l += 1) == 1000
-            puts "#{l} - #{l/(Time.now - start)} listings/s"
-            exit
-          end
+<<<<<<< HEAD
+=======
+#          if (l += 1) == 1000
+#            puts "#{l} - #{l/(Time.now - start)} listings/s"
+#            exit
+#          end
+>>>>>>> ImportSourceFormat-Enumeral
         end
       end
       File.delete(filepath)
     end
   end
-
-    
-#    existing_listing_keys = Listing.all.select(:listing_key).pluck(:listing_key)
-#    (existing_listing_keys - incoming_listing_keys).each do |orphaned_listing_key|
-#      @listing = Listing.find_by(:listing_key => orphaned_listing_key)
-#      puts "Deleting expired: #{@listing.listing_key}".color(:red) + " - #{@listing.listing_title}"
-#      @listing.destroy
-#    end
 
 end
