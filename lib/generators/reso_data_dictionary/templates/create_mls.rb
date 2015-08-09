@@ -6,5 +6,6 @@ class CreateMls < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :mls, [:mls_id, :mls_name]
   end
 end

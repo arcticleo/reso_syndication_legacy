@@ -9,7 +9,7 @@ class CreatePeople < ActiveRecord::Migration
       t.string :last_name       # Aldrin
       t.string :suffix          # Jr., Sr., MD, DDS
       t.date   :birthdate       # 1972-08-20
-      t.references :gender      # male
+      t.references :gender
       t.string :preferred_locale, default: "en-US" # en-US
       t.string :modification_timestamp
       t.timestamps

@@ -8,16 +8,16 @@ module ResoDataDictionary
 
 
       def self.next_migration_number(path)
-        Time.now.utc.strftime("%Y%m%d%H%M%S")
+        Time.now.utc.strftime("%Y%m%d%H%M%S%L")
       end
 
       def create_model_file
         template "enumerals.csv", "db/enumerals.csv"
-        template "example.xml", "db/example.xml"
         %w[addresses 
            businesses 
            enumerals 
            expenses 
+           imports
            listings
            listing_media 
            listing_providers 
@@ -29,12 +29,12 @@ module ResoDataDictionary
            participant_licenses 
            places
            prices
+           queued_listings
            rooms
            schools
            taxes
            join_tables].each do |name|
              migration_template "create_#{name}.rb", "db/migrate/create_#{name}.rb"
-             sleep 1
            end
       end
 

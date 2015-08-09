@@ -22,6 +22,8 @@ class CreateOffices < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :offices, :name
+    add_index :offices, [:office_identifier, :name]
 
   end
 end

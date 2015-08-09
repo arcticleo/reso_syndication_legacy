@@ -1,10 +1,68 @@
 namespace :reso do
 
-  require 'aws-sdk'
   require 'nokogiri'
+  require 'open-uri'
+  require 'open_uri_redirections'
 
+  def download_feed_to_import import
+    filename = import.source_url.split('/').last
+    filepath = Rails.root.join('tmp', filename).to_s
+    File.delete(filepath) if File.file? filepath
+    open(filepath, 'wb') do |file|
+      file << open(import.source_url, 
+                http_basic_authentication: [import.source_user, import.source_pass], 
+                allow_redirections: :all
+              ).read
+    end
+    filepath
+  end
+
+  def get_open_and_closing_tag_for repeating_element
+    ApplicationController.helpers.content_tag(repeating_element, "\n").split
+  end
+
+  def get_xml_header filepath, repeating_element
+    stream = ''
+    open_tag = get_open_and_closing_tag_for(repeating_element).first
+    File.foreach(filepath) do |line|
+      stream += line
+      pos = stream.index(open_tag)
+      return stream[0..pos-1] if pos
+    end
+    nil # Just in cases
+  end
+  
+  def process_item xml, xml_header, import
+    begin
+      doc = Nokogiri::XML([xml_header, xml].join).remove_namespaces!
+      doc.css(import.repeating_element).each do |o|
+        listing_data = Hash.new
+        listing = Hash.from_xml(o.to_xml)
+        object = import.queued_listings.new
+        listing[import.repeating_element].each_pair{|key, value| listing_data[key] = value }
+        object.listing_data = listing_data
+        object.save
+      end
+    rescue Exception => e
+      puts e.inspect
+      exit
+    end
+  end
+  
+  def uncompress_and_return_new_filepath filepath
+    output_path = [filepath, '.xml'].join
+    File.delete(output_path) if File.file? output_path
+    Zlib::GzipReader.open(filepath) do |gz|
+      File.open(output_path, "w") do |g|
+        IO.copy_stream(gz, g)
+      end
+    end
+    File.delete(filepath)
+    output_path
+  end
+  
   desc "Populate database with seed data."
-  task :seed => [:load_enumerals] 
+  task :seed => [:seed_imports, :load_enumerals] 
 
   task :load_enumerals => [:environment] do
     require "csv"
@@ -18,83 +76,58 @@ namespace :reso do
       puts
   end
 
-  desc "Poll and import listings from AWS SQS queue."
-  task :process_aws_sqs_queue, [:aws_sqs_queue_name] => [:environment] do |t, args|
-    AWS_ACCESS_KEY_ID = nil unless defined? AWS_ACCESS_KEY_ID
-    AWS_SECRET_KEY = nil unless defined? AWS_SECRET_KEY
-    case (AWS_ACCESS_KEY_ID && AWS_SECRET_KEY && args.aws_sqs_queue_name.present?)
-    when true
-      aws = AWS::SQS.new(:access_key_id => AWS_ACCESS_KEY_ID, :secret_access_key => AWS_SECRET_KEY)
-      queue = aws.queues.create(args.aws_sqs_queue_name)
-      puts "Polling AWS SQS queue '#{args.aws_sqs_queue_name}'...".color(:green)
-      queue.poll do |msg|
-        p = Nokogiri::XML(msg.body)
-        @listing = Listing.find_by(:listing_key => p.children.at_css('ListingKey').try(:inner_text))
-        if (@listing.blank? || @listing.modification_timestamp != p.children.at_css('ModificationTimestamp').try(:inner_text))
-          if Listing::import_or_update_item(p)
-           puts "Imported: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:green)
-          else
-           puts "Failed: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:red)
-          end
-        else
-          puts "Skipping: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:yellow)
-        end
-      end
-    else
-      puts "Could not launch import worker. Make sure AWS_ACCESS_KEY_ID, AWS_SECRET_KEY and aws_queue_name are present.".color(:red)
-      puts "Example: rake reso_data_dictionary:process_aws_sqs_queue[some_queue_name]\n".color(:red)
+  task :seed_imports => [:environment] do
+    imports = [{ name: "ListHub Example", token: "listhub-example", source_format: "reso", repeating_element: "Listing", unique_identifier: "ListingKey", source_url: "https://app.listhub.com/syndication-docs/example.xml"}]
+  
+    imports.each do |import|
+      @import = Import.new
+      import.each_pair{|key, value| @import[key] = value }
+      @import.save
     end
   end
 
-  desc "Import or queue listings from XML source file."
-  task :process, [:path, :aws_sqs_queue_name] => [:environment] do |t, args|
-    AWS_ACCESS_KEY_ID = nil unless defined? AWS_ACCESS_KEY_ID
-    AWS_SECRET_KEY = nil unless defined? AWS_SECRET_KEY
-    case (AWS_ACCESS_KEY_ID && AWS_SECRET_KEY && args.aws_sqs_queue_name.present?)
-    when true
-      target = "AWS"
-      aws = AWS::SQS.new(:access_key_id => AWS_ACCESS_KEY_ID, :secret_access_key => AWS_SECRET_KEY)
-      queue = aws.queues.create(args.aws_sqs_queue_name)
-    else
-      target = "DB"
-    end
-    incoming_listing_keys = Array.new
-    existing_listing_keys = Array.new
-    args.with_defaults(:path => "#{Rails.root}/db/example.xml")
-    @doc = Nokogiri::XML(f = File.open(args.path))
-    @doc.remove_namespaces!
+  desc "Download and import data file for specified import."
+  task :import, [:import_token] => [:environment] do |t, args|
 
-    @doc.css('Listing').each do |p|
-      incoming_listing_keys << p.children.at_css('ListingKey').try(:inner_text)
-      @listing = Listing.find_by(:listing_key => p.children.at_css('ListingKey').try(:inner_text))
-      if (@listing.blank? || @listing.modification_timestamp != p.children.at_css('ModificationTimestamp').try(:inner_text))
-        case target
-        when "AWS"
-          Thread.new{ queue.send_message(p.serialize) }
-          puts "AWS Queued: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:green) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
-        when "DB"
-          if @listing.blank?
-            puts "Importing: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:green) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
-          else
-            puts "Updating: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:magenta) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
+    args.with_defaults(:import_token => "listhub-example")
+    import = Import.find_by(token: args.import_token)
+
+    unless import.blank?
+      count, stream = 0, ''
+      open_tag, close_tag = get_open_and_closing_tag_for import.repeating_element
+
+      # Grab a file to work with
+      filepath = download_feed_to_import import
+      filepath = uncompress_and_return_new_filepath(filepath) if filepath.split('.').last.downcase == 'gz'
+      
+      # Grab the XML header to avoid namespace errors later 
+      xml_header = get_xml_header filepath, import.repeating_element
+
+      start = Time.now
+
+      l = 0
+      File.foreach(filepath) do |line|
+        stream += line
+        while (from_here = stream.index(open_tag)) && (to_there = stream.index(close_tag))
+          xml = stream[from_here..to_there + (close_tag.length-1)]
+          process_item xml, xml_header, import
+          stream.gsub!(xml, '')
+          if (l += 1) == 1000
+            puts "#{l} - #{l/(Time.now - start)} listings/s"
+            exit
           end
-          if Listing::import_or_update_item(p)
-          else
-           puts "FAILED: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:red) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
-          end
-        else
-          puts "Unknown target.".color(:gray)
         end
-      else
-        puts "#{target} Skipped: #{p.children.at_css('ListingKey').try(:inner_text)}".color(:yellow) + " - #{p.children.at_css('ListingTitle').try(:inner_text)}"
       end
+      File.delete(filepath)
     end
+  end
+
     
-    existing_listing_keys = Listing.all.select(:listing_key).pluck(:listing_key)
-    (existing_listing_keys - incoming_listing_keys).each do |orphaned_listing_key|
-      @listing = Listing.find_by(:listing_key => orphaned_listing_key)
-      puts "Deleting expired: #{@listing.listing_key}".color(:red) + " - #{@listing.listing_title}"
-      @listing.destroy
-    end
-  end
+#    existing_listing_keys = Listing.all.select(:listing_key).pluck(:listing_key)
+#    (existing_listing_keys - incoming_listing_keys).each do |orphaned_listing_key|
+#      @listing = Listing.find_by(:listing_key => orphaned_listing_key)
+#      puts "Deleting expired: #{@listing.listing_key}".color(:red) + " - #{@listing.listing_title}"
+#      @listing.destroy
+#    end
+
 end

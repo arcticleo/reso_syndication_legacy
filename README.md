@@ -1,6 +1,6 @@
 # RESO Data Dictionary
 
-The reso_data_dictionary gem is an ongoing effort to provide data models and data import based on the Real Estate Standardization Organization Data Dictionary syndication format for exchange of real estate listing data.
+The RESO Data Dictionary gem is an ongoing effort to provide data models and data import based on the Real Estate Standardization Organization Data Dictionary syndication format for exchange of real estate listing data.
 
 Read more here:
 http://www.reso.org/schemas-for-syndication
@@ -31,13 +31,18 @@ Populate the database with necessary seed data:
 
 	$ rake reso:seed
 
-You might want to populate the database with an example listing:
+Populate the database with an example listing:
 
-	$ rake reso:process
+	$ rake reso:import
 
-Alternatively, if you have an XML data file in the RETS syndication format, you can import it by specifying the absolute path to it:
+This will download and install an example listing in the RESO format, as provided by ListHub, the largest US listing syndicator. The information needed is populated by the seed task through the Import model. If you want to add your own import, you would open the console and create an import:
 
-	$ rake reso:process[/Users/medlund/Downloads/somefile.xml]
+   > Import.create(token: 'myimport', name: 'My Import', source_url: 'http://somewebsite.com/myfeed.xml')
+
+You would then import it by passing the token value to the import rake task:
+
+  $ rake reso:import[myimport]
+
 
 ## Usage
 

@@ -7,7 +7,7 @@ class CreateOpenHouses < ActiveRecord::Migration
       t.string :start_time
       t.string :end_time
       t.text :description
-      t.references :listing, index: true, null: false
+      t.references :listing, index: true, null: false, foreign_key: true
 
       t.timestamps
     end

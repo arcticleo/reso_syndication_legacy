@@ -5,7 +5,7 @@ class CreateParticipantLicenses < ActiveRecord::Migration
       t.string :license_number
       t.string :jurisdiction
       t.string :state_or_province
-      t.references :participant, index: true, null: false
+      t.references :participant, index: true, null: false, foreign_key: true
 
       t.timestamps
     end

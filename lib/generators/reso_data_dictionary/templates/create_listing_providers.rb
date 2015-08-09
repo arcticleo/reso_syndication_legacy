@@ -7,5 +7,6 @@ class CreateListingProviders < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :listing_providers, [:name, :source_provider_category_id, :url], name: "index_provider_on_name_and_category_and_url"
   end
 end

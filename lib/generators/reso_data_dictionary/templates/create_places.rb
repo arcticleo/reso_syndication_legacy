@@ -15,5 +15,6 @@ class CreatePlaces < ActiveRecord::Migration
     add_index :places, :state_or_province
     add_index :places, :country
     add_index :places, :type
+    add_index :places, [:name, :state_or_province, :country]
   end
 end

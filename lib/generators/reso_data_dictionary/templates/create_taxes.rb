@@ -4,7 +4,7 @@ class CreateTaxes < ActiveRecord::Migration
       t.integer :year
       t.decimal :amount, null: false
       t.string :description
-      t.references :listing, index: true, null: false
+      t.references :listing, index: true, null: false, foreign_key: true
 
       t.timestamps
     end

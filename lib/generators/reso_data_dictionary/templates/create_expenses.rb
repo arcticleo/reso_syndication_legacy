@@ -8,5 +8,6 @@ class CreateExpenses < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :expenses, [:expense_category_id, :currency_period_id, :expense_value], name: "index_on_category_and_currency_period_and_value"
   end
 end

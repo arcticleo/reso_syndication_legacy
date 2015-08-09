@@ -1,6 +1,7 @@
 class Listing < ActiveRecord::Base
   require 'nokogiri'
 
+  belongs_to :import
   belongs_to :listing_provider
   belongs_to :property_type
   belongs_to :property_sub_type
