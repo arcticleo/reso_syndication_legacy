@@ -4,6 +4,8 @@ class Import < ActiveRecord::Base
 
   has_many :listings
   has_many :queued_listings
+  
+  validates_uniqueness_of :token
 
   before_save :set_import_format
 
