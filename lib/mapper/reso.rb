@@ -251,15 +251,6 @@ module Mapper
       (result = get_value(queued_listing, %w(LotSize))) ? result : nil
     end
 
-    def self.multiple_listing_service queued_listing
-      if (get_value(queued_listing, %w(MlsId)) || get_value(queued_listing, %w(MlsName)))
-        MultipleListingService.find_or_initialize_by(
-          mls_id: get_value(queued_listing, %w(MlsId)),
-          mls_name: get_value(queued_listing, %w(MlsName))
-        )
-      end
-    end
-
     def self.mls_number queued_listing
       (result = get_value(queued_listing, %w(MlsNumber))) ? result : nil
     end
@@ -267,6 +258,15 @@ module Mapper
     def self.modification_timestamp queued_listing
       # TODO: Change from string to datetime
       (result = get_value(queued_listing, %w(ModificationTimestamp))) ? result : nil
+    end
+
+    def self.multiple_listing_service queued_listing
+      if (get_value(queued_listing, %w(MlsId)) || get_value(queued_listing, %w(MlsName)))
+        MultipleListingService.find_or_initialize_by(
+          mls_id: get_value(queued_listing, %w(MlsId)),
+          mls_name: get_value(queued_listing, %w(MlsName))
+        )
+      end
     end
 
     def self.num_floors queued_listing
@@ -486,17 +486,12 @@ module Mapper
         end
       end
     end
-        
-    # .eager_load(:address).eager_load(:alternate_prices).eager_load(:brokerage).eager_load(:county).eager_load(:franchise).eager_load(:listing_category).eager_load(:listing_provider).eager_load(:listing_status).eager_load(:office).eager_load(:open_houses).eager_load(:participants).eager_load(:property_sub_type).eager_load(:property_type).eager_load(:taxes)
-    
-    # .eager_load(:photos).eager_load(:videos).eager_load(:virtual_tours)
-    # .eager_load(:appliances).eager_load(:cooling_systems).eager_load(:expenses).eager_load(:exterior_types).eager_load(:floor_coverings).eager_load(:heating_fuels).eager_load(:heating_systems).eager_load(:roof_types).eager_load(:view_types)
 
     def self.create_or_update_listing queued_listing
       listing = queued_listing.import.listings.eager_load(:appliances).eager_load(:cooling_systems).eager_load(:expenses).eager_load(:exterior_types).eager_load(:floor_coverings).eager_load(:heating_fuels).eager_load(:heating_systems).eager_load(:roof_types).eager_load(:view_types).find_or_initialize_by(
         listing_key: unique_identifier(queued_listing)
       )
-#      if (listing.modification_timestamp != modification_timestamp(queued_listing))
+      if (listing.modification_timestamp != modification_timestamp(queued_listing))
         listing.assign_attributes({
           address: address(queued_listing, listing),
           alternate_prices: alternate_prices(queued_listing, listing),        
@@ -573,7 +568,7 @@ module Mapper
           year_built: year_built(queued_listing),
           year_updated: year_updated(queued_listing)
         })
-#      end
+      end
       listing.save
     end
   end

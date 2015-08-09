@@ -119,6 +119,7 @@ Access related models:
 	@listing.listing_provider
 	@listing.listing_service
 	@listing.listing_status
+	@listing.multiple_listing_service
 	@listing.neighborhoods
 	@listing.offices
 	@listing.open_houses
