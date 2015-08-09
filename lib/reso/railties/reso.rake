@@ -45,7 +45,6 @@ namespace :reso do
       end
     rescue Exception => e
       puts e.inspect
-      exit
     end
   end
   
