@@ -491,7 +491,7 @@ module Mapper
       listing = queued_listing.import.listings.eager_load(:appliances).eager_load(:cooling_systems).eager_load(:expenses).eager_load(:exterior_types).eager_load(:floor_coverings).eager_load(:heating_fuels).eager_load(:heating_systems).eager_load(:roof_types).eager_load(:view_types).find_or_initialize_by(
         listing_key: unique_identifier(queued_listing)
       )
-#      if (listing.modification_timestamp != modification_timestamp(queued_listing))
+      if (listing.modification_timestamp != modification_timestamp(queued_listing))
         listing.assign_attributes({
           address: address(queued_listing, listing),
           alternate_prices: alternate_prices(queued_listing, listing),        
@@ -568,7 +568,7 @@ module Mapper
           year_built: year_built(queued_listing),
           year_updated: year_updated(queued_listing)
         })
-#      end
+      end
       listing.save
     end
   end
