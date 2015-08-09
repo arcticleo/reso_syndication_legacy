@@ -1,6 +1,6 @@
 require 'rails/generators/migration'
 
-class ResoDataDictionary < Rails::Generators::Base
+class Reso < Rails::Generators::Base
   include Rails::Generators::Migration
 
   def self.source_root
