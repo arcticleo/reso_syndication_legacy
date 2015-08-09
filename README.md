@@ -37,11 +37,11 @@ Populate the database with an example listing:
 
 This will download and install an example listing in the RESO format, as provided by ListHub, the largest US listing syndicator. The information needed is populated by the seed task through the Import model. If you want to add your own import, you would open the console and create an import:
 
-   > Import.create(token: 'myimport', name: 'My Import', source_url: 'http://somewebsite.com/myfeed.xml')
+	> Import.create(token: 'myimport', name: 'My Import', source_url: 'http://somewebsite.com/myfeed.xml')
 
 You would then import it by passing the token value to the import rake task:
 
-  $ rake reso:import[myimport]
+	$ rake reso:import[myimport]
 
 
 ## Usage
