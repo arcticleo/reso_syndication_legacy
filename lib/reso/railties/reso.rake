@@ -108,20 +108,12 @@ namespace :reso do
 
       start = Time.now
 
-#      l = 0
       File.foreach(filepath) do |line|
         stream += line
         while (from_here = stream.index(open_tag)) && (to_there = stream.index(close_tag))
           xml = stream[from_here..to_there + (close_tag.length-1)]
           process_item xml, xml_header, import
           stream.gsub!(xml, '')
-<<<<<<< HEAD
-=======
-#          if (l += 1) == 1000
-#            puts "#{l} - #{l/(Time.now - start)} listings/s"
-#            exit
-#          end
->>>>>>> ImportSourceFormat-Enumeral
         end
       end
       File.delete(filepath)
