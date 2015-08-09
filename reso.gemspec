@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'reso_data_dictionary/version'
+require 'reso/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "reso_data_dictionary"
-  spec.version       = ResoDataDictionary::VERSION
+  spec.name          = "reso"
+  spec.version       = Reso::VERSION
   spec.authors       = ["Michael Edlund"]
   spec.email         = ["medlund@mac.com"]
   spec.description   = %q{RESO Data Dictionary data models and import.}
-  spec.summary       = %q{The reso_data_dictionary gem provides models and data import based on the Real Estate Standards Organizations RETS Syndication Format for exchange of real estate listing data. Supports AWS SQS (Simple Queue Service) for queuing and parallel processing for fast import of large data sets.}
-  spec.homepage      = "http://github.com/arcticleo/reso_data_dictionary"
+  spec.summary       = %q{The RESO Data Dictionary gem provides models and data import based on the Real Estate Standards Organization Syndication Format for exchange of real estate listing data.}
+  spec.homepage      = "http://github.com/arcticleo/reso"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
