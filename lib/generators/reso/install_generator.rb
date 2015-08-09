@@ -21,7 +21,7 @@ module Reso
            listings
            listing_media 
            listing_providers 
-           mls
+           multiple_listing_services
            open_houses
            offices
            people

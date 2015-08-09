@@ -10,7 +10,7 @@ class Listing < ActiveRecord::Base
   belongs_to :listing_category
   belongs_to :listing_provider
   belongs_to :listing_status
-  belongs_to :mls
+  belongs_to :multiple_listing_service
   belongs_to :property_sub_type
   belongs_to :property_type
   belongs_to :office

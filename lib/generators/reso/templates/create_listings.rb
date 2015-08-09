@@ -20,7 +20,7 @@ class CreateListings < ActiveRecord::Migration
       t.integer     :full_bathrooms
       t.string      :geocode_options
       t.integer     :half_bathrooms
-      t.references  :import, index: true, foreign_key: true, foreign_key: true
+      t.references  :import, index: true, foreign_key: true
       t.decimal     :latitude, precision: 10, scale: 6
       t.string      :lead_routing_email
       t.text        :legal_description
@@ -39,7 +39,7 @@ class CreateListings < ActiveRecord::Migration
       t.decimal     :longitude, precision: 10, scale: 6
       t.float       :lot_size
       t.string      :lot_size_unit
-      t.references  :mls, index: true
+      t.references  :multiple_listing_service, index: true
       t.string      :mls_number
       t.string      :modification_timestamp
       t.integer     :num_floors

@@ -251,9 +251,9 @@ module Mapper
       (result = get_value(queued_listing, %w(LotSize))) ? result : nil
     end
 
-    def self.mls queued_listing
+    def self.multiple_listing_service queued_listing
       if (get_value(queued_listing, %w(MlsId)) || get_value(queued_listing, %w(MlsName)))
-        Mls.find_or_initialize_by(
+        MultipleListingService.find_or_initialize_by(
           mls_id: get_value(queued_listing, %w(MlsId)),
           mls_name: get_value(queued_listing, %w(MlsName))
         )
@@ -542,8 +542,8 @@ module Mapper
           living_area_unit: living_area_unit(queued_listing),
           longitude: longitude(queued_listing),
           lot_size: lot_size(queued_listing),
-          mls: mls(queued_listing),
           mls_number: mls_number(queued_listing),
+          multiple_listing_service: multiple_listing_service(queued_listing),
           modification_timestamp: modification_timestamp(queued_listing),
           num_floors: num_floors(queued_listing),
           num_parking_spaces: num_parking_spaces(queued_listing),
