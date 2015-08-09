@@ -77,7 +77,10 @@ namespace :reso do
   end
 
   task :seed_imports => [:environment] do
-    imports = [{ name: "ListHub Example", token: "listhub-example", source_format: "reso", repeating_element: "Listing", unique_identifier: "ListingKey", source_url: "https://app.listhub.com/syndication-docs/example.xml"}]
+    imports = [{ name: "ListHub Example", 
+                 token: "listhub-example", 
+                 source_url: "https://app.listhub.com/syndication-docs/example.xml"
+              }]
   
     imports.each do |import|
       @import = Import.new
