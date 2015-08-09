@@ -9,7 +9,7 @@ http://www.reso.org/schemas-for-syndication
 
 Add this line to your application's Gemfile:
 
-	gem 'reso_data_dictionary'
+	gem 'reso'
 
 And then install:
 
@@ -17,7 +17,7 @@ And then install:
 
 Run the generator to copy migrations to your app:
 
-    $ rails g reso_data_dictionary:install
+    $ rails g reso:install
 
 Create the database:
 
@@ -117,7 +117,7 @@ Access related models:
 	@listing.listing_service
 	@listing.listing_status
 	@listing.neighborhoods
-        @listing.offices
+	@listing.offices
 	@listing.open_houses
 	@listing.parking
 	@listing.participants
@@ -139,7 +139,7 @@ Other:
 
 ## License
 
-MIT License. Copyright 2013 Michael Edlund, medlund@mac.com.
+MIT License. Copyright 2013-2015 Michael Edlund, medlund@mac.com.
 
   
 
