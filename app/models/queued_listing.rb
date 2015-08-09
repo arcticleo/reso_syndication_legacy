@@ -4,7 +4,7 @@ class QueuedListing < ActiveRecord::Base
   after_save :create_listing_and_remove_myself
 
   def mapper
-    "Mapper::#{self.import.source_format.capitalize}".constantize
+    "Mapper::#{self.import.import_format.name.downcase.capitalize}".constantize
   end
 
   def create_listing_and_remove_myself
