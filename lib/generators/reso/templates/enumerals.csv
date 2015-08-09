@@ -1,5 +1,5 @@
 name,type
-reso, ImportSourceFormat
+RESO,ImportFormat
 Physical,AddressType
 Display,AddressType
 Mailing,AddressType
