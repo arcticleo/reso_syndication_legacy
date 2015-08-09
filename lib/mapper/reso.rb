@@ -251,15 +251,6 @@ module Mapper
       (result = get_value(queued_listing, %w(LotSize))) ? result : nil
     end
 
-    def self.multiple_listing_service queued_listing
-      if (get_value(queued_listing, %w(MlsId)) || get_value(queued_listing, %w(MlsName)))
-        MultipleListingService.find_or_initialize_by(
-          mls_id: get_value(queued_listing, %w(MlsId)),
-          mls_name: get_value(queued_listing, %w(MlsName))
-        )
-      end
-    end
-
     def self.mls_number queued_listing
       (result = get_value(queued_listing, %w(MlsNumber))) ? result : nil
     end
@@ -267,6 +258,15 @@ module Mapper
     def self.modification_timestamp queued_listing
       # TODO: Change from string to datetime
       (result = get_value(queued_listing, %w(ModificationTimestamp))) ? result : nil
+    end
+
+    def self.multiple_listing_service queued_listing
+      if (get_value(queued_listing, %w(MlsId)) || get_value(queued_listing, %w(MlsName)))
+        MultipleListingService.find_or_initialize_by(
+          mls_id: get_value(queued_listing, %w(MlsId)),
+          mls_name: get_value(queued_listing, %w(MlsName))
+        )
+      end
     end
 
     def self.num_floors queued_listing
