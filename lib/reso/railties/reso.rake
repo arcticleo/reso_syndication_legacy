@@ -78,7 +78,8 @@ namespace :reso do
 
   task :seed_imports => [:environment] do
     imports = [{ name: "RESO Example", 
-                 token: "reso", 
+                 token: "reso",
+                 import_format_id: ImportFormat.find_by(name: 'reso').id,
                  source_url: "https://app.listhub.com/syndication-docs/example.xml"
               }]
   
@@ -92,7 +93,7 @@ namespace :reso do
   desc "Download and import data file for specified import."
   task :import, [:import_token] => [:environment] do |t, args|
 
-    args.with_defaults(:import_token => "listhub-example")
+    args.with_defaults(:import_token => "reso")
     import = Import.find_by(token: args.import_token)
 
     unless import.blank?
