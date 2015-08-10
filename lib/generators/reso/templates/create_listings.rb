@@ -46,6 +46,7 @@ class CreateListings < ActiveRecord::Migration
       t.integer     :num_parking_spaces
       t.references  :office, index: true
       t.integer     :one_quarter_bathrooms
+      t.string      :originating_system_key, limit: 255
       t.string      :parcel_info
       t.integer     :partial_bathrooms
       t.boolean     :permit_address_on_internet
@@ -76,6 +77,7 @@ class CreateListings < ActiveRecord::Migration
     add_index :listings, :listing_date
     add_index :listings, :latitude
     add_index :listings, :longitude
+    add_index :listings, :originating_system_key
     add_index :listings, :year_built
   end
 end
