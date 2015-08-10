@@ -1,4 +1,4 @@
-class PropertyType < Enumeral
+class PropertyType < Enumeration
 
   has_many :listings
 

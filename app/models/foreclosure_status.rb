@@ -1,4 +1,4 @@
-class ForeclosureStatus < Enumeral
+class ForeclosureStatus < Enumeration
 
   has_many :listings
 

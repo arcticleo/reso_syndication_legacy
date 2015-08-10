@@ -4,9 +4,9 @@ class CreateJoinTables < ActiveRecord::Migration
     add_index(:businesses_listings, [:business_id, :listing_id], unique: true)
     add_index(:businesses_listings, :listing_id)
 
-    create_join_table :enumerals, :listings
-    add_index(:enumerals_listings, [:enumeral_id, :listing_id], unique: true)
-    add_index(:enumerals_listings, :listing_id)
+    create_join_table :enumerations, :listings
+    add_index(:enumerations_listings, [:enumeration_id, :listing_id], unique: true)
+    add_index(:enumerations_listings, :listing_id)
 
     create_join_table :listing_offices, :listings
     add_index(:listing_offices_listings, [:listing_office_id, :listing_id], unique: true, name: "index_listings_offices_listing_id_office_id")

@@ -1,2 +1,2 @@
-class SchoolCategory < Enumeral
+class SchoolCategory < Enumeration
 end

@@ -1,2 +1,2 @@
-class SourceProviderCategory < Enumeral
+class SourceProviderCategory < Enumeration
 end

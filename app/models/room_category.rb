@@ -1,2 +1,2 @@
-class RoomCategory < Enumeral
+class RoomCategory < Enumeration
 end

@@ -1,4 +1,4 @@
-class ListingStatus < Enumeral
+class ListingStatus < Enumeration
 
   has_many :listings
 

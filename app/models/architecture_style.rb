@@ -1,4 +1,4 @@
-class ArchitectureStyle < Enumeral
+class ArchitectureStyle < Enumeration
 
   has_many :listings
 

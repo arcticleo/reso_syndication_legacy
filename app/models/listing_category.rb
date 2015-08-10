@@ -1,4 +1,4 @@
-class ListingCategory < Enumeral
+class ListingCategory < Enumeration
 
   has_many :listings
 

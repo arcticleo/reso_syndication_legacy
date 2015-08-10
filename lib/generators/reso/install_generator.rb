@@ -12,10 +12,10 @@ module Reso
       end
 
       def create_model_file
-        template "enumerals.csv", "db/enumerals.csv"
+        template "enumerations.csv", "db/enumerations.csv"
         %w[addresses 
            businesses 
-           enumerals 
+           enumerations 
            expenses 
            imports
            listings
