@@ -29,7 +29,7 @@ class CreateListings < ActiveRecord::Migration
       t.references  :listing_category, index: true
       t.date        :listing_date
       t.text        :listing_description
-      t.string      :listing_key, null: false
+      t.string      :listing_key, null: false, limit: 255
       t.references  :listing_provider, index: true
       t.references  :listing_status, index: true
       t.text        :listing_title
@@ -40,7 +40,7 @@ class CreateListings < ActiveRecord::Migration
       t.float       :lot_size
       t.string      :lot_size_unit
       t.references  :multiple_listing_service, index: true
-      t.string      :mls_number
+      t.string      :mls_number, limit: 255
       t.string      :modification_timestamp
       t.integer     :num_floors
       t.integer     :num_parking_spaces
