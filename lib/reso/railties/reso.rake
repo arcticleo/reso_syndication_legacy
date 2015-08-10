@@ -61,15 +61,15 @@ namespace :reso do
   end
   
   desc "Populate database with seed data."
-  task :seed => [:load_enumerals, :seed_imports] 
+  task :seed => [:load_enumerations, :seed_imports] 
 
-  task :load_enumerals => [:environment] do
+  task :load_enumerations => [:environment] do
     require "csv"
-    csv_text = File.read("#{Rails.root}/db/enumerals.csv")
+    csv_text = File.read("#{Rails.root}/db/enumerations.csv")
     csv = CSV.parse(csv_text, :headers => true)
     csv.each do |row|
       row = row.to_hash.with_indifferent_access
-      Enumeral.create!(row.to_hash.symbolize_keys)
+      Enumeration.create!(row.to_hash.symbolize_keys)
         puts row.inspect
       end
       puts

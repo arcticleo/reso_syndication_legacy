@@ -1,3 +1,3 @@
-class ImportFormat < Enumeral
+class ImportFormat < Enumeration
   has_many :imports
 end

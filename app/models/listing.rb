@@ -28,19 +28,19 @@ class Listing < ActiveRecord::Base
   has_many :videos, dependent: :destroy
   has_many :virtual_tours, dependent: :destroy
   
-  has_and_belongs_to_many :appliances, association_foreign_key: "enumeral_id"
+  has_and_belongs_to_many :appliances, association_foreign_key: "enumeration_id"
   has_and_belongs_to_many :builders, association_foreign_key: "business_id"
-  has_and_belongs_to_many :cooling_systems, association_foreign_key: "enumeral_id"
-  has_and_belongs_to_many :exterior_types, association_foreign_key: "enumeral_id"
-  has_and_belongs_to_many :floor_coverings, association_foreign_key: "enumeral_id"
-  has_and_belongs_to_many :heating_fuels, association_foreign_key: "enumeral_id"
-  has_and_belongs_to_many :heating_systems, association_foreign_key: "enumeral_id"
-  has_and_belongs_to_many :home_features, association_foreign_key: "enumeral_id"
+  has_and_belongs_to_many :cooling_systems, association_foreign_key: "enumeration_id"
+  has_and_belongs_to_many :exterior_types, association_foreign_key: "enumeration_id"
+  has_and_belongs_to_many :floor_coverings, association_foreign_key: "enumeration_id"
+  has_and_belongs_to_many :heating_fuels, association_foreign_key: "enumeration_id"
+  has_and_belongs_to_many :heating_systems, association_foreign_key: "enumeration_id"
+  has_and_belongs_to_many :home_features, association_foreign_key: "enumeration_id"
   has_and_belongs_to_many :neighborhoods, association_foreign_key: "place_id"
-  has_and_belongs_to_many :parking, association_foreign_key: "enumeral_id"
+  has_and_belongs_to_many :parking, association_foreign_key: "enumeration_id"
   has_and_belongs_to_many :participants
-  has_and_belongs_to_many :roof_types, association_foreign_key: "enumeral_id"
-  has_and_belongs_to_many :view_types, association_foreign_key: "enumeral_id"
+  has_and_belongs_to_many :roof_types, association_foreign_key: "enumeration_id"
+  has_and_belongs_to_many :view_types, association_foreign_key: "enumeration_id"
 
   accepts_nested_attributes_for :alternate_prices, allow_destroy: true
   accepts_nested_attributes_for :appliances

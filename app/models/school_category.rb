@@ -1,2 +1,0 @@
-class SchoolCategory < Enumeral
-end

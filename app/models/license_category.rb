@@ -1,2 +1,2 @@
-class LicenseCategory < Enumeral
+class LicenseCategory < Enumeration
 end

@@ -1,3 +1,3 @@
-class AddressType < Enumeral
+class AddressType < Enumeration
   has_many :addresses
 end

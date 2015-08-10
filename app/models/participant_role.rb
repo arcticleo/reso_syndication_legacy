@@ -1,3 +1,3 @@
-class ParticipantRole < Enumeral
+class ParticipantRole < Enumeration
   has_many :participants
 end

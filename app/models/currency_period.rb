@@ -1,3 +1,3 @@
-class CurrencyPeriod < Enumeral
+class CurrencyPeriod < Enumeration
   has_many :expenses
 end

@@ -1,2 +1,0 @@
-class RoomCategory < Enumeral
-end

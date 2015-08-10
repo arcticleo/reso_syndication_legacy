@@ -14,7 +14,7 @@ class Reso < Rails::Generators::Base
   def create_model_file
     migration_template "create_addresses.rb", "db/migrate/create_addresses.rb"
     migration_template "create_businesses.rb", "db/migrate/create_businesses.rb"
-    migration_template "create_enumerals.rb", "db/migrate/create_enumerals.rb"
+    migration_template "create_enumerations.rb", "db/migrate/create_enumerations.rb"
     migration_template "create_expenses.rb", "db/migrate/create_expenses.rb"
     migration_template "create_listing_media.rb", "db/migrate/create_listing_media.rb"
     migration_template "create_participants.rb", "db/migrate/create_participants.rb"
