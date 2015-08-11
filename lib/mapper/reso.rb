@@ -473,12 +473,6 @@ module Mapper
       end
     end
     
-    def self.hash_drill drillees
-      if (result = drillees[1..-1].inject(drillees.first){|v, e| v[e] ? v[e] : Hash.new })
-        result.present? ? result.unwrap_attribute : nil
-      end
-    end
-    
     def self.get_subvalue queued_listing, element, child_elements
       if (value = get_simple_value(queued_listing, element))
         if (subvalue = child_elements.inject(value){|v, e| v[e] ? v[e] : Hash.new })
