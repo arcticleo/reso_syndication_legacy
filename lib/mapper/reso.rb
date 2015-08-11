@@ -382,8 +382,10 @@ module Mapper
       (result = get_value(queued_listing, %w(DetailedCharacteristics RoomCount))) ? result.to_i : nil
     end
     
-    def self.rooms queued_listing
-      (result = get_enums(queued_listing, %w(DetailedCharacteristics Rooms Room))) ? result : nil
+    def self.rooms queued_listing, listing
+      if (result = get_value(queued_listing, %w(DetailedCharacteristics Rooms Room)))
+        result.map{|room_category| Room.new(listing: listing, room_category: RoomCategory.find_by(name: room_category))}
+      end
     end
     
     def self.taxes queued_listing
@@ -473,12 +475,6 @@ module Mapper
       end
     end
     
-    def self.hash_drill drillees
-      if (result = drillees[1..-1].inject(drillees.first){|v, e| v[e] ? v[e] : Hash.new })
-        result.present? ? result.unwrap_attribute : nil
-      end
-    end
-    
     def self.get_subvalue queued_listing, element, child_elements
       if (value = get_simple_value(queued_listing, element))
         if (subvalue = child_elements.inject(value){|v, e| v[e] ? v[e] : Hash.new })
@@ -488,7 +484,7 @@ module Mapper
     end
 
     def self.create_or_update_listing queued_listing
-      listing = queued_listing.import.listings.eager_load(:appliances).eager_load(:cooling_systems).eager_load(:expenses).eager_load(:exterior_types).eager_load(:floor_coverings).eager_load(:heating_fuels).eager_load(:heating_systems).eager_load(:roof_types).eager_load(:view_types).find_or_initialize_by(
+      listing = queued_listing.import.listings.find_or_initialize_by(
         listing_key: unique_identifier(queued_listing)
       )
       if (listing.modification_timestamp != modification_timestamp(queued_listing))
@@ -555,7 +551,7 @@ module Mapper
           property_type_description: property_type_description(queued_listing),
           roof_types: roof_types(queued_listing),
           room_count: room_count(queued_listing),
-  # TODO: rooms: rooms(queued_listing),
+          rooms: rooms(queued_listing, listing),
   # TODO: subdivision: subdivision(queued_listing),
           taxes: taxes(queued_listing),
           three_quarter_bathrooms: three_quarter_bathrooms(queued_listing),
