@@ -202,7 +202,7 @@ module Mapper
         result.map do |item|
           media = listing.send(elements.last.tableize).find_or_initialize_by(
             media_url: item.drilldown('MediaURL'),
-            media_modification_timestamp: (value = item.drilldown('MediaModificationTimestamp').is_a?(Hash) ? nil : value)
+            media_modification_timestamp: item.drilldown('MediaModificationTimestamp')
           )
           media.assign_attributes({
             media_order_number: item.drilldown('MediaOrderNumber'),
