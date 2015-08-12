@@ -51,6 +51,7 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :heating_fuels
   accepts_nested_attributes_for :heating_systems
   accepts_nested_attributes_for :home_features
+  accepts_nested_attributes_for :neighborhoods
   accepts_nested_attributes_for :open_houses, allow_destroy: true
   accepts_nested_attributes_for :parking
   accepts_nested_attributes_for :participants, allow_destroy: true

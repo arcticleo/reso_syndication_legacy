@@ -1,6 +1,10 @@
 module Mapper
   module Reso
-    
+
+    def self.method_missing method_name, *args
+      args[1][method_name]
+    end
+      
     def self.address queued_listing, listing
       if (result = get_value(queued_listing, %w(Address)))
         listing.address ||= Address.new
@@ -29,47 +33,47 @@ module Mapper
       end
     end
 
-    def self.appliances queued_listing
+    def self.appliances queued_listing, listing
       (result = get_enums(queued_listing, %w(DetailedCharacteristics Appliances Appliance))) ? result : nil
     end
     
-    def self.architecture_style queued_listing
+    def self.architecture_style queued_listing, listing
       (result = unwrap_attribute(get_value(queued_listing, %w(DetailedCharacteristics ArchitectureStyle)))) ? ArchitectureStyle.find_by_name(result) : nil
     end
     
-    def self.architecture_style_description queued_listing
+    def self.architecture_style_description queued_listing, listing
       (result = get_value(queued_listing, %w(DetailedCharacteristics ArchitectureStyle otherDescription))) ? result : nil
     end
     
-    def self.bathrooms queued_listing
+    def self.bathrooms queued_listing, listing
       (result = get_value(queued_listing, %w(Bathrooms))) ? result.to_i : nil
     end
 
-    def self.bedrooms queued_listing
+    def self.bedrooms queued_listing, listing
       (result = get_value(queued_listing, %w(Bedrooms))) ? result.to_i : nil
     end
 
-    def self.brokerage queued_listing
+    def self.brokerage queued_listing, listing
       get_reso_business(queued_listing, 'Brokerage')
     end
 
-    def self.builder queued_listing
+    def self.builder queued_listing, listing
       get_reso_business(queued_listing, 'Builder')
     end
 
-    def self.building_unit_count queued_listing
+    def self.building_unit_count queued_listing, listing
       (result = get_value(queued_listing, %w(DetailedCharacteristics BuildingUnitCount))) ? result.to_i : nil
     end
     
-    def self.condo_floor_num queued_listing
+    def self.condo_floor_num queued_listing, listing
       (result = get_value(queued_listing, %w(DetailedCharacteristics CondoFloorNum))) ? result.to_i : nil
     end
     
-    def self.cooling_systems queued_listing
+    def self.cooling_systems queued_listing, listing
       (result = get_enums(queued_listing, %w(DetailedCharacteristics CoolingSystems CoolingSystem))) ? result : nil
     end
     
-    def self.county queued_listing
+    def self.county queued_listing, listing
       if (get_value(queued_listing, %w(Location County)))
         County.find_or_initialize_by(
           name: get_value(queued_listing, %w(Location County)),
@@ -81,23 +85,23 @@ module Mapper
       end
     end
 
-    def self.currency_code queued_listing
+    def self.currency_code queued_listing, listing
       (result = get_value(queued_listing, %w(ListPrice currencyCode))) ? result : nil
     end
     
-    def self.directions queued_listing
+    def self.directions queued_listing, listing
       (result = get_value(queued_listing, %w(Location Directions))) ? result : nil
     end
 
-    def self.disclaimer queued_listing
+    def self.disclaimer queued_listing, listing
       (result = get_value(queued_listing, %w(Disclaimer))) ? result : nil
     end
 
-    def self.disclose_address queued_listing
+    def self.disclose_address queued_listing, listing
       (result = get_value(queued_listing, %w(DiscloseAddress))) ? result.to_s.to_bool : nil
     end
     
-    def self.elevation queued_listing
+    def self.elevation queued_listing, listing
       (result = get_value(queued_listing, %w(Location Elevation))) ? result : nil
     end
 
@@ -111,211 +115,211 @@ module Mapper
       end
     end
 
-    def self.exterior_types queued_listing
+    def self.exterior_types queued_listing, listing
       (result = get_enums(queued_listing, %w(DetailedCharacteristics ExteriorTypes ExteriorType))) ? result : nil
     end
     
-    def self.floor_coverings queued_listing
+    def self.floor_coverings queued_listing, listing
       (result = get_enums(queued_listing, %w(DetailedCharacteristics FloorCoverings FloorCovering))) ? result : nil
     end
     
-    def self.foreclosure_status queued_listing
+    def self.foreclosure_status queued_listing, listing
       (result = get_value(queued_listing, %w(ForeclosureStatus))) ? ForeclosureStatus.find_by(name: result) : nil
     end
     
-    def self.franchise queued_listing
+    def self.franchise queued_listing, listing
       get_reso_business(queued_listing, 'Franchise')
     end
 
-    def self.full_bathrooms queued_listing
+    def self.full_bathrooms queued_listing, listing
       (result = get_value(queued_listing, %w(FullBathrooms))) ? result.to_i : nil
     end
 
-    def self.geocode_options queued_listing
+    def self.geocode_options queued_listing, listing
       (result = get_value(queued_listing, %w(Location GeocodeOptions))) ? result : nil
     end
 
-    def self.half_bathrooms queued_listing
+    def self.half_bathrooms queued_listing, listing
       (result = get_value(queued_listing, %w(HalfBathrooms))) ? result.to_i : nil
     end
 
-    def self.has_attic queued_listing
+    def self.has_attic queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasAttic))
     end
 
-    def self.has_barbecue_area queued_listing
+    def self.has_barbecue_area queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasBarbecueArea))
     end
 
-    def self.has_basement queued_listing
+    def self.has_basement queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasBasement))
     end
 
-    def self.has_ceiling_fan queued_listing
+    def self.has_ceiling_fan queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasCeilingFan))
     end
 
-    def self.has_deck queued_listing
+    def self.has_deck queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasDeck))
     end
 
-    def self.has_disabled_access queued_listing
+    def self.has_disabled_access queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasDisabledAccess))
     end
 
-    def self.has_dock queued_listing
+    def self.has_dock queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasDock))
     end
       
-    def self.has_doorman queued_listing
+    def self.has_doorman queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasDoorman))
     end
 
-    def self.has_double_pane_windows queued_listing
+    def self.has_double_pane_windows queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasDoublePaneWindows))
     end
 
-    def self.has_elevator queued_listing
+    def self.has_elevator queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasElevator))
     end
 
-    def self.has_fireplace queued_listing
+    def self.has_fireplace queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasFireplace))
     end
 
-    def self.has_garden queued_listing
+    def self.has_garden queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasGarden))
     end
 
-    def self.has_gated_entry queued_listing
+    def self.has_gated_entry queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasGatedEntry))
     end
 
-    def self.has_greenhouse queued_listing
+    def self.has_greenhouse queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasGreenhouse))
     end
 
-    def self.has_hot_tub_spa queued_listing
+    def self.has_hot_tub_spa queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasHotTubSpa))
     end
 
-    def self.has_intercom queued_listing
+    def self.has_intercom queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics Intercom))
     end
 
-    def self.has_jetted_bath_tub queued_listing
+    def self.has_jetted_bath_tub queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasJettedBathTub))
     end
 
-    def self.has_lawn queued_listing
+    def self.has_lawn queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasLawn))
     end
 
-    def self.has_mother_in_law queued_listing
+    def self.has_mother_in_law queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasMotherInLaw))
     end
 
-    def self.has_patio queued_listing
+    def self.has_patio queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasPatio))
     end
 
-    def self.has_pond queued_listing
+    def self.has_pond queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasPond))
     end
       
-    def self.has_pool queued_listing
+    def self.has_pool queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasPool))
     end
 
-    def self.has_porch queued_listing
+    def self.has_porch queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasPorch))
     end
 
-    def self.has_rv_parking queued_listing
+    def self.has_rv_parking queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasRVParking))
     end
 
-    def self.has_sauna queued_listing
+    def self.has_sauna queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasSauna))
     end
 
-    def self.has_security_system queued_listing
+    def self.has_security_system queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasSecuritySystem))
     end
 
-    def self.has_skylight queued_listing
+    def self.has_skylight queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasSkylight))
     end
 
-    def self.has_sports_court queued_listing
+    def self.has_sports_court queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasSportsCourt))
     end
 
-    def self.has_sprinkler_system queued_listing
+    def self.has_sprinkler_system queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasSprinklerSystem))
     end
 
-    def self.has_vaulted_ceiling queued_listing
+    def self.has_vaulted_ceiling queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasVaultedCeiling))
     end
 
-    def self.has_wet_bar queued_listing
+    def self.has_wet_bar queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics HasWetBar))
     end
 
-    def self.heating_fuels queued_listing
+    def self.heating_fuels queued_listing, listing
       (result = get_enums(queued_listing, %w(DetailedCharacteristics HeatingFuels HeatingFuel))) ? result : nil
     end
     
-    def self.heating_systems queued_listing
+    def self.heating_systems queued_listing, listing
       (result = get_enums(queued_listing, %w(DetailedCharacteristics HeatingSystems HeatingSystem))) ? result : nil
     end
 
-    def self.is_cable_ready queued_listing
+    def self.is_cable_ready queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics IsCableReady))
     end
 
-    def self.is_new_construction queued_listing
+    def self.is_new_construction queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics IsNewConstruction))
     end
 
-    def self.is_waterfront queued_listing
+    def self.is_waterfront queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics IsWaterfront))
     end
 
-    def self.is_wired queued_listing
+    def self.is_wired queued_listing, listing
       get_boolean_value(queued_listing, %w(DetailedCharacteristics IsWired))
     end
 
-    def self.latitude queued_listing
+    def self.latitude queued_listing, listing
       (result = get_value(queued_listing, %w(Location Latitude))) ? result.to_d : nil
     end
 
-    def self.lead_routing_email queued_listing
+    def self.lead_routing_email queued_listing, listing
       (result = get_value(queued_listing, %w(LeadRoutingEmail))) ? result : nil
     end
 
-    def self.legal_description queued_listing
+    def self.legal_description queued_listing, listing
       (result = get_value(queued_listing, %w(DetailedCharacteristics LegalDescription))) ? result : nil
     end
     
-    def self.list_price queued_listing
+    def self.list_price queued_listing, listing
       (result = get_value(queued_listing, %w(ListPrice)).unwrap_attribute) ? result : nil
     end
     
-    def self.list_price_low queued_listing
+    def self.list_price_low queued_listing, listing
       (result = get_value(queued_listing, %w(ListPriceLow)).unwrap_attribute) ? result : nil
     end
     
-    def self.listing_category queued_listing
+    def self.listing_category queued_listing, listing
       (result = get_value(queued_listing, %w(ListingCategory))) ? ListingCategory.find_by_name(result) : nil
     end
 
-    def self.listing_date queued_listing
+    def self.listing_date queued_listing, listing
       (result = get_value(queued_listing, %w(ListingDate))) ? Chronic::parse(result).to_date : nil
     end
     
-    def self.listing_description queued_listing
+    def self.listing_description queued_listing, listing
       (result = unwrap_attribute(get_value(queued_listing, %w(ListingDescription)))) ? result : nil
     end
 
@@ -337,7 +341,7 @@ module Mapper
     end
 
     # TODO: Make ListingProvider and SourceProviderCategory Provider and ProviderCategory
-    def self.listing_provider queued_listing
+    def self.listing_provider queued_listing, listing
       (result = ListingProvider.find_or_initialize_by(
         name: get_value(queued_listing, %w(ProviderName)),
         url: get_value(queued_listing, %w(ProviderURL)),
@@ -345,44 +349,44 @@ module Mapper
       )) ? result : nil
     end
 
-    def self.listing_status queued_listing
+    def self.listing_status queued_listing, listing
       (result = get_value(queued_listing, %w(ListingStatus))) ? ListingStatus.find_by_name(result) : nil
     end
     
-    def self.listing_title queued_listing
+    def self.listing_title queued_listing, listing
       (result = get_value(queued_listing, %w(ListingTitle))) ? result : nil
     end
     
-    def self.listing_url queued_listing
+    def self.listing_url queued_listing, listing
       (result = get_value(queued_listing, %w(ListingURL))) ? result : nil
     end
 
-    def self.living_area queued_listing
+    def self.living_area queued_listing, listing
       (result = get_value(queued_listing, %w(LivingArea))) ? result.to_i : nil
     end
     
-    def self.living_area_unit queued_listing
+    def self.living_area_unit queued_listing, listing
       (result = get_value(queued_listing, %w(LivingArea areaUnits))) ? result : nil
     end
 
-    def self.longitude queued_listing
+    def self.longitude queued_listing, listing
       (result = get_value(queued_listing, %w(Location Longitude))) ? result.to_d : nil
     end
     
-    def self.lot_size queued_listing
+    def self.lot_size queued_listing, listing
       (result = get_value(queued_listing, %w(LotSize))) ? result : nil
     end
 
-    def self.mls_number queued_listing
+    def self.mls_number queued_listing, listing
       (result = get_value(queued_listing, %w(MlsNumber))) ? result : nil
     end
     
-    def self.modification_timestamp queued_listing
+    def self.modification_timestamp queued_listing, listing
       # TODO: Change from string to datetime
       (result = get_value(queued_listing, %w(ModificationTimestamp))) ? result : nil
     end
 
-    def self.multiple_listing_service queued_listing
+    def self.multiple_listing_service queued_listing, listing
       if (get_value(queued_listing, %w(MlsId)) || get_value(queued_listing, %w(MlsName)))
         MultipleListingService.find_or_initialize_by(
           mls_id: get_value(queued_listing, %w(MlsId)),
@@ -391,15 +395,30 @@ module Mapper
       end
     end
 
-    def self.num_floors queued_listing
+    def self.neighborhoods queued_listing, listing
+      if (result = get_value(queued_listing, %w(Location Neighborhoods Neighborhood)))
+        places = result.map do |item| 
+          place = Neighborhood.find_or_initialize_by(
+            city: get_value(queued_listing, %w(Address City)),
+            name: item.drilldown('Name'),
+            state_or_province: get_value(queued_listing, %w(Address StateOrProvince))
+          )
+          place.description = item.drilldown('Description')
+          place
+        end
+        places
+      end
+    end
+
+    def self.num_floors queued_listing, listing
       (result = get_value(queued_listing, %w(DetailedCharacteristics NumFloors))) ? result.to_i : nil
     end
     
-    def self.num_parking_spaces queued_listing
+    def self.num_parking_spaces queued_listing, listing
       (result = get_value(queued_listing, %w(DetailedCharacteristics NumParkingSpaces))) ? result.to_i : nil
     end
     
-    def self.office queued_listing
+    def self.office queued_listing, listing
       if (result = get_value(queued_listing, %w(Offices Office)))
         office = Office.find_or_initialize_by(
           office_identifier: result.drilldown('OfficeId'),
@@ -429,7 +448,7 @@ module Mapper
       end
     end
 
-    def self.one_quarter_bathrooms queued_listing
+    def self.one_quarter_bathrooms queued_listing, listing
       (result = get_value(queued_listing, %w(OneQuarterBathrooms))) ? result.to_i : nil
     end
 
@@ -445,12 +464,12 @@ module Mapper
       end
     end
 
-    def self.parcel_id queued_listing
+    def self.parcel_id queued_listing, listing
       (result = get_value(queued_listing, %w(Location ParcelId))) ? result : nil
     end
 
     # TODO: Change participant_identifier to participant_id
-    def self.participants queued_listing
+    def self.participants queued_listing, listing
       if (result = get_repeaters(queued_listing, %w(ListingParticipants Participant)))
         result.map do |item| 
           participant = Participant.find_or_initialize_by(
@@ -472,7 +491,7 @@ module Mapper
       end
     end
 
-    def self.permit_address_on_internet queued_listing
+    def self.permit_address_on_internet queued_listing, listing
       (result = get_value(queued_listing, %w(MarketingInformation PermitAddressOnInternet))) ? result.to_s.to_bool : nil
     end
     
@@ -480,37 +499,38 @@ module Mapper
       (result = listing_media(queued_listing, listing, %w(Photos Photo))) ? result : nil
     end
 
-    def self.property_sub_type queued_listing
+    def self.property_sub_type queued_listing, listing
       (result = unwrap_attribute(get_value(queued_listing, %w(PropertySubType)))) ? PropertySubType.find_by_name(result) : nil
     end
     
-    def self.property_sub_type_description queued_listing
+    def self.property_sub_type_description queued_listing, listing
       (result = get_value(queued_listing, %w(PropertySubType otherDescription))) ? result : nil
     end
     
-    def self.property_type queued_listing
+    def self.property_type queued_listing, listing
       (result = unwrap_attribute(get_value(queued_listing, %w(PropertyType)))) ? PropertyType.find_by_name(result) : nil
     end
 
-    def self.property_type_description queued_listing
+    def self.property_type_description queued_listing, listing
       (result = get_value(queued_listing, %w(PropertyType otherDescription))) ? result : nil
     end
     
-    def self.roof_types queued_listing
+    def self.roof_types queued_listing, listing
       (result = get_enums(queued_listing, %w(DetailedCharacteristics RoofTypes RoofType))) ? result : nil
     end
     
-    def self.room_count queued_listing
+    def self.room_count queued_listing, listing
       (result = get_value(queued_listing, %w(DetailedCharacteristics RoomCount))) ? result.to_i : nil
     end
     
     def self.rooms queued_listing, listing
       if (result = get_value(queued_listing, %w(DetailedCharacteristics Rooms Room)))
-        result.map{|room_category| Room.new(listing: listing, room_category: RoomCategory.find_by(name: room_category))}
+        rooms = result.map{|room_category| Room.new(listing: listing, room_category: RoomCategory.find_by(name: room_category))}
       end
+      rooms ? rooms : []
     end
     
-    def self.taxes queued_listing
+    def self.taxes queued_listing, listing
       if (result = get_repeaters(queued_listing, %w(Taxes Tax)))
         result.map{|item| Tax.find_or_initialize_by(
           year: item['Year'],
@@ -520,7 +540,7 @@ module Mapper
       end
     end
 
-    def self.three_quarter_bathrooms queued_listing
+    def self.three_quarter_bathrooms queued_listing, listing
       (result = get_value(queued_listing, %w(ThreeQuarterBathrooms))) ? result.to_i : nil
     end
 
@@ -528,7 +548,7 @@ module Mapper
       (result = listing_media(queued_listing, listing, %w(Videos Video))) ? result : nil
     end
 
-    def self.view_types queued_listing
+    def self.view_types queued_listing, listing
       (result = get_enums(queued_listing, %w(DetailedCharacteristics ViewTypes ViewType))) ? result : nil
     end
     
@@ -536,24 +556,24 @@ module Mapper
       (result = listing_media(queued_listing, listing, %w(VirtualTours VirtualTour))) ? result : nil
     end
 
-    def self.vow_address_display queued_listing
+    def self.vow_address_display queued_listing, listing
       get_boolean_value(queued_listing, %w(MarketingInformation VOWAutomatedValuationDisplay'))
     end
 
-    def self.vow_automated_valuation_display queued_listing
+    def self.vow_automated_valuation_display queued_listing, listing
       get_boolean_value(queued_listing, %w(MarketingInformation VOWAddressDisplay'))
     end
 
-    def self.vow_consumer_comment queued_listing
+    def self.vow_consumer_comment queued_listing, listing
       get_boolean_value(queued_listing, %w(MarketingInformation VOWConsumerComment'))
     end
     
-    def self.year_built queued_listing
+    def self.year_built queued_listing, listing
       (result = get_value(queued_listing, %w(YearBuilt))) ? result.to_i : nil
     end
 
-    def self.year_updated queued_listing
-      (result = get_value(queued_listing, %w(DetailedCharacteristics YearUpdated))) ? result.to_i : nil
+    def self.year_updated queued_listing, listing
+      (result = get_value(queued_listing, %w(DetailedCharacteristics YearUpdated))) ? result.to_s.to_i : nil
     end
     
     # Utilities
@@ -584,12 +604,12 @@ module Mapper
       end
     end
 
-    def self.get_boolean_value queued_listing, elements
-      (result = get_value(queued_listing, elements)) ? result.to_s.to_bool : nil
-    end
-    
     def self.unique_identifier queued_listing
       (result = get_value(queued_listing, queued_listing.import.unique_identifier.split(' ')))
+    end
+
+    def self.get_boolean_value queued_listing, elements
+      (result = get_value(queued_listing, elements)) ? result.to_s.to_bool : nil
     end
     
     def self.unwrap_attribute value
@@ -635,125 +655,5 @@ module Mapper
       end
     end
 
-    def self.create_or_update_listing queued_listing
-      listing = queued_listing.import.listings.find_or_initialize_by(
-        listing_key: unique_identifier(queued_listing)
-      )
-      if (listing.modification_timestamp != modification_timestamp(queued_listing))
-        listing.assign_attributes({
-          address: address(queued_listing, listing),
-          alternate_prices: alternate_prices(queued_listing, listing),        
-          appliances: appliances(queued_listing),
-          architecture_style: architecture_style(queued_listing),
-          architecture_style_description: architecture_style_description(queued_listing),
-          bathrooms: bathrooms(queued_listing),
-          bedrooms: bedrooms(queued_listing),
-          brokerage: brokerage(queued_listing),
-          builder: builder(queued_listing),
-          building_unit_count: building_unit_count(queued_listing),
-          condo_floor_num: condo_floor_num(queued_listing),
-          cooling_systems: cooling_systems(queued_listing),
-          county: county(queued_listing),
-          currency_code: currency_code(queued_listing),
-          directions: directions(queued_listing),
-          disclaimer: disclaimer(queued_listing),
-          disclose_address: disclose_address(queued_listing),
-          elevation: elevation(queued_listing),
-          expenses: expenses(queued_listing, listing),
-          exterior_types: exterior_types(queued_listing),
-          floor_coverings: floor_coverings(queued_listing),
-          foreclosure_status: foreclosure_status(queued_listing),
-          franchise: franchise(queued_listing),
-          full_bathrooms: full_bathrooms(queued_listing),
-          geocode_options: geocode_options(queued_listing),
-          half_bathrooms: half_bathrooms(queued_listing),
-          has_attic: has_attic(queued_listing),
-          has_barbecue_area: has_barbecue_area(queued_listing),
-          has_basement: has_basement(queued_listing),
-          has_ceiling_fan: has_ceiling_fan(queued_listing),
-          has_deck: has_deck(queued_listing),
-          has_disabled_access: has_disabled_access(queued_listing),
-          has_dock: has_dock(queued_listing),
-          has_doorman: has_doorman(queued_listing),
-          has_double_pane_windows: has_double_pane_windows(queued_listing),
-          has_elevator: has_elevator(queued_listing),
-          has_fireplace: has_fireplace(queued_listing),
-          has_garden: has_garden(queued_listing),
-          has_gated_entry: has_gated_entry(queued_listing),
-          has_greenhouse: has_greenhouse(queued_listing),
-          has_hot_tub_spa: has_hot_tub_spa(queued_listing),
-          has_intercom: has_intercom(queued_listing),
-          has_jetted_bath_tub: has_jetted_bath_tub(queued_listing),
-          has_lawn: has_lawn(queued_listing),
-          has_mother_in_law: has_mother_in_law(queued_listing),
-          has_patio: has_patio(queued_listing),
-          has_pond: has_pond(queued_listing),
-          has_pool: has_pool(queued_listing),
-          has_porch: has_porch(queued_listing),
-          has_rv_parking: has_rv_parking(queued_listing),
-          has_sauna: has_sauna(queued_listing),
-          has_security_system: has_security_system(queued_listing),
-          has_skylight: has_skylight(queued_listing),
-          has_sports_court: has_sports_court(queued_listing),
-          has_sprinkler_system: has_sprinkler_system(queued_listing),
-          has_vaulted_ceiling: has_vaulted_ceiling(queued_listing),
-          has_wet_bar: has_wet_bar(queued_listing),
-          heating_fuels: heating_fuels(queued_listing),
-          heating_systems: heating_systems(queued_listing),
-          import: queued_listing.import,
-          is_cable_ready: is_cable_ready(queued_listing),
-          is_new_construction: is_new_construction(queued_listing),
-          is_waterfront: is_waterfront(queued_listing),
-          is_wired: is_wired(queued_listing),
-          latitude: latitude(queued_listing),
-          lead_routing_email: lead_routing_email(queued_listing),
-          legal_description: legal_description(queued_listing),
-          list_price: list_price(queued_listing),
-          list_price_low: list_price_low(queued_listing),
-          listing_category: listing_category(queued_listing),
-          listing_date: listing_date(queued_listing),
-          listing_description: listing_description(queued_listing),
-          listing_provider: listing_provider(queued_listing),
-          listing_status: listing_status(queued_listing),
-          listing_title: listing_title(queued_listing),
-          listing_url: listing_url(queued_listing),
-          living_area: living_area(queued_listing),
-          living_area_unit: living_area_unit(queued_listing),
-          longitude: longitude(queued_listing),
-          lot_size: lot_size(queued_listing),
-          mls_number: mls_number(queued_listing),
-          multiple_listing_service: multiple_listing_service(queued_listing),
-          modification_timestamp: modification_timestamp(queued_listing),
-          num_floors: num_floors(queued_listing),
-          num_parking_spaces: num_parking_spaces(queued_listing),
-          office: office(queued_listing),
-          one_quarter_bathrooms: one_quarter_bathrooms(queued_listing),
-          open_houses: open_houses(queued_listing, listing),
-          parcel_info: parcel_id(queued_listing),
-          participants: participants(queued_listing),
-          permit_address_on_internet: permit_address_on_internet(queued_listing),
-          photos: photos(queued_listing, listing),
-          property_sub_type: property_sub_type(queued_listing), 
-          property_sub_type_description: property_sub_type_description(queued_listing),
-          property_type: property_type(queued_listing),
-          property_type_description: property_type_description(queued_listing),
-          roof_types: roof_types(queued_listing),
-          room_count: room_count(queued_listing),
-          rooms: rooms(queued_listing, listing),
-  # TODO: subdivision: subdivision(queued_listing),
-          taxes: taxes(queued_listing),
-          three_quarter_bathrooms: three_quarter_bathrooms(queued_listing),
-          videos: videos(queued_listing, listing),
-          view_types: view_types(queued_listing),
-          virtual_tours: virtual_tours(queued_listing, listing),
-          vow_address_display: vow_address_display(queued_listing),
-          vow_automated_valuation_display: vow_automated_valuation_display(queued_listing),
-          vow_consumer_comment: vow_consumer_comment(queued_listing),
-          year_built: year_built(queued_listing),
-          year_updated: year_updated(queued_listing)
-        })
-      end
-      listing.save
-    end
   end
 end

@@ -45,6 +45,7 @@ namespace :reso do
       end
     rescue Exception => e
       puts e.inspect
+      exit if Rails.env.development?
     end
   end
   
