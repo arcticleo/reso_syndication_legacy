@@ -639,7 +639,7 @@ module Mapper
       listing = queued_listing.import.listings.find_or_initialize_by(
         listing_key: unique_identifier(queued_listing)
       )
-      unless (listing.modification_timestamp != modification_timestamp(queued_listing))
+      if (listing.modification_timestamp != modification_timestamp(queued_listing))
         listing.assign_attributes({
           address: address(queued_listing, listing),
           alternate_prices: alternate_prices(queued_listing, listing),        
