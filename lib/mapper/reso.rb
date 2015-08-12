@@ -156,7 +156,131 @@ module Mapper
     def self.half_bathrooms queued_listing
       (result = get_value(queued_listing, %w(HalfBathrooms))) ? result.to_i : nil
     end
-    
+
+    def self.has_attic queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasAttic))
+    end
+
+    def self.has_barbecue_area queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasBarbecueArea))
+    end
+
+    def self.has_basement queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasBasement))
+    end
+
+    def self.has_ceiling_fan queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasCeilingFan))
+    end
+
+    def self.has_deck queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasDeck))
+    end
+
+    def self.has_disabled_access queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasDisabledAccess))
+    end
+
+    def self.has_dock queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasDock))
+    end
+      
+    def self.has_doorman queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasDoorman))
+    end
+
+    def self.has_double_pane_windows queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasDoublePaneWindows))
+    end
+
+    def self.has_elevator queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasElevator))
+    end
+
+    def self.has_fireplace queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasFireplace))
+    end
+
+    def self.has_garden queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasGarden))
+    end
+
+    def self.has_gated_entry queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasGatedEntry))
+    end
+
+    def self.has_greenhouse queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasGreenhouse))
+    end
+
+    def self.has_hot_tub_spa queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasHotTubSpa))
+    end
+
+    def self.has_intercom queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics Intercom))
+    end
+
+    def self.has_jetted_bath_tub queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasJettedBathTub))
+    end
+
+    def self.has_lawn queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasLawn))
+    end
+
+    def self.has_mother_in_law queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasMotherInLaw))
+    end
+
+    def self.has_patio queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasPatio))
+    end
+
+    def self.has_pond queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasPond))
+    end
+      
+    def self.has_pool queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasPool))
+    end
+
+    def self.has_porch queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasPorch))
+    end
+
+    def self.has_rv_parking queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasRVParking))
+    end
+
+    def self.has_sauna queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasSauna))
+    end
+
+    def self.has_security_system queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasSecuritySystem))
+    end
+
+    def self.has_skylight queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasSkylight))
+    end
+
+    def self.has_sports_court queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasSportsCourt))
+    end
+
+    def self.has_sprinkler_system queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasSprinklerSystem))
+    end
+
+    def self.has_vaulted_ceiling queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasVaultedCeiling))
+    end
+
+    def self.has_wet_bar queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics HasWetBar))
+    end
+
     def self.heating_fuels queued_listing
       (result = get_enums(queued_listing, %w(DetailedCharacteristics HeatingFuels HeatingFuel))) ? result : nil
     end
@@ -164,7 +288,23 @@ module Mapper
     def self.heating_systems queued_listing
       (result = get_enums(queued_listing, %w(DetailedCharacteristics HeatingSystems HeatingSystem))) ? result : nil
     end
-    
+
+    def self.is_cable_ready queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics IsCableReady))
+    end
+
+    def self.is_new_construction queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics IsNewConstruction))
+    end
+
+    def self.is_waterfront queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics IsWaterfront))
+    end
+
+    def self.is_wired queued_listing
+      get_boolean_value(queued_listing, %w(DetailedCharacteristics IsWired))
+    end
+
     def self.latitude queued_listing
       (result = get_value(queued_listing, %w(Location Latitude))) ? result.to_d : nil
     end
@@ -202,7 +342,7 @@ module Mapper
         result.map do |item|
           media = listing.send(elements.last.tableize).find_or_initialize_by(
             media_url: item.drilldown('MediaURL'),
-            media_modification_timestamp: (value = item.drilldown('MediaModificationTimestamp').is_a?(Hash) ? nil : value)
+            media_modification_timestamp: item.drilldown('MediaModificationTimestamp')
           )
           media.assign_attributes({
             media_order_number: item.drilldown('MediaOrderNumber'),
@@ -415,15 +555,15 @@ module Mapper
     end
 
     def self.vow_address_display queued_listing
-      (result = unwrap_attribute(get_value(queued_listing, %w(MarketingInformation VOWAddressDisplay)))) ? result.to_s.to_bool : nil
+      get_boolean_value(queued_listing, %w(MarketingInformation VOWAutomatedValuationDisplay'))
     end
 
     def self.vow_automated_valuation_display queued_listing
-      (result = unwrap_attribute(get_value(queued_listing, %w(MarketingInformation VOWAutomatedValuationDisplay)))) ? result.to_s.to_bool : nil
+      get_boolean_value(queued_listing, %w(MarketingInformation VOWAddressDisplay'))
     end
 
     def self.vow_consumer_comment queued_listing
-      (result = unwrap_attribute(get_value(queued_listing, %w(MarketingInformation VOWConsumerComment)))) ? result.to_s.to_bool : nil
+      get_boolean_value(queued_listing, %w(MarketingInformation VOWConsumerComment'))
     end
     
     def self.year_built queued_listing
@@ -435,6 +575,10 @@ module Mapper
     end
     
     # Utilities
+    
+    def self.get_boolean_value queued_listing, elements
+      (result = get_value(queued_listing, elements)) ? result.to_s.to_bool : nil
+    end
     
     def self.unique_identifier queued_listing
       (result = get_value(queued_listing, queued_listing.import.unique_identifier.split(' ')))
@@ -514,9 +658,44 @@ module Mapper
           full_bathrooms: full_bathrooms(queued_listing),
           geocode_options: geocode_options(queued_listing),
           half_bathrooms: half_bathrooms(queued_listing),
+          has_attic: has_attic(queued_listing),
+          has_barbecue_area: has_barbecue_area(queued_listing),
+          has_basement: has_basement(queued_listing),
+          has_ceiling_fan: has_ceiling_fan(queued_listing),
+          has_deck: has_deck(queued_listing),
+          has_disabled_access: has_disabled_access(queued_listing),
+          has_dock: has_dock(queued_listing),
+          has_doorman: has_doorman(queued_listing),
+          has_double_pane_windows: has_double_pane_windows(queued_listing),
+          has_elevator: has_elevator(queued_listing),
+          has_fireplace: has_fireplace(queued_listing),
+          has_garden: has_garden(queued_listing),
+          has_gated_entry: has_gated_entry(queued_listing),
+          has_greenhouse: has_greenhouse(queued_listing),
+          has_hot_tub_spa: has_hot_tub_spa(queued_listing),
+          has_intercom: has_intercom(queued_listing),
+          has_jetted_bath_tub: has_jetted_bath_tub(queued_listing),
+          has_lawn: has_lawn(queued_listing),
+          has_mother_in_law: has_mother_in_law(queued_listing),
+          has_patio: has_patio(queued_listing),
+          has_pond: has_pond(queued_listing),
+          has_pool: has_pool(queued_listing),
+          has_porch: has_porch(queued_listing),
+          has_rv_parking: has_rv_parking(queued_listing),
+          has_sauna: has_sauna(queued_listing),
+          has_security_system: has_security_system(queued_listing),
+          has_skylight: has_skylight(queued_listing),
+          has_sports_court: has_sports_court(queued_listing),
+          has_sprinkler_system: has_sprinkler_system(queued_listing),
+          has_vaulted_ceiling: has_vaulted_ceiling(queued_listing),
+          has_wet_bar: has_wet_bar(queued_listing),
           heating_fuels: heating_fuels(queued_listing),
           heating_systems: heating_systems(queued_listing),
           import: queued_listing.import,
+          is_cable_ready: is_cable_ready(queued_listing),
+          is_new_construction: is_new_construction(queued_listing),
+          is_waterfront: is_waterfront(queued_listing),
+          is_wired: is_wired(queued_listing),
           latitude: latitude(queued_listing),
           lead_routing_email: lead_routing_email(queued_listing),
           legal_description: legal_description(queued_listing),
