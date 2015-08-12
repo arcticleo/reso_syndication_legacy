@@ -2,6 +2,7 @@ class Listing < ActiveRecord::Base
 
   belongs_to :architecture_style
   belongs_to :brokerage
+  belongs_to :builder
   belongs_to :community
   belongs_to :county
   belongs_to :foreclosure_status
@@ -29,7 +30,6 @@ class Listing < ActiveRecord::Base
   has_many :virtual_tours, dependent: :destroy
   
   has_and_belongs_to_many :appliances, association_foreign_key: "enumeration_id"
-  has_and_belongs_to_many :builders, association_foreign_key: "business_id"
   has_and_belongs_to_many :cooling_systems, association_foreign_key: "enumeration_id"
   has_and_belongs_to_many :exterior_types, association_foreign_key: "enumeration_id"
   has_and_belongs_to_many :floor_coverings, association_foreign_key: "enumeration_id"
@@ -51,6 +51,7 @@ class Listing < ActiveRecord::Base
   accepts_nested_attributes_for :heating_fuels
   accepts_nested_attributes_for :heating_systems
   accepts_nested_attributes_for :home_features
+  accepts_nested_attributes_for :neighborhoods
   accepts_nested_attributes_for :open_houses, allow_destroy: true
   accepts_nested_attributes_for :parking
   accepts_nested_attributes_for :participants, allow_destroy: true

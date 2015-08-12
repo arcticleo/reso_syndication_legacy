@@ -26,6 +26,14 @@ Hash.class_eval do
   end
 end
 
+Array.class_eval do
+  def drilldown drillee
+    if (result = drillee.last)
+      result.present? ? (result.unwrap_attribute) : nil
+    end
+  end
+end
+
 Object.class_eval do
   def unwrap_attribute
     self.is_a?(Hash) ? (self['__content__'] ? self['__content__'] : self) : self
@@ -41,3 +49,5 @@ String.class_eval do
     nil
   end
 end
+
+
