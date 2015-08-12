@@ -8,6 +8,7 @@ module Mapper
     bathrooms
     bedrooms
     brokerage
+    builder
     building_unit_count
     condo_floor_num
     cooling_systems
@@ -82,6 +83,7 @@ module Mapper
     mls_number
     multiple_listing_service
     modification_timestamp
+    neighborhoods
     num_floors
     num_parking_spaces
     office
