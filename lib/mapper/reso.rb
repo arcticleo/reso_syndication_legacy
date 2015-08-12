@@ -50,31 +50,13 @@ module Mapper
     end
 
     def self.brokerage queued_listing
-      if (result = get_value(queued_listing, %w(Brokerage)))
-        brokerage = Brokerage.find_or_initialize_by(
-          name: result.drilldown('Name')
-        )
-        brokerage.assign_attributes({
-          phone: result.drilldown('Phone'),
-          email: result.drilldown('Email'),
-          website_url: result.drilldown('WebsiteURL'),
-          logo_url: result.drilldown('LogoURL')
-        })
-        brokerage.address ||= Address.new
-        brokerage.address.assign_attributes({
-          preference_order: result.drilldown('Address preference_order'),
-          address_preference_order: result.drilldown('Address address_preference_order'),
-          full_street_address: result.drilldown('Address FullStreetAddress'),
-          unit_number: result.drilldown('Address UnitNumber'),
-          city: result.drilldown('Address City'),
-          state_or_province: result.drilldown('Address StateOrProvince'),
-          postal_code: result.drilldown('Address PostalCode'),
-          country: result.drilldown('Address Country')
-        })
-        brokerage
-      end
+      get_reso_business(queued_listing, 'Brokerage')
     end
-    
+
+    def self.builder queued_listing
+      get_reso_business(queued_listing, 'Builder')
+    end
+
     def self.building_unit_count queued_listing
       (result = get_value(queued_listing, %w(DetailedCharacteristics BuildingUnitCount))) ? result.to_i : nil
     end
@@ -142,7 +124,7 @@ module Mapper
     end
     
     def self.franchise queued_listing
-      (result = get_value(queued_listing, %w(Franchise Name))) ? Franchise.find_or_initialize_by(name: result) : nil
+      get_reso_business(queued_listing, 'Franchise')
     end
 
     def self.full_bathrooms queued_listing
@@ -575,7 +557,33 @@ module Mapper
     end
     
     # Utilities
-    
+
+    def self.get_reso_business queued_listing, business_type
+      if (result = get_value(queued_listing, [business_type]))
+        business = business_type.constantize.find_or_initialize_by(
+          name: result.drilldown('Name'),
+          phone: result.drilldown('Phone')
+        )
+        business.assign_attributes({
+          email: result.drilldown('Email'),
+          logo_url: result.drilldown('LogoURL'),
+          website_url: result.drilldown('WebsiteURL')
+        })
+        business.address ||= Address.new
+        business.address.assign_attributes({
+          preference_order: result.drilldown('Address preference_order'),
+          address_preference_order: result.drilldown('Address address_preference_order'),
+          full_street_address: result.drilldown('Address FullStreetAddress'),
+          unit_number: result.drilldown('Address UnitNumber'),
+          city: result.drilldown('Address City'),
+          state_or_province: result.drilldown('Address StateOrProvince'),
+          postal_code: result.drilldown('Address PostalCode'),
+          country: result.drilldown('Address Country')
+        })
+        business
+      end
+    end
+
     def self.get_boolean_value queued_listing, elements
       (result = get_value(queued_listing, elements)) ? result.to_s.to_bool : nil
     end
@@ -631,7 +639,7 @@ module Mapper
       listing = queued_listing.import.listings.find_or_initialize_by(
         listing_key: unique_identifier(queued_listing)
       )
-      if (listing.modification_timestamp != modification_timestamp(queued_listing))
+      unless (listing.modification_timestamp != modification_timestamp(queued_listing))
         listing.assign_attributes({
           address: address(queued_listing, listing),
           alternate_prices: alternate_prices(queued_listing, listing),        
@@ -641,6 +649,7 @@ module Mapper
           bathrooms: bathrooms(queued_listing),
           bedrooms: bedrooms(queued_listing),
           brokerage: brokerage(queued_listing),
+          builder: builder(queued_listing),
           building_unit_count: building_unit_count(queued_listing),
           condo_floor_num: condo_floor_num(queued_listing),
           cooling_systems: cooling_systems(queued_listing),
