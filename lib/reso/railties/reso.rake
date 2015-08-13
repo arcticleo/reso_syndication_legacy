@@ -97,7 +97,7 @@ namespace :reso do
     import = Import.find_by(token: args.import_token)
 
     unless import.blank?
-      count, stream = 0, ''
+      l, count, stream = 0, 0, ''
       open_tag, close_tag = get_open_and_closing_tag_for import.repeating_element
 
       # Grab a file to work with
@@ -108,15 +108,19 @@ namespace :reso do
       xml_header = get_xml_header filepath, import.repeating_element
 
       start = Time.now
-
+      puts "Starting..." if Rails.env.development?
       File.foreach(filepath) do |line|
         stream += line
         while (from_here = stream.index(open_tag)) && (to_there = stream.index(close_tag))
           xml = stream[from_here..to_there + (close_tag.length-1)]
           process_item xml, xml_header, import
           stream.gsub!(xml, '')
+          if (l += 1) % 1000 == 0
+            puts "#{l} - #{l/(Time.now - start)} listings/s" if Rails.env.development?
+          end
         end
       end
+      puts "#{l} - #{l/(Time.now - start)} listings/s" if Rails.env.development?
       File.delete(filepath)
     end
   end
