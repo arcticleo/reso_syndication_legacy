@@ -455,12 +455,15 @@ module Mapper
     # TODO: Figure out how to provide time zone for StartTime and EndTime 
     def self.open_houses queued_listing, listing
       if (result = get_repeaters(queued_listing, %w(OpenHouses OpenHouse)))
-        result.map{|open_house| listing.open_houses.find_or_initialize_by(
-          showing_date: Chronic::parse(open_house['Date']).to_date,
-          start_time: open_house['StartTime'],
-          end_time: open_house['EndTime'],
-          description: open_house['Description']
-        )}
+        result.map do |open_house| 
+          oh = listing.open_houses.find_or_initialize_by(
+            showing_date: Chronic::parse(open_house['Date']).to_date,
+            start_time: open_house['StartTime'],
+            end_time: open_house['EndTime']
+          )
+          oh.description = open_house['Description']
+          oh
+        end
       end
     end
 
