@@ -406,8 +406,8 @@ module Mapper
           place.description = item.drilldown('Description')
           place
         end
-        places
       end
+      places ? places : []
     end
 
     def self.num_floors queued_listing, listing
