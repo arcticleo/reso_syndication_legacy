@@ -18,9 +18,9 @@ class CreateParticipants < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :participants, :participant_key
+    add_index :participants, :email
     add_index :participants, :participant_identifier
+    add_index :participants, :participant_key
     add_index :participants, :person_id
-    add_index :participants, [:first_name, :last_name, :email]
   end
 end
