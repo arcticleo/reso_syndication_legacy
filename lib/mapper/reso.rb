@@ -476,11 +476,11 @@ module Mapper
       if (result = get_repeaters(queued_listing, %w(ListingParticipants Participant)))
         result.map do |item| 
           participant = Participant.find_or_initialize_by(
-            first_name: item['FirstName'],
-            last_name: item['LastName'],
             email: item['Email']
           )
           participant.assign_attributes({
+            first_name: item['FirstName'],
+            last_name: item['LastName'],
             participant_key: item['ParticipantKey'],
             participant_identifier: item['ParticipantId'],
             participant_role: ParticipantRole.find_by(name: item['Role']),
