@@ -13,7 +13,6 @@ class CreateListingMedia < ActiveRecord::Migration
     end
     add_index :listing_media, :media_order_number
     add_index :listing_media, :type
-    add_index :listing_media, [:listing_id, :media_order_number]
     add_index :listing_media, [:media_url, :media_modification_timestamp], name: "on_url_and_timestamp"
   end
 end
