@@ -12,7 +12,6 @@ class CreateOpenHouses < ActiveRecord::Migration
       t.timestamps
     end
     add_index :open_houses, :showing_date
-    add_index :open_houses, :start_time
-    add_index :open_houses, :end_time
+    add_index :open_houses, [:showing_date, :start_time, :end_time]
   end
 end
