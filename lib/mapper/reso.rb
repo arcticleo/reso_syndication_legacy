@@ -572,11 +572,11 @@ module Mapper
     end
     
     def self.year_built queued_listing, listing
-      (result = get_value(queued_listing, %w(YearBuilt))) ? result.to_i : nil
+      (result = get_value(queued_listing, %w(YearBuilt))) ? result : nil
     end
 
     def self.year_updated queued_listing, listing
-      (result = get_value(queued_listing, %w(DetailedCharacteristics YearUpdated))) ? result.to_s.to_i : nil
+      get_value(queued_listing, %w(DetailedCharacteristics YearUpdated))
     end
     
     # Utilities
