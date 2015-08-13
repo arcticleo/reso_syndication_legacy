@@ -272,7 +272,7 @@ module Mapper
     end
     
     def self.heating_systems queued_listing, listing
-      (result = get_enums(queued_listing, %w(DetailedCharacteristics HeatingSystems HeatingSystem))) ? result : nil
+      (result = get_enums(queued_listing, %w(DetailedCharacteristics HeatingSystems HeatingSystem)).uniq) ? result : nil
     end
 
     def self.is_cable_ready queued_listing, listing
