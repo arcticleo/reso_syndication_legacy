@@ -525,7 +525,7 @@ module Mapper
     
     def self.rooms queued_listing, listing
       if (result = get_value(queued_listing, %w(DetailedCharacteristics Rooms Room)))
-        rooms = result.map{|room_category| Room.new(listing: listing, room_category: RoomCategory.find_by(name: room_category))}
+        rooms = Array(result).map{|room_category| Room.new(listing: listing, room_category: RoomCategory.find_by(name: room_category))}
       end
       rooms ? rooms : []
     end
@@ -627,10 +627,9 @@ module Mapper
     # TODO: Should be find_by_name not find_or_create_by_name. Remove after before_save validation.
     def self.get_enums queued_listing, elements
       if (result = get_repeaters(queued_listing, elements))
-        result.map{|name| elements.last.constantize.find_or_create_by(name: name)}
-      else
-        nil
+        enums = result.map{|name| elements.last.constantize.find_or_create_by(name: name)}
       end
+      enums ? enums : nil
     end
 
     def self.get_value queued_listing, elements
