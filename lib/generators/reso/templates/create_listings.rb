@@ -106,49 +106,6 @@ class CreateListings < ActiveRecord::Migration
     add_index :listings, :list_price
     add_index :listings, :listing_key
     add_index :listings, :mls_number
-    add_index :listings, :bedrooms
-    add_index :listings, :bathrooms
-    add_index :listings, :has_attic
-    add_index :listings, :has_barbecue_area
-    add_index :listings, :has_basement
-    add_index :listings, :has_ceiling_fan
-    add_index :listings, :has_deck
-    add_index :listings, :has_disabled_access
-    add_index :listings, :has_dock
-    add_index :listings, :has_doorman
-    add_index :listings, :has_double_pane_windows
-    add_index :listings, :has_elevator
-    add_index :listings, :has_fireplace
-    add_index :listings, :has_garden
-    add_index :listings, :has_gated_entry
-    add_index :listings, :has_greenhouse
-    add_index :listings, :has_hot_tub_spa
-    add_index :listings, :has_intercom
-    add_index :listings, :has_jetted_bath_tub
-    add_index :listings, :has_lawn
-    add_index :listings, :has_mother_in_law
-    add_index :listings, :has_patio
-    add_index :listings, :has_pond
-    add_index :listings, :has_pool
-    add_index :listings, :has_porch
-    add_index :listings, :has_rv_parking
-    add_index :listings, :has_sauna
-    add_index :listings, :has_security_system
-    add_index :listings, :has_skylight
-    add_index :listings, :has_sports_court
-    add_index :listings, :has_sprinkler_system
-    add_index :listings, :has_vaulted_ceiling
-    add_index :listings, :has_wet_bar
-    add_index :listings, :is_cable_ready
-    add_index :listings, :is_new_construction
-    add_index :listings, :is_waterfront
-    add_index :listings, :is_wired
-    add_index :listings, :living_area
-    add_index :listings, :lot_size
-    add_index :listings, :listing_date
-    add_index :listings, :latitude
-    add_index :listings, :longitude
     add_index :listings, :originating_system_key
-    add_index :listings, :year_built
   end
 end

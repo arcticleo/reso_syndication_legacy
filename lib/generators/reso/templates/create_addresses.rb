@@ -2,7 +2,7 @@ class CreateAddresses < ActiveRecord::Migration
   def change
     create_table :addresses, options: 'DEFAULT CHARSET=utf8' do |t|
       t.string :addressable_type
-      t.references :addressable
+      t.references :addressable, index: true
 
       t.integer :preference_order, default: 1 
       t.integer :address_preference_order, default: 1
@@ -28,6 +28,6 @@ class CreateAddresses < ActiveRecord::Migration
     add_index :addresses, :state_or_province
     add_index :addresses, :postal_code
     add_index :addresses, :country
-    add_index :addresses, [:addressable_id, :addressable_type]
+    add_index :addresses, :addressable_type
   end
 end
