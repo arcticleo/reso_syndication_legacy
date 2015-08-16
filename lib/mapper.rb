@@ -111,4 +111,121 @@ module Mapper
     year_built
     year_updated
   )
+
+  def self.fetch_enumerations class_name
+    Rails.cache.fetch(class_name, expires_in: 1.hours) do
+      enums = {}
+      class_name.constantize.all.map{|item| enums[item.name] = item}
+      enums
+    end
+  end
+
+  def self.address_types
+    fetch_enumerations 'AddressType'
+  end
+  
+  def self.appliances
+    fetch_enumerations 'Appliance'
+  end
+
+  def self.architecture_styles
+    fetch_enumerations 'ArchitectureStyle'
+  end
+  
+  def self.area_units
+    fetch_enumerations 'AreaUnit'
+  end
+  
+  def self.cooling_systems
+    fetch_enumerations 'CoolingSystem'
+  end
+  
+  def self.currency_periods
+    fetch_enumerations 'CurrencyPeriod'
+  end
+  
+  def self.expense_categories
+    fetch_enumerations 'ExpenseCategory'
+  end
+  
+  def self.exterior_types
+    fetch_enumerations 'ExteriorType'
+  end
+  
+  def self.floor_coverings
+    fetch_enumerations 'FloorCovering'
+  end
+  
+  def self.foreclosure_statuses
+    fetch_enumerations 'ForeclosureStatus'
+  end
+  
+  def self.gender
+    fetch_enumerations 'Gender'
+  end
+  
+  def self.heating_fuels
+    fetch_enumerations 'HeatingFuel'
+  end
+  
+  def self.heating_systems
+    fetch_enumerations 'HeatingSystem'
+  end
+  
+  def self.home_features
+    fetch_enumerations 'HomeFeature'
+  end
+  
+  def self.import_formats
+    fetch_enumerations 'ImportFormat'
+  end
+  
+  def self.license_categories
+    fetch_enumerations 'LicenseCategory'
+  end
+  
+  def self.listing_categories
+    fetch_enumerations 'ListingCategory'
+  end
+  
+  def self.listing_statuses
+    fetch_enumerations 'ListingStatus'
+  end
+  
+  def self.parkings
+    fetch_enumerations 'Parking'
+  end
+  
+  def self.participant_roles
+    fetch_enumerations 'ParticipantRole'
+  end
+  
+  def self.property_sub_types
+    fetch_enumerations 'PropertySubType'
+  end
+  
+  def self.property_types
+    fetch_enumerations 'PropertyType'
+  end
+  
+  def self.roof_types
+    fetch_enumerations 'RoofType'
+  end
+  
+  def self.room_categories
+    fetch_enumerations 'RoomCategory'
+  end
+  
+  def self.school_categories
+    fetch_enumerations 'SchoolCategory'
+  end
+  
+  def self.source_provider_categories
+    fetch_enumerations 'SourceProviderCategory'
+  end
+  
+  def self.view_types
+    fetch_enumerations 'ViewType'
+  end
+
 end

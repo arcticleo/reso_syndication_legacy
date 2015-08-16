@@ -34,23 +34,23 @@ module Mapper
     end
 
     def self.appliances queued_listing, listing
-      (result = get_enums(queued_listing, %w(DetailedCharacteristics Appliances Appliance))) ? result : nil
+      get_enums(queued_listing, %w(DetailedCharacteristics Appliances Appliance))
     end
     
     def self.architecture_style queued_listing, listing
-      (result = unwrap_attribute(get_value(queued_listing, %w(DetailedCharacteristics ArchitectureStyle)))) ? ArchitectureStyle.find_by_name(result) : nil
+      (result = get_value(queued_listing, %w(DetailedCharacteristics ArchitectureStyle))) ? Mapper::architecture_styles[result] : nil
     end
     
     def self.architecture_style_description queued_listing, listing
-      (result = get_value(queued_listing, %w(DetailedCharacteristics ArchitectureStyle otherDescription))) ? result : nil
+      get_value(queued_listing, %w(DetailedCharacteristics ArchitectureStyle otherDescription))
     end
     
     def self.bathrooms queued_listing, listing
-      (result = get_value(queued_listing, %w(Bathrooms))) ? result.to_i : nil
+      get_value(queued_listing, %w(Bathrooms))
     end
 
     def self.bedrooms queued_listing, listing
-      (result = get_value(queued_listing, %w(Bedrooms))) ? result.to_i : nil
+      get_value(queued_listing, %w(Bedrooms))
     end
 
     def self.brokerage queued_listing, listing
@@ -62,20 +62,20 @@ module Mapper
     end
 
     def self.building_unit_count queued_listing, listing
-      (result = get_value(queued_listing, %w(DetailedCharacteristics BuildingUnitCount))) ? result.to_i : nil
+      get_value(queued_listing, %w(DetailedCharacteristics BuildingUnitCount))
     end
     
     def self.condo_floor_num queued_listing, listing
-      (result = get_value(queued_listing, %w(DetailedCharacteristics CondoFloorNum))) ? result.to_i : nil
+      get_value(queued_listing, %w(DetailedCharacteristics CondoFloorNum))
     end
     
     def self.cooling_systems queued_listing, listing
-      (result = get_enums(queued_listing, %w(DetailedCharacteristics CoolingSystems CoolingSystem))) ? result : nil
+      get_enums(queued_listing, %w(DetailedCharacteristics CoolingSystems CoolingSystem))
     end
     
     def self.county queued_listing, listing
       if (get_value(queued_listing, %w(Location County)))
-        County.find_or_initialize_by(
+        county = County.find_or_initialize_by(
           name: get_value(queued_listing, %w(Location County)),
           state_or_province: get_value(queued_listing, %w(Address StateOrProvince)),
           country: get_value(queued_listing, %w(Address Country))
@@ -86,45 +86,45 @@ module Mapper
     end
 
     def self.currency_code queued_listing, listing
-      (result = get_value(queued_listing, %w(ListPrice currencyCode))) ? result : nil
+      get_value(queued_listing, %w(ListPrice currencyCode))
     end
     
     def self.directions queued_listing, listing
-      (result = get_value(queued_listing, %w(Location Directions))) ? result : nil
+      get_value(queued_listing, %w(Location Directions))
     end
 
     def self.disclaimer queued_listing, listing
-      (result = get_value(queued_listing, %w(Disclaimer))) ? result : nil
+      get_value(queued_listing, %w(Disclaimer))
     end
 
     def self.disclose_address queued_listing, listing
-      (result = get_value(queued_listing, %w(DiscloseAddress))) ? result.to_s.to_bool : nil
+      get_boolean_value(queued_listing, %w(DiscloseAddress))
     end
     
     def self.elevation queued_listing, listing
-      (result = get_value(queued_listing, %w(Location Elevation))) ? result : nil
+      get_value(queued_listing, %w(Location Elevation))
     end
 
     def self.expenses queued_listing, listing
       if (result = get_repeaters(queued_listing, %w(Expenses Expense)))
         result.map{|item| listing.expenses.find_or_initialize_by(
-          expense_category: ExpenseCategory.find_by_name(item['ExpenseCategory']),
-          currency_period: CurrencyPeriod.find_by_name(item['ExpenseValue']['currencyPeriod']),
-          expense_value: unwrap_attribute(item['ExpenseValue'])
+          expense_category: Mapper::expense_categories[item['ExpenseCategory']],
+          currency_period: Mapper::expense_categories[item['ExpenseValue']['currencyPeriod']],
+          expense_value: item['ExpenseValue'].unwrap_attribute
         )}
       end
     end
 
     def self.exterior_types queued_listing, listing
-      (result = get_enums(queued_listing, %w(DetailedCharacteristics ExteriorTypes ExteriorType))) ? result : nil
+      get_enums(queued_listing, %w(DetailedCharacteristics ExteriorTypes ExteriorType))
     end
     
     def self.floor_coverings queued_listing, listing
-      (result = get_enums(queued_listing, %w(DetailedCharacteristics FloorCoverings FloorCovering))) ? result : nil
+      get_enums(queued_listing, %w(DetailedCharacteristics FloorCoverings FloorCovering))
     end
     
     def self.foreclosure_status queued_listing, listing
-      (result = get_value(queued_listing, %w(ForeclosureStatus))) ? ForeclosureStatus.find_by(name: result) : nil
+      (result = get_value(queued_listing, %w(ForeclosureStatus))) ? Mapper::foreclosure_statuses[result] : nil
     end
     
     def self.franchise queued_listing, listing
@@ -132,15 +132,15 @@ module Mapper
     end
 
     def self.full_bathrooms queued_listing, listing
-      (result = get_value(queued_listing, %w(FullBathrooms))) ? result.to_i : nil
+      get_value(queued_listing, %w(FullBathrooms))
     end
 
     def self.geocode_options queued_listing, listing
-      (result = get_value(queued_listing, %w(Location GeocodeOptions))) ? result : nil
+      get_value(queued_listing, %w(Location GeocodeOptions))
     end
 
     def self.half_bathrooms queued_listing, listing
-      (result = get_value(queued_listing, %w(HalfBathrooms))) ? result.to_i : nil
+      get_value(queued_listing, %w(HalfBathrooms))
     end
 
     def self.has_attic queued_listing, listing
@@ -268,11 +268,11 @@ module Mapper
     end
 
     def self.heating_fuels queued_listing, listing
-      (result = get_enums(queued_listing, %w(DetailedCharacteristics HeatingFuels HeatingFuel))) ? result : nil
+      get_enums(queued_listing, %w(DetailedCharacteristics HeatingFuels HeatingFuel)).uniq
     end
     
     def self.heating_systems queued_listing, listing
-      (result = get_enums(queued_listing, %w(DetailedCharacteristics HeatingSystems HeatingSystem)).uniq) ? result : nil
+      get_enums(queued_listing, %w(DetailedCharacteristics HeatingSystems HeatingSystem)).uniq
     end
 
     def self.is_cable_ready queued_listing, listing
@@ -292,27 +292,27 @@ module Mapper
     end
 
     def self.latitude queued_listing, listing
-      (result = get_value(queued_listing, %w(Location Latitude))) ? result.to_d : nil
+      get_value(queued_listing, %w(Location Latitude))
     end
 
     def self.lead_routing_email queued_listing, listing
-      (result = get_value(queued_listing, %w(LeadRoutingEmail))) ? result : nil
+      get_value(queued_listing, %w(LeadRoutingEmail))
     end
 
     def self.legal_description queued_listing, listing
-      (result = get_value(queued_listing, %w(DetailedCharacteristics LegalDescription))) ? result : nil
+      get_value(queued_listing, %w(DetailedCharacteristics LegalDescription))
     end
     
     def self.list_price queued_listing, listing
-      (result = get_value(queued_listing, %w(ListPrice)).unwrap_attribute) ? result : nil
+      get_value(queued_listing, %w(ListPrice))
     end
     
     def self.list_price_low queued_listing, listing
-      (result = get_value(queued_listing, %w(ListPriceLow)).unwrap_attribute) ? result : nil
+      get_value(queued_listing, %w(ListPriceLow))
     end
     
     def self.listing_category queued_listing, listing
-      (result = get_value(queued_listing, %w(ListingCategory))) ? ListingCategory.find_by_name(result) : nil
+      (result = get_value(queued_listing, %w(ListingCategory))) ? Mapper::listing_categories[result] : nil
     end
 
     def self.listing_date queued_listing, listing
@@ -320,70 +320,69 @@ module Mapper
     end
     
     def self.listing_description queued_listing, listing
-      (result = unwrap_attribute(get_value(queued_listing, %w(ListingDescription)))) ? result : nil
+      get_value(queued_listing, %w(ListingDescription))
     end
 
     def self.listing_media queued_listing, listing, elements
       if (result = get_repeaters(queued_listing, elements))
         result.map do |item|
-          media = listing.send(elements.last.tableize).find_or_initialize_by(
+          listing.send(elements.last.tableize).find_or_initialize_by(
             media_url: item.drilldown('MediaURL'),
-            media_modification_timestamp: item.drilldown('MediaModificationTimestamp')
-          )
-          media.assign_attributes({
+            media_modification_timestamp: item.drilldown('MediaModificationTimestamp'),
             media_order_number: item.drilldown('MediaOrderNumber'),
             media_caption: item.drilldown('MediaCaption'),
             media_description: item.drilldown('MediaDescription')
-          })
-          media
+          )
         end
       end
     end
 
     # TODO: Make ListingProvider and SourceProviderCategory Provider and ProviderCategory
     def self.listing_provider queued_listing, listing
-      (result = ListingProvider.find_or_initialize_by(
-        name: get_value(queued_listing, %w(ProviderName)),
-        url: get_value(queued_listing, %w(ProviderURL)),
-        source_provider_category: SourceProviderCategory.find_by_name(get_value(queued_listing, %w(ProviderCategory)))
-      )) ? result : nil
+      if get_value(queued_listing, %w(ProviderName)).present?
+        result = ListingProvider.find_or_initialize_by(
+          name: get_value(queued_listing, %w(ProviderName)),
+          url: get_value(queued_listing, %w(ProviderURL)),
+          source_provider_category: Mapper::source_provider_categories[get_value(queued_listing, %w(ProviderCategory))]
+        )
+      end
     end
 
     def self.listing_status queued_listing, listing
-      (result = get_value(queued_listing, %w(ListingStatus))) ? ListingStatus.find_by_name(result) : nil
+      (result = get_value(queued_listing, %w(ListingStatus))) ? Mapper::listing_statuses[result] : nil
     end
     
     def self.listing_title queued_listing, listing
-      (result = get_value(queued_listing, %w(ListingTitle))) ? result : nil
+      get_value(queued_listing, %w(ListingTitle))
     end
     
     def self.listing_url queued_listing, listing
-      (result = get_value(queued_listing, %w(ListingURL))) ? result : nil
+      get_value(queued_listing, %w(ListingURL))
     end
 
     def self.living_area queued_listing, listing
-      (result = get_value(queued_listing, %w(LivingArea))) ? result.to_i : nil
+      get_value(queued_listing, %w(LivingArea))
     end
     
     def self.living_area_unit queued_listing, listing
-      (result = get_value(queued_listing, %w(LivingArea areaUnits))) ? result : nil
+      get_value(queued_listing, %w(LivingArea areaUnits))
     end
 
     def self.longitude queued_listing, listing
-      (result = get_value(queued_listing, %w(Location Longitude))) ? result.to_d : nil
+      get_value(queued_listing, %w(Location Longitude))
     end
     
     def self.lot_size queued_listing, listing
-      (result = get_value(queued_listing, %w(LotSize))) ? result : nil
+      get_value(queued_listing, %w(LotSize))
     end
 
     def self.mls_number queued_listing, listing
-      (result = get_value(queued_listing, %w(MlsNumber))) ? result : nil
+      get_value(queued_listing, %w(MlsNumber))
     end
     
     def self.modification_timestamp queued_listing, listing
       # TODO: Change from string to datetime
-      (result = get_value(queued_listing, %w(ModificationTimestamp))) ? result : nil
+      get_value(queued_listing, %w(ModificationTimestamp))
     end
 
     def self.multiple_listing_service queued_listing, listing
@@ -407,15 +406,15 @@ module Mapper
           place
         end
       end
-      places ? places : []
+      places.present? ? places : []
     end
 
     def self.num_floors queued_listing, listing
-      (result = get_value(queued_listing, %w(DetailedCharacteristics NumFloors))) ? result.to_i : nil
+      get_value(queued_listing, %w(DetailedCharacteristics NumFloors))
     end
     
     def self.num_parking_spaces queued_listing, listing
-      (result = get_value(queued_listing, %w(DetailedCharacteristics NumParkingSpaces))) ? result.to_i : nil
+      get_value(queued_listing, %w(DetailedCharacteristics NumParkingSpaces))
     end
     
     def self.office queued_listing, listing
@@ -449,7 +448,7 @@ module Mapper
     end
 
     def self.one_quarter_bathrooms queued_listing, listing
-      (result = get_value(queued_listing, %w(OneQuarterBathrooms))) ? result.to_i : nil
+      get_value(queued_listing, %w(OneQuarterBathrooms))
     end
 
     # TODO: Figure out how to provide time zone for StartTime and EndTime 
@@ -468,7 +467,7 @@ module Mapper
     end
 
     def self.parcel_id queued_listing, listing
-      (result = get_value(queued_listing, %w(Location ParcelId))) ? result : nil
+      get_value(queued_listing, %w(Location ParcelId))
     end
 
     # TODO: Change participant_identifier to participant_id
@@ -476,14 +475,14 @@ module Mapper
       if (result = get_repeaters(queued_listing, %w(ListingParticipants Participant)))
         result.map do |item| 
           participant = Participant.find_or_initialize_by(
+            first_name: item['FirstName'],
+            last_name: item['LastName'],
             email: item['Email']
           )
           participant.assign_attributes({
-            first_name: item['FirstName'],
-            last_name: item['LastName'],
             participant_key: item['ParticipantKey'],
             participant_identifier: item['ParticipantId'],
-            participant_role: ParticipantRole.find_by(name: item['Role']),
+            participant_role: Mapper::participant_roles[item['Role']],
             primary_contact_phone: item['PrimaryContactPhone'],
             office_phone: item['OfficePhone'],
             fax: item['Fax'],
@@ -495,40 +494,40 @@ module Mapper
     end
 
     def self.permit_address_on_internet queued_listing, listing
-      (result = get_value(queued_listing, %w(MarketingInformation PermitAddressOnInternet))) ? result.to_s.to_bool : nil
+      get_boolean_value(queued_listing, %w(MarketingInformation PermitAddressOnInternet'))
     end
     
     def self.photos queued_listing, listing
-      (result = listing_media(queued_listing, listing, %w(Photos Photo))) ? result : nil
+      listing_media(queued_listing, listing, %w(Photos Photo))
     end
 
     def self.property_sub_type queued_listing, listing
-      (result = unwrap_attribute(get_value(queued_listing, %w(PropertySubType)))) ? PropertySubType.find_by_name(result) : nil
+      (result = get_value(queued_listing, %w(PropertySubType))) ? Mapper::property_sub_types[result] : nil
     end
     
     def self.property_sub_type_description queued_listing, listing
-      (result = get_value(queued_listing, %w(PropertySubType otherDescription))) ? result : nil
+      get_value(queued_listing, %w(PropertySubType otherDescription))
     end
     
     def self.property_type queued_listing, listing
-      (result = unwrap_attribute(get_value(queued_listing, %w(PropertyType)))) ? PropertyType.find_by_name(result) : nil
+      (result = get_value(queued_listing, %w(PropertyType))) ? Mapper::property_types[result] : nil
     end
 
     def self.property_type_description queued_listing, listing
-      (result = get_value(queued_listing, %w(PropertyType otherDescription))) ? result : nil
+      get_value(queued_listing, %w(PropertyType otherDescription))
     end
     
     def self.roof_types queued_listing, listing
-      (result = get_enums(queued_listing, %w(DetailedCharacteristics RoofTypes RoofType))) ? result : nil
+      get_enums(queued_listing, %w(DetailedCharacteristics RoofTypes RoofType))
     end
     
     def self.room_count queued_listing, listing
-      (result = get_value(queued_listing, %w(DetailedCharacteristics RoomCount))) ? result.to_i : nil
+      get_value(queued_listing, %w(DetailedCharacteristics RoomCount))
     end
     
     def self.rooms queued_listing, listing
       if (result = get_value(queued_listing, %w(DetailedCharacteristics Rooms Room)))
-        rooms = Array(result).map{|room_category| Room.new(listing: listing, room_category: RoomCategory.find_by(name: room_category))}
+        rooms = Array(result).map{|room_category| Room.new(listing: listing, room_category: Mapper::room_categories[room_category])}
       end
       rooms ? rooms : []
     end
@@ -544,19 +543,19 @@ module Mapper
     end
 
     def self.three_quarter_bathrooms queued_listing, listing
-      (result = get_value(queued_listing, %w(ThreeQuarterBathrooms))) ? result.to_i : nil
+      get_value(queued_listing, %w(ThreeQuarterBathrooms))
     end
 
     def self.videos queued_listing, listing
-      (result = listing_media(queued_listing, listing, %w(Videos Video))) ? result : nil
+      listing_media(queued_listing, listing, %w(Videos Video))
     end
 
     def self.view_types queued_listing, listing
-      (result = get_enums(queued_listing, %w(DetailedCharacteristics ViewTypes ViewType))) ? result : nil
+      get_enums(queued_listing, %w(DetailedCharacteristics ViewTypes ViewType))
     end
     
     def self.virtual_tours queued_listing, listing
-      (result = listing_media(queued_listing, listing, %w(VirtualTours VirtualTour))) ? result : nil
+      listing_media(queued_listing, listing, %w(VirtualTours VirtualTour))
     end
 
     def self.vow_address_display queued_listing, listing
@@ -572,7 +571,7 @@ module Mapper
     end
     
     def self.year_built queued_listing, listing
-      (result = get_value(queued_listing, %w(YearBuilt))) ? result : nil
+      get_value(queued_listing, %w(YearBuilt))
     end
 
     def self.year_updated queued_listing, listing
@@ -615,10 +614,6 @@ module Mapper
       (result = get_value(queued_listing, elements)) ? result.to_s.to_bool : nil
     end
     
-    def self.unwrap_attribute value
-      value.is_a?(Hash) ? (value['__content__'] ? value['__content__'] : value) : value
-    end
-    
     def self.get_repeaters queued_listing, elements
       if (value = get_value(queued_listing, elements[0..-2]))
         (result = value.drilldown(elements.last)) ? (result.is_a?(Array) ? result : [result]) : nil
@@ -627,12 +622,11 @@ module Mapper
       end
     end
     
-    # TODO: Should be find_by_name not find_or_create_by_name. Remove after before_save validation.
     def self.get_enums queued_listing, elements
       if (result = get_repeaters(queued_listing, elements))
-        enums = result.map{|name| elements.last.constantize.find_or_create_by(name: name)}
+        enums = result.map{|name| Mapper.send(elements.last.tableize)[name]}
       end
-      enums ? enums : nil
+      enums ? enums.compact : nil
     end
 
     def self.get_value queued_listing, elements
