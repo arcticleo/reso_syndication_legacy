@@ -7,7 +7,7 @@ class CreateAddresses < ActiveRecord::Migration
       t.integer :preference_order, default: 1 
       t.integer :address_preference_order, default: 1
       t.string :full_street_address
-      t.integer :street_number
+      t.integer :street_number, limit: 8
       t.string :street_dir_prefix
       t.string :street_name
       t.string :street_suffix
