@@ -14,6 +14,5 @@ class CreateBusinesses < ActiveRecord::Migration
     end
     add_index :businesses, :name
     add_index :businesses, :type
-    add_index :businesses, [:name, :type]
   end
 end

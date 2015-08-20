@@ -6,7 +6,7 @@ class CreateParticipants < ActiveRecord::Migration
       t.string :participant_code
       t.string :first_name
       t.string :last_name
-      t.references :person, null: true, foreign_key: true
+      t.references :person, index:true, foreign_key: true
       t.references :participant_role, index: true
       t.string :primary_contact_phone
       t.string :office_phone
@@ -18,9 +18,9 @@ class CreateParticipants < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :participants, :participant_key
+    add_index :participants, :email
     add_index :participants, :participant_identifier
-    add_index :participants, :person_id
+    add_index :participants, :participant_key
     add_index :participants, [:first_name, :last_name, :email]
   end
 end

@@ -31,17 +31,13 @@ namespace :reso do
     end
     nil # Just in cases
   end
-  
-  def process_item xml, xml_header, import
+
+  def create_queued_listing doc, import
     begin
-      doc = Nokogiri::XML([xml_header, xml].join).remove_namespaces!
       doc.css(import.repeating_element).each do |o|
-        listing_data = Hash.new
-        listing = Hash.from_xml(o.to_xml)
-        object = import.queued_listings.new
-        listing[import.repeating_element].each_pair{|key, value| listing_data[key] = value }
-        object.listing_data = listing_data
-        object.save
+        listing_data = {}
+        Hash.from_xml(o.to_xml)[import.repeating_element].each_pair{|key, value| listing_data[key] = value }
+        QueuedListing.create(import: import, listing_data: listing_data)
       end
     rescue Exception => e
       puts e.inspect
@@ -107,17 +103,19 @@ namespace :reso do
       # Grab the XML header to avoid namespace errors later 
       xml_header = get_xml_header filepath, import.repeating_element
 
-      start = Time.now
+      puts (start = Time.now)
       puts "Starting..." if Rails.env.development?
       File.foreach(filepath) do |line|
         stream += line
         while (from_here = stream.index(open_tag)) && (to_there = stream.index(close_tag))
           xml = stream[from_here..to_there + (close_tag.length-1)]
-          process_item xml, xml_header, import
+          doc = Nokogiri::XML([xml_header, xml].join).remove_namespaces!
+          create_queued_listing doc, import
           stream.gsub!(xml, '')
-          if (l += 1) % 1000 == 0
-            puts "#{l} - #{l/(Time.now - start)} listings/s" if Rails.env.development?
+          if ((l += 1) % 1000).zero?
+            puts "#{l}\t#{l/(Time.now - start)}" if Rails.env.development?
           end
+          GC.start if (l % 100).zero?
         end
       end
       puts "#{l} - #{l/(Time.now - start)} listings/s" if Rails.env.development?

@@ -4,7 +4,7 @@ class CreateListingMedia < ActiveRecord::Migration
       t.integer :media_order_number
       t.string :media_url, null: false, limit: 512 
       t.string :media_caption
-      t.text :media_description
+      t.string :media_description
       t.string :media_modification_timestamp
       t.string :type, null: false
       t.references :listing, index: true, null: false, foreign_key: true 
@@ -13,7 +13,6 @@ class CreateListingMedia < ActiveRecord::Migration
     end
     add_index :listing_media, :media_order_number
     add_index :listing_media, :type
-    add_index :listing_media, [:listing_id, :media_order_number]
-    add_index :listing_media, [:media_url, :media_modification_timestamp], name: "on_url_and_timestamp"
+    add_index :listing_media, [:media_url, :media_modification_timestamp, :media_order_number, :media_caption, :media_description], name: "on_url_and_timestamp"
   end
 end

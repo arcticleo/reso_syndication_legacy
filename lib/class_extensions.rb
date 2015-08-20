@@ -21,16 +21,14 @@ end
 Hash.class_eval do
   def drilldown drillees
     if (result = drillees.split(' ').inject(self){|res, el| res[el] ? res[el] : Hash.new })
-      result.present? ? (result.unwrap_attribute) : nil
+      result.present? ? result.unwrap_attribute : nil
     end
   end
 end
 
 Array.class_eval do
   def drilldown drillee
-    if (result = drillee.last)
-      result.present? ? (result.unwrap_attribute) : nil
-    end
+    drillee.last.unwrap_attribute
   end
 end
 
