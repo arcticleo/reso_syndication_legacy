@@ -112,120 +112,118 @@ module Mapper
     year_updated
   )
 
-  def self.fetch_enumerations class_name
-    Rails.cache.fetch(class_name, expires_in: 1.hours) do
-      enums = {}
-      class_name.constantize.all.map{|item| enums[item.name] = item}
-      enums
+  def self.fetch_enumeration class_name, item_name
+    Rails.cache.fetch([class_name, item_name], expires_in: 1.hours) do
+      class_name.constantize.find_by(name: item_name)
     end
   end
 
-  def self.address_types
-    fetch_enumerations 'AddressType'
+  def self.address_types item_name
+    fetch_enumeration 'AddressType', item_name
   end
   
-  def self.appliances
-    fetch_enumerations 'Appliance'
+  def self.appliances item_name
+    fetch_enumeration 'Appliance', item_name
   end
 
-  def self.architecture_styles
-    fetch_enumerations 'ArchitectureStyle'
+  def self.architecture_styles item_name
+    fetch_enumeration 'ArchitectureStyle', item_name
   end
   
-  def self.area_units
-    fetch_enumerations 'AreaUnit'
+  def self.area_units item_name
+    fetch_enumeration 'AreaUnit', item_name
   end
   
-  def self.cooling_systems
-    fetch_enumerations 'CoolingSystem'
+  def self.cooling_systems item_name
+    fetch_enumeration 'CoolingSystem', item_name
   end
   
-  def self.currency_periods
-    fetch_enumerations 'CurrencyPeriod'
+  def self.currency_periods item_name
+    fetch_enumeration 'CurrencyPeriod', item_name
   end
   
-  def self.expense_categories
-    fetch_enumerations 'ExpenseCategory'
+  def self.expense_categories item_name
+    fetch_enumeration 'ExpenseCategory', item_name
   end
   
-  def self.exterior_types
-    fetch_enumerations 'ExteriorType'
+  def self.exterior_types item_name
+    fetch_enumeration 'ExteriorType', item_name
   end
   
-  def self.floor_coverings
-    fetch_enumerations 'FloorCovering'
+  def self.floor_coverings item_name
+    fetch_enumeration 'FloorCovering', item_name
   end
   
-  def self.foreclosure_statuses
-    fetch_enumerations 'ForeclosureStatus'
+  def self.foreclosure_statuses item_name
+    fetch_enumeration 'ForeclosureStatus', item_name
   end
   
-  def self.gender
-    fetch_enumerations 'Gender'
+  def self.gender item_name
+    fetch_enumeration 'Gender', item_name
   end
   
-  def self.heating_fuels
-    fetch_enumerations 'HeatingFuel'
+  def self.heating_fuels item_name
+    fetch_enumeration 'HeatingFuel', item_name
   end
   
-  def self.heating_systems
-    fetch_enumerations 'HeatingSystem'
+  def self.heating_systems item_name
+    fetch_enumeration 'HeatingSystem', item_name
   end
   
-  def self.home_features
-    fetch_enumerations 'HomeFeature'
+  def self.home_features item_name
+    fetch_enumeration 'HomeFeature', item_name
   end
   
-  def self.import_formats
-    fetch_enumerations 'ImportFormat'
+  def self.import_formats item_name
+    fetch_enumeration 'ImportFormat', item_name
   end
   
-  def self.license_categories
-    fetch_enumerations 'LicenseCategory'
+  def self.license_categories item_name
+    fetch_enumeration 'LicenseCategory', item_name
   end
   
-  def self.listing_categories
-    fetch_enumerations 'ListingCategory'
+  def self.listing_categories item_name
+    fetch_enumeration 'ListingCategory', item_name
   end
   
-  def self.listing_statuses
-    fetch_enumerations 'ListingStatus'
+  def self.listing_statuses item_name
+    fetch_enumeration 'ListingStatus', item_name
   end
   
-  def self.parkings
-    fetch_enumerations 'Parking'
+  def self.parkings item_name
+    fetch_enumeration 'Parking', item_name
   end
   
-  def self.participant_roles
-    fetch_enumerations 'ParticipantRole'
+  def self.participant_roles item_name
+    fetch_enumeration 'ParticipantRole', item_name
   end
   
-  def self.property_sub_types
-    fetch_enumerations 'PropertySubType'
+  def self.property_sub_types item_name
+    fetch_enumeration 'PropertySubType', item_name
   end
   
-  def self.property_types
-    fetch_enumerations 'PropertyType'
+  def self.property_types item_name
+    fetch_enumeration 'PropertyType', item_name
   end
   
-  def self.roof_types
-    fetch_enumerations 'RoofType'
+  def self.roof_types item_name
+    fetch_enumeration 'RoofType', item_name
   end
   
-  def self.room_categories
-    fetch_enumerations 'RoomCategory'
+  def self.room_categories item_name
+    fetch_enumeration 'RoomCategory', item_name
   end
   
-  def self.school_categories
-    fetch_enumerations 'SchoolCategory'
+  def self.school_categories item_name
+    fetch_enumeration 'SchoolCategory', item_name
   end
   
-  def self.source_provider_categories
-    fetch_enumerations 'SourceProviderCategory'
+  def self.source_provider_categories item_name
+    fetch_enumeration 'SourceProviderCategory', item_name
   end
   
-  def self.view_types
-    fetch_enumerations 'ViewType'
+  def self.view_types item_name
+    fetch_enumeration 'ViewType', item_name
   end
 
 end

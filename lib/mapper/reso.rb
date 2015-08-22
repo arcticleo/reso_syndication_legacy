@@ -38,7 +38,7 @@ module Mapper
     end
     
     def self.architecture_style queued_listing, listing
-      (result = get_value(queued_listing, %w(DetailedCharacteristics ArchitectureStyle))) ? Mapper::architecture_styles[result] : nil
+      (result = get_value(queued_listing, %w(DetailedCharacteristics ArchitectureStyle))) ? Mapper::architecture_styles(result) : nil
     end
     
     def self.architecture_style_description queued_listing, listing
@@ -108,8 +108,8 @@ module Mapper
     def self.expenses queued_listing, listing
       if (result = get_repeaters(queued_listing, %w(Expenses Expense)))
         result.map{|item| listing.expenses.find_or_initialize_by(
-          expense_category: Mapper::expense_categories[item['ExpenseCategory']],
-          currency_period: Mapper::expense_categories[item['ExpenseValue']['currencyPeriod']],
+          expense_category: Mapper::expense_categories(item['ExpenseCategory']),
+          currency_period: Mapper::expense_categories(item['ExpenseValue']['currencyPeriod']),
           expense_value: item['ExpenseValue'].unwrap_attribute
         )}
       end
@@ -124,7 +124,7 @@ module Mapper
     end
     
     def self.foreclosure_status queued_listing, listing
-      (result = get_value(queued_listing, %w(ForeclosureStatus))) ? Mapper::foreclosure_statuses[result] : nil
+      (result = get_value(queued_listing, %w(ForeclosureStatus))) ? Mapper::foreclosure_statuses(result) : nil
     end
     
     def self.franchise queued_listing, listing
@@ -312,7 +312,7 @@ module Mapper
     end
     
     def self.listing_category queued_listing, listing
-      (result = get_value(queued_listing, %w(ListingCategory))) ? Mapper::listing_categories[result] : nil
+      (result = get_value(queued_listing, %w(ListingCategory))) ? Mapper::listing_categories(result) : nil
     end
 
     def self.listing_date queued_listing, listing
@@ -343,13 +343,13 @@ module Mapper
         result = ListingProvider.find_or_initialize_by(
           name: get_value(queued_listing, %w(ProviderName)),
           url: get_value(queued_listing, %w(ProviderURL)),
-          source_provider_category: Mapper::source_provider_categories[get_value(queued_listing, %w(ProviderCategory))]
+          source_provider_category: Mapper::source_provider_categories(get_value(queued_listing, %w(ProviderCategory)))
         )
       end
     end
 
     def self.listing_status queued_listing, listing
-      (result = get_value(queued_listing, %w(ListingStatus))) ? Mapper::listing_statuses[result] : nil
+      (result = get_value(queued_listing, %w(ListingStatus))) ? Mapper::listing_statuses(result) : nil
     end
     
     def self.listing_title queued_listing, listing
@@ -482,7 +482,7 @@ module Mapper
           participant.assign_attributes({
             participant_key: item['ParticipantKey'],
             participant_identifier: item['ParticipantId'],
-            participant_role: Mapper::participant_roles[item['Role']],
+            participant_role: Mapper::participant_roles(item['Role']),
             primary_contact_phone: item['PrimaryContactPhone'],
             office_phone: item['OfficePhone'],
             fax: item['Fax'],
@@ -502,7 +502,7 @@ module Mapper
     end
 
     def self.property_sub_type queued_listing, listing
-      (result = get_value(queued_listing, %w(PropertySubType))) ? Mapper::property_sub_types[result] : nil
+      (result = get_value(queued_listing, %w(PropertySubType))) ? Mapper::property_sub_types(result) : nil
     end
     
     def self.property_sub_type_description queued_listing, listing
@@ -510,7 +510,7 @@ module Mapper
     end
     
     def self.property_type queued_listing, listing
-      (result = get_value(queued_listing, %w(PropertyType))) ? Mapper::property_types[result] : nil
+      (result = get_value(queued_listing, %w(PropertyType))) ? Mapper::property_types(result) : nil
     end
 
     def self.property_type_description queued_listing, listing
@@ -527,7 +527,7 @@ module Mapper
     
     def self.rooms queued_listing, listing
       if (result = get_value(queued_listing, %w(DetailedCharacteristics Rooms Room)))
-        rooms = Array(result).map{|room_category| Room.new(listing: listing, room_category: Mapper::room_categories[room_category])}
+        rooms = Array(result).map{|room_category| Room.new(listing: listing, room_category: Mapper::room_categories(room_category))}
       end
       rooms ? rooms : []
     end
