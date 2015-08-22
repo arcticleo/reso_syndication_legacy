@@ -225,5 +225,50 @@ module Mapper
   def self.view_types item_name
     fetch_enumeration 'ViewType', item_name
   end
+  
+  def self.unique_identifier queued_listing
+    (result = Mapper::get_value(queued_listing, queued_listing.import.unique_identifier.split(' ')))
+  end
+
+  def self.get_boolean_value queued_listing, elements
+    (result = Mapper::get_value(queued_listing, elements)) ? result.to_s.to_bool : nil
+  end
+  
+  def self.get_value queued_listing, elements
+    if elements.count.eql?(1)
+      get_simple_value(queued_listing, elements.first)
+    else
+      get_subvalue(queued_listing, elements.first, elements[1..-1])
+    end
+  end
+  
+  def self.get_simple_value queued_listing, element
+    if (value = queued_listing.listing_data[element])
+      value.unwrap_attribute
+    end
+  end
+  
+  def self.get_subvalue queued_listing, element, child_elements
+    if (value = get_simple_value(queued_listing, element))
+      if (subvalue = child_elements.inject(value){|v, e| v[e] ? v[e] : Hash.new })
+        subvalue.present? ? subvalue.unwrap_attribute : nil
+      end
+    end
+  end
+
+  def self.get_repeaters queued_listing, elements
+    if (value = Mapper::get_value(queued_listing, elements[0..-2]))
+      (result = value.drilldown(elements.last)) ? (result.is_a?(Array) ? result : [result]) : nil
+    else
+      return []
+    end
+  end
+  
+  def self.get_enums queued_listing, elements
+    if (result = get_repeaters(queued_listing, elements))
+      enums = result.map{|name| Mapper.send(elements.last.tableize, name)}
+    end
+    enums ? enums.compact : nil
+  end
 
 end
