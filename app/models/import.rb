@@ -9,7 +9,7 @@ class Import < ActiveRecord::Base
 
   before_save :set_import_format
 
-  def remove_listings_no_longer_present fresh_listing_keys
+  def remove_listings_not_present fresh_listing_keys
     existing_listing_keys = self.listings.all.pluck(:listing_key)
     stale_listing_keys = existing_listing_keys.delete_if{|key| fresh_listing_keys.include? key }
     stale_listing_keys.each do |listing_key|

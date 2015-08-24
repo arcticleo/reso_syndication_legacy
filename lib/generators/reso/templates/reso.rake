@@ -123,7 +123,7 @@ namespace :reso do
       end
       puts "Import speed: #{l/(Time.now - start)} listings/s" if Rails.env.development?
       puts "Found #{l} new listings." if Rails.env.development?
-      stale_listing_keys = import.remove_listings_no_longer_present(incoming_listing_keys)
+      stale_listing_keys = import.remove_listings_not_present(incoming_listing_keys)
       puts "Removed #{stale_listing_keys.count} old listings." if Rails.env.development?
       File.delete(filepath)
     end
