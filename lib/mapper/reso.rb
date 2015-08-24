@@ -275,6 +275,10 @@ module Mapper
       Mapper::get_enums(queued_listing, %w(DetailedCharacteristics HeatingSystems HeatingSystem)).uniq
     end
 
+    def self.import queued_listing, listing
+      queued_listing.import
+    end
+
     def self.is_cable_ready queued_listing, listing
       Mapper::get_boolean_value(queued_listing, %w(DetailedCharacteristics IsCableReady))
     end
