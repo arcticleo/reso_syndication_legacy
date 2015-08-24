@@ -9,6 +9,7 @@ class CreateImports < ActiveRecord::Migration
       t.string      :source_url
       t.string      :source_user
       t.string      :source_pass
+      t.datetime    :source_data_modified
 
       t.timestamps null: false
     end
