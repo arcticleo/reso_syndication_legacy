@@ -14,7 +14,7 @@ class QueuedListing < ActiveRecord::Base
       eager_load(:participants).
       eager_load(:photos).
       find_or_initialize_by(
-        listing_key: mapper.unique_identifier(self)
+        listing_key: Mapper::unique_identifier(self)
       )
     if (listing.modification_timestamp != mapper.modification_timestamp(self, listing))
       Mapper::RESO_LISTING_ATTRIBUTES.each do |attribute|

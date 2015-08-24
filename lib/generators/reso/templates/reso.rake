@@ -32,16 +32,19 @@ namespace :reso do
     nil # Just in cases
   end
 
-  def create_queued_listing doc, import
+  def create_queued_listing_and_return_listing_key doc, import
     begin
       doc.css(import.repeating_element).each do |o|
         listing_data = {}
         Hash.from_xml(o.to_xml)[import.repeating_element].each_pair{|key, value| listing_data[key] = value }
-        QueuedListing.create(import: import, listing_data: listing_data)
+        queued_listing = QueuedListing.new(import: import, listing_data: listing_data)
+        queued_listing.save
+        return Mapper::unique_identifier(queued_listing)
       end
     rescue Exception => e
       puts e.inspect
       exit if Rails.env.development?
+      return nil
     end
   end
   
@@ -93,7 +96,7 @@ namespace :reso do
     import = Import.find_by(token: args.import_token)
 
     unless import.blank?
-      l, count, stream = 0, 0, ''
+      l, count, incoming_listing_keys, stream = 0, 0, [], ''
       open_tag, close_tag = get_open_and_closing_tag_for import.repeating_element
 
       # Grab a file to work with
@@ -110,7 +113,7 @@ namespace :reso do
         while (from_here = stream.index(open_tag)) && (to_there = stream.index(close_tag))
           xml = stream[from_here..to_there + (close_tag.length-1)]
           doc = Nokogiri::XML([xml_header, xml].join).remove_namespaces!
-          create_queued_listing doc, import
+          incoming_listing_keys << create_queued_listing_and_return_listing_key(doc, import)
           stream.gsub!(xml, '')
           if ((l += 1) % 1000).zero?
             puts "#{l}\t#{l/(Time.now - start)}" if Rails.env.development?
@@ -118,7 +121,10 @@ namespace :reso do
           GC.start if (l % 100).zero?
         end
       end
-      puts "#{l} - #{l/(Time.now - start)} listings/s" if Rails.env.development?
+      puts "Import speed: #{l/(Time.now - start)} listings/s" if Rails.env.development?
+      puts "Found #{l} new listings." if Rails.env.development?
+      stale_listing_keys = import.remove_listings_no_longer_present(incoming_listing_keys)
+      puts "Removed #{stale_listing_keys.count} old listings." if Rails.env.development?
       File.delete(filepath)
     end
   end
