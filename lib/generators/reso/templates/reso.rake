@@ -96,36 +96,44 @@ namespace :reso do
     import = Import.find_by(token: args.import_token)
 
     unless import.blank?
-      l, count, incoming_listing_keys, stream = 0, 0, [], ''
-      open_tag, close_tag = get_open_and_closing_tag_for import.repeating_element
+      unless import.new_source_data_exists?
+        source_data_modified = import.source_url_last_modified
+        l, count, found_listing_keys, stream = 0, 0, [], ''
+        open_tag, close_tag = get_open_and_closing_tag_for import.repeating_element
 
-      # Grab a file to work with
-      filepath = download_feed_to_import import
-      filepath = uncompress_and_return_new_filepath(filepath) if filepath.split('.').last.downcase == 'gz'
+        # Grab a file to work with
+        filepath = download_feed_to_import import
+        filepath = uncompress_and_return_new_filepath(filepath) if filepath.split('.').last.downcase == 'gz'
       
-      # Grab the XML header to avoid namespace errors later 
-      xml_header = get_xml_header filepath, import.repeating_element
+        # Grab the XML header to avoid namespace errors later 
+        xml_header = get_xml_header filepath, import.repeating_element
 
-      puts (start = Time.now)
-      puts "Starting..." if Rails.env.development?
-      File.foreach(filepath) do |line|
-        stream += line
-        while (from_here = stream.index(open_tag)) && (to_there = stream.index(close_tag))
-          xml = stream[from_here..to_there + (close_tag.length-1)]
-          doc = Nokogiri::XML([xml_header, xml].join).remove_namespaces!
-          incoming_listing_keys << create_queued_listing_and_return_listing_key(doc, import)
-          stream.gsub!(xml, '')
-          if ((l += 1) % 1000).zero?
-            puts "#{l}\t#{l/(Time.now - start)}" if Rails.env.development?
+        start_time = Time.now
+        import_result = ImportResult.create(import: import, start_time: start_time)
+        File.foreach(filepath) do |line|
+          stream += line
+          while (from_here = stream.index(open_tag)) && (to_there = stream.index(close_tag))
+            xml = stream[from_here..to_there + (close_tag.length-1)]
+            doc = Nokogiri::XML([xml_header, xml].join).remove_namespaces!
+            found_listing_keys << create_queued_listing_and_return_listing_key(doc, import)
+            stream.gsub!(xml, '')
+            if ((l += 1) % 1000).zero?
+              puts "#{l}\t#{l/(Time.now - start)}" if Rails.env.development?
+            end
+            GC.start if (l % 100).zero?
           end
-          GC.start if (l % 100).zero?
         end
+        end_time = Time.now
+        removed_listing_keys = import.remove_listings_not_present(found_listing_keys)
+        import_result.assign_attributes({
+          end_time: end_time,
+          found_listing_keys: found_listing_keys,
+          removed_listing_keys: removed_listing_keys.inspect
+        })
+        import_result.save
+        import.update_attribute(:source_data_modified, source_data_modified)
+        File.delete(filepath)
       end
-      puts "Import speed: #{l/(Time.now - start)} listings/s" if Rails.env.development?
-      puts "Found #{l} new listings." if Rails.env.development?
-      stale_listing_keys = import.remove_listings_no_longer_present(incoming_listing_keys)
-      puts "Removed #{stale_listing_keys.count} old listings." if Rails.env.development?
-      File.delete(filepath)
     end
   end
 
