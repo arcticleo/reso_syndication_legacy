@@ -93,10 +93,11 @@ namespace :reso do
   task :import, [:import_token] => [:environment] do |t, args|
 
     args.with_defaults(:import_token => "reso")
-    import = Import.find_by(token: args.import_token)
+    import = Import.where(status: 'active', token: args.import_token).first
 
     unless import.blank?
       unless import.new_source_data_exists?
+        import.update_attribute(:status, :running)
         source_data_modified = import.source_url_last_modified
         l, count, found_listing_keys, stream = 0, 0, [], ''
         open_tag, close_tag = get_open_and_closing_tag_for import.repeating_element
@@ -131,6 +132,7 @@ namespace :reso do
           removed_listing_keys: removed_listing_keys.inspect
         })
         import_result.save
+        import.update_attribute(:status, :active)
         import.update_attribute(:source_data_modified, source_data_modified)
         File.delete(filepath)
       end

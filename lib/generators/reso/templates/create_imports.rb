@@ -1,6 +1,7 @@
 class CreateImports < ActiveRecord::Migration
   def change
     create_table :imports do |t|
+      t.integer     :status, default: 0
       t.string      :name
       t.string      :token
       t.references  :import_format, index: true
