@@ -51,7 +51,7 @@ class Import < ActiveRecord::Base
         xml_header = get_xml_header filepath, self.repeating_element
 
         start_time = Time.now
-        import_result = ImportResult.create(import: self, start_time: start_time)
+        import_result = ImportResult.create(import: self, start_time: start_time, source_data_modified: source_data_modified)
         File.foreach(filepath) do |line|
           stream += line
           while (from_here = stream.index(open_tag)) && (to_there = stream.index(close_tag))
@@ -69,8 +69,11 @@ class Import < ActiveRecord::Base
           removed_listing_keys: removed_listing_keys.inspect
         })
         import_result.save
-        self.update_attribute(:status, :active)
-        self.update_attribute(:source_data_modified, source_data_modified)
+        self.assign_attributes({
+          status: :active,
+          source_data_modified: source_data_modified
+        })
+        self.save
         File.delete(filepath)
       end
     end
