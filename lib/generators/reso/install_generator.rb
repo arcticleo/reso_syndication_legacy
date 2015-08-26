@@ -18,8 +18,8 @@ module Reso
            businesses 
            enumerations 
            expenses
-           import_results 
            imports
+           import_results 
            listings
            listing_media 
            listing_providers 
