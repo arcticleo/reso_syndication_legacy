@@ -17,7 +17,8 @@ module Reso
         %w[addresses 
            businesses 
            enumerations 
-           expenses 
+           expenses
+           import_results 
            imports
            listings
            listing_media 
