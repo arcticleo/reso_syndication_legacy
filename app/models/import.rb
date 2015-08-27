@@ -32,7 +32,12 @@ class Import < ActiveRecord::Base
   end
   
   def new_source_data_exists?
-    (self.source_url_last_modified > self.source_data_modified) ? true : false
+    if (source_url_last_modified = self.source_url_last_modified)
+      (self.source_url_last_modified.eql? self.source_data_modified) ? result = true : result = false
+    else
+      result = true
+    end
+    result
   end
 
   def run_import
@@ -65,17 +70,17 @@ class Import < ActiveRecord::Base
         end
         end_time = Time.now
         removed_listing_keys = self.remove_listings_not_present(found_listing_keys)
+        self.assign_attributes({
+          status: :active,
+          source_data_modified: source_data_modified
+        })
+        self.save
         import_result.assign_attributes({
           end_time: end_time,
           found_listing_keys: found_listing_keys,
           removed_listing_keys: removed_listing_keys.inspect
         })
         import_result.save
-        self.assign_attributes({
-          status: :active,
-          source_data_modified: source_data_modified
-        })
-        self.save
         File.delete(filepath)
       end
     end
