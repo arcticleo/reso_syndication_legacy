@@ -69,7 +69,7 @@ namespace :reso do
     csv = CSV.parse(csv_text, :headers => true)
     csv.each do |row|
       row = row.to_hash.with_indifferent_access
-      Enumeration.create!(row.to_hash.symbolize_keys)
+      Enumeration.find_or_create_by(row.to_hash.symbolize_keys)
         puts row.inspect
       end
       puts

@@ -32,14 +32,16 @@ class Import < ActiveRecord::Base
   end
   
   def new_source_data_exists?
-    self.source_data_modified.eql? self.source_url_last_modified ? false : true
+    (self.source_url_last_modified > self.source_data_modified) ? true : false
   end
 
   def run_import
     if self.status == 'active'
-      unless self.new_source_data_exists?
+      if self.new_source_data_exists?
+        
         self.update_attribute(:status, :running)
         source_data_modified = self.source_url_last_modified
+
         l, count, found_listing_keys, stream = 0, 0, [], ''
         open_tag, close_tag = get_open_and_closing_tag_for self.repeating_element
 
