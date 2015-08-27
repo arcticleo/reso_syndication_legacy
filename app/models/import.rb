@@ -32,17 +32,12 @@ class Import < ActiveRecord::Base
   end
   
   def new_source_data_exists?
-    result = true
-    if (source_url_last_modified = self.source_url_last_modified)
-      if source_url_last_modified.eql? self.source_data_modified)
-        result = true
-      else
-        result = false
-      end
+    source_url_last_modified = self.source_url_last_modified
+    if source_url_last_modified.present? && self.source_data_modified.present?
+      DateTime.parse(source_url_last_modified.to_s) > DateTime.parse(self.source_data_modified.to_s) ? true : false
     else
-      result = true
+      true
     end
-    result
   end
 
   def run_import
@@ -73,7 +68,7 @@ class Import < ActiveRecord::Base
             stream.gsub!(xml, '')
             if ((l += 1) % 100).zero?
               GC.start
-              snapshots << [l, ] l/(Time.now - start_time)
+              snapshots << [l, l/(Time.now - start_time)]
             end
           end
         end
