@@ -32,8 +32,13 @@ class Import < ActiveRecord::Base
   end
   
   def new_source_data_exists?
+    result = true
     if (source_url_last_modified = self.source_url_last_modified)
-      (self.source_url_last_modified.eql? self.source_data_modified) ? result = true : result = false
+      if source_url_last_modified.eql? self.source_data_modified)
+        result = true
+      else
+        result = false
+      end
     else
       result = true
     end
