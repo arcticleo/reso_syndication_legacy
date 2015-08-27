@@ -47,7 +47,7 @@ class Import < ActiveRecord::Base
         self.update_attribute(:status, :running)
         source_data_modified = self.source_url_last_modified
 
-        l, count, found_listing_keys, stream = 0, 0, [], ''
+        l, count, found_listing_keys, snapshots, stream = 0, 0, [], [], ''
         open_tag, close_tag = get_open_and_closing_tag_for self.repeating_element
 
         # Grab a file to work with
@@ -66,6 +66,10 @@ class Import < ActiveRecord::Base
             doc = Nokogiri::XML([xml_header, xml].join).remove_namespaces!
             found_listing_keys << create_queued_listing_and_return_listing_key(doc, self)
             stream.gsub!(xml, '')
+            if ((l += 1) % 100).zero?
+              GC.start
+              snapshots << [l, ] l/(Time.now - start_time)
+            end
           end
         end
         end_time = Time.now
