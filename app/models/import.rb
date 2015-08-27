@@ -91,7 +91,7 @@ class Import < ActiveRecord::Base
   end
   
   def download_feed_to_import import
-    filename = import.source_url.split('/').last
+    filename = [Time.now.to_s.parameterize, import.source_url.split('/').last].join
     filepath = Rails.root.join('tmp', filename).to_s
     File.delete(filepath) if File.file? filepath
     open(filepath, 'wb') do |file|
