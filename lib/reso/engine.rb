@@ -6,7 +6,7 @@ module Reso
     engine_name :reso
 
     rake_tasks do
-      # load "reso/railties/reso.rake"
+      load "reso/railties/reso.rake"
     end
 
   end

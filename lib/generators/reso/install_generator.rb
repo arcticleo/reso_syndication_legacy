@@ -13,7 +13,6 @@ module Reso
 
       def create_model_file
         template "enumerations.csv", "db/enumerations.csv"
-        template "reso.rake", "lib/tasks/reso.rake"
         %w[addresses 
            businesses 
            enumerations 

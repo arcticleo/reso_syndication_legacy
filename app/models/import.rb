@@ -32,12 +32,12 @@ class Import < ActiveRecord::Base
   end
   
   def new_source_data_exists?
-    if (source_url_last_modified = self.source_url_last_modified)
-      (self.source_url_last_modified.eql? self.source_data_modified) ? result = true : result = false
+    source_url_last_modified = self.source_url_last_modified
+    if source_url_last_modified.present? && self.source_data_modified.present?
+      DateTime.parse(source_url_last_modified.to_s) > DateTime.parse(self.source_data_modified.to_s) ? true : false
     else
-      result = true
+      true
     end
-    result
   end
 
   def run_import
@@ -47,7 +47,7 @@ class Import < ActiveRecord::Base
         self.update_attribute(:status, :running)
         source_data_modified = self.source_url_last_modified
 
-        l, count, found_listing_keys, stream = 0, 0, [], ''
+        l, count, found_listing_keys, snapshots, stream = 0, 0, [], [], ''
         open_tag, close_tag = get_open_and_closing_tag_for self.repeating_element
 
         # Grab a file to work with
@@ -66,6 +66,10 @@ class Import < ActiveRecord::Base
             doc = Nokogiri::XML([xml_header, xml].join).remove_namespaces!
             found_listing_keys << create_queued_listing_and_return_listing_key(doc, self)
             stream.gsub!(xml, '')
+            if ((l += 1) % 100).zero?
+              GC.start
+              snapshots << [l, l/(Time.now - start_time)]
+            end
           end
         end
         end_time = Time.now
@@ -87,7 +91,7 @@ class Import < ActiveRecord::Base
   end
   
   def download_feed_to_import import
-    filename = import.source_url.split('/').last
+    filename = [Time.now.to_s.parameterize, import.source_url.split('/').last].join
     filepath = Rails.root.join('tmp', filename).to_s
     File.delete(filepath) if File.file? filepath
     open(filepath, 'wb') do |file|
