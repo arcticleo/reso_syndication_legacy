@@ -42,10 +42,11 @@ class Import < ActiveRecord::Base
 
   def run_import
     if self.status == 'active'
+      self.update_attribute(:status, :running)
       if self.new_source_data_exists?
         
-        self.update_attribute(:status, :running)
         source_data_modified = self.source_url_last_modified
+        self.update_attribute(:source_data_modified, source_data_modified)
 
         l, count, found_listing_keys, snapshots, stream = 0, 0, [], [], ''
         open_tag, close_tag = get_open_and_closing_tag_for self.repeating_element
@@ -74,11 +75,6 @@ class Import < ActiveRecord::Base
         end
         end_time = Time.now
         removed_listing_keys = self.remove_listings_not_present(found_listing_keys)
-        self.assign_attributes({
-          status: :active,
-          source_data_modified: source_data_modified
-        })
-        self.save
         import_result.assign_attributes({
           end_time: end_time,
           found_listing_keys: found_listing_keys,
@@ -87,6 +83,7 @@ class Import < ActiveRecord::Base
         import_result.save
         File.delete(filepath)
       end
+      self.update_attribute(:status, :active)
     end
   end
   
