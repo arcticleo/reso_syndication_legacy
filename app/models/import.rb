@@ -74,6 +74,7 @@ class Import < ActiveRecord::Base
           end
         end
         end_time = Time.now
+        self.update_attribute(:status, :active)
         removed_listing_keys = self.remove_listings_not_present(found_listing_keys)
         import_result.assign_attributes({
           end_time: end_time,
