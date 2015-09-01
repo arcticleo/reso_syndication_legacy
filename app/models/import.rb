@@ -71,7 +71,7 @@ class Import < ActiveRecord::Base
               GC.start
               snapshots << [l, l/(Time.now - start_time)]
               import_result.update_attribute(:snapshots, snapshots)
-              puts snapshots.inspect if Rails.env.development?
+              puts snapshots.last.inspect if Rails.env.development?
             end
           end
         end
