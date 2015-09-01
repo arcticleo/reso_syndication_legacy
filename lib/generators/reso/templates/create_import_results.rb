@@ -7,6 +7,7 @@ class CreateImportResults < ActiveRecord::Migration
       t.datetime    :end_time
       t.text        :found_listing_keys
       t.text        :removed_listing_keys
+      t.text        :snapshots
 
       t.timestamps null: false
     end

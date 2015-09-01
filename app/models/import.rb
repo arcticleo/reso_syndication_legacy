@@ -70,15 +70,20 @@ class Import < ActiveRecord::Base
             if ((l += 1) % 100).zero?
               GC.start
               snapshots << [l, l/(Time.now - start_time)]
+              import_result.update_attribute(:snapshots, snapshots)
+              puts snapshots.inspect if Rails.env.development?
             end
           end
         end
+        snapshots << [l, l/(Time.now - start_time)]
         end_time = Time.now
+        self.update_attribute(:status, :active)
         removed_listing_keys = self.remove_listings_not_present(found_listing_keys)
         import_result.assign_attributes({
           end_time: end_time,
           found_listing_keys: found_listing_keys,
-          removed_listing_keys: removed_listing_keys.inspect
+          removed_listing_keys: removed_listing_keys,
+          snapshots: snapshots
         })
         import_result.save
         File.delete(filepath)
