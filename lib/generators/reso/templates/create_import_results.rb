@@ -5,9 +5,9 @@ class CreateImportResults < ActiveRecord::Migration
       t.datetime    :source_data_modified
       t.datetime    :start_time
       t.datetime    :end_time
-      t.text        :found_listing_keys
-      t.text        :removed_listing_keys
-      t.text        :snapshots
+      t.text        :found_listing_keys, :limit => 4294967295
+      t.text        :removed_listing_keys, :limit => 4294967295
+      t.text        :snapshots, :limit => 4294967295
 
       t.timestamps null: false
     end
