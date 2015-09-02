@@ -66,6 +66,7 @@ class Import < ActiveRecord::Base
             xml = stream[from_here..to_there + (close_tag.length-1)]
             doc = Nokogiri::XML([xml_header, xml].join).remove_namespaces!
             found_listing_keys << create_queued_listing_and_return_listing_key(doc, self)
+            import_result.update_attribute(:found_listing_keys, found_listing_keys)
             stream.gsub!(xml, '')
             if ((l += 1) % 100).zero?
               GC.start
