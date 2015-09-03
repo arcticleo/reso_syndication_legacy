@@ -332,7 +332,7 @@ module Mapper
         result.map do |item|
           listing.send(elements.last.tableize).find_or_initialize_by(
             media_url: item.drilldown('MediaURL'),
-            media_modification_timestamp: item.drilldown('MediaModificationTimestamp'),
+            media_modification_timestamp: Chronic::parse(item.drilldown('MediaModificationTimestamp')),
             media_order_number: item.drilldown('MediaOrderNumber'),
             media_caption: item.drilldown('MediaCaption'),
             media_description: item.drilldown('MediaDescription')
