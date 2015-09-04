@@ -7,6 +7,7 @@ class Import < ActiveRecord::Base
   before_save :set_import_format
   belongs_to :import_format
   enum status: [ :active, :inactive, :running ]
+  has_many :import_results
   has_many :listings
   has_many :queued_listings
   validates_uniqueness_of :token
