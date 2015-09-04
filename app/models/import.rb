@@ -49,7 +49,7 @@ class Import < ActiveRecord::Base
         source_data_modified = self.source_url_last_modified
         self.update_attribute(:source_data_modified, source_data_modified)
 
-        l, count, found_listing_keys, snapshots, stream = 0, 0, [], [], ''
+        listing_count, count, found_listing_keys, snapshots, stream = 0, 0, [], [], ''
         open_tag, close_tag = get_open_and_closing_tag_for self.repeating_element
 
         # Grab a file to work with
@@ -68,16 +68,16 @@ class Import < ActiveRecord::Base
             doc = Nokogiri::XML([xml_header, xml].join).remove_namespaces!
             found_listing_keys << create_queued_listing_and_return_listing_key(doc, self)
             stream.gsub!(xml, '')
-            if ((l += 1) % 100).zero?
+            if ((listing_count += 1) % 100).zero?
               GC.start
-              snapshots << [l, l/(Time.now - start_time)]
+              snapshots << [listing_count, listing_count/(Time.now - start_time)]
               import_result.update_attribute(:snapshots, snapshots)
-              import_result.update_attribute(:found_listing_keys, found_listing_keys)
+              import_result.update_attribute(:found_listing_keys, found_listing_keys) unless listing_count > 10000
               puts snapshots.last.inspect if Rails.env.development?
             end
           end
         end
-        snapshots << [l, l/(Time.now - start_time)]
+        snapshots << [listing_count, listing_count/(Time.now - start_time)]
         end_time = Time.now
         self.update_attribute(:status, :active)
         removed_listing_keys = self.remove_listings_not_present(found_listing_keys)
