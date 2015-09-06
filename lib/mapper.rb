@@ -113,7 +113,7 @@ module Mapper
   )
 
   def self.fetch_enumeration class_name, item_name
-    Rails.cache.fetch([class_name, item_name], expires_in: 1.hours) do
+    Rails.cache.fetch([class_name, item_name], expires_in: 12.hours) do
       class_name.constantize.find_by(name: item_name)
     end
   end
