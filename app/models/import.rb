@@ -72,7 +72,6 @@ class Import < ActiveRecord::Base
               GC.start
               snapshots << [listing_count, listing_count/(Time.now - start_time)]
               import_result.update_attribute(:snapshots, snapshots)
-              import_result.update_attribute(:found_listing_keys, found_listing_keys) unless listing_count > 10000
               puts snapshots.last.inspect if Rails.env.development?
             end
           end
