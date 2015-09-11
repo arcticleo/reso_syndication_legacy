@@ -71,7 +71,7 @@ class Import < ActiveRecord::Base
             if ((listing_count += 1) % 100).zero?
               GC.start
               snapshots << [listing_count, listing_count/(Time.now - start_time)]
-              import_result.update_attribute(:snapshots, snapshots)
+              import_result.update_attribute(:snapshots, snapshots) if (listing_count % 1000).zero?
               puts snapshots.last.inspect if Rails.env.development?
             end
           end
