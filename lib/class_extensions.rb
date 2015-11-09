@@ -40,6 +40,9 @@ end
 
 
 String.class_eval do
+  def drilldown drillee
+    []
+  end
   # Add to_bool method to String.
   def to_bool
     return true   if self == true   || self =~ (/(true|t|yes|y|1)$/i)
