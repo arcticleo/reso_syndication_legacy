@@ -377,7 +377,8 @@ module Mapper
     end
     
     def self.lot_size queued_listing, listing
-      Mapper::get_value(queued_listing, %w(LotSize))
+      value = Mapper::get_value(queued_listing, %w(LotSize))
+      value.to_s.to_f.zero? ? nil : value
     end
 
     def self.mls_number queued_listing, listing
