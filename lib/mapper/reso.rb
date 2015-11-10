@@ -426,7 +426,7 @@ module Mapper
       if (result = Mapper::get_value(queued_listing, %w(Offices Office)))
         office = Office.find_or_initialize_by(
           office_identifier: result.drilldown('OfficeId'),
-          name: result.drilldown('Name'))
+          name: result.drilldown('Name')
         )
         office.assign_attributes({
           office_key: result.drilldown('OfficeKey'),
