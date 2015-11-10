@@ -426,10 +426,10 @@ module Mapper
       if (result = Mapper::get_value(queued_listing, %w(Offices Office)))
         office = Office.find_or_initialize_by(
           office_identifier: result.drilldown('OfficeId'),
-          name: (value = result.drilldown('Name') ? value : get_reso_business(queued_listing, 'Brokerage'))
+          name: result.drilldown('Name'))
         )
         office.assign_attributes({
-          office_key: (value = result.drilldown('OfficeKey') ? value : result.drilldown('OfficeId')),
+          office_key: result.drilldown('OfficeKey'),
           level: result.drilldown('Level'),
           office_code_identifier: result.drilldown('OfficeCode OfficeCodeId'),
           corporate_name: result.drilldown('CorporateName'),

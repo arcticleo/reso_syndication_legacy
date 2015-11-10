@@ -1,11 +1,11 @@
 class CreateOffices < ActiveRecord::Migration
   def change
     create_table :offices, options: 'DEFAULT CHARSET=utf8' do |t|
-      t.string :office_key, null: false
+      t.string :office_key
       t.string :office_identifier, null: false
       t.string :level
       t.string :office_code_identifier
-      t.string :name, null: false
+      t.string :name
       t.string :franchise_affiliation
       t.string :corporate_name
       t.string :broker_identifier
