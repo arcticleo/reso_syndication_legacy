@@ -1,3 +1,3 @@
 module Reso
-  VERSION = "0.1.5.7"
+  VERSION = "0.1.5.8"
 end
