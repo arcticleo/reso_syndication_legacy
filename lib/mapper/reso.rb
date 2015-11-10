@@ -429,7 +429,7 @@ module Mapper
           name: (value = result.drilldown('Name') ? value : get_reso_business(queued_listing, 'Brokerage'))
         )
         office.assign_attributes({
-          office_key: result.drilldown('OfficeKey'),
+          office_key: (value = result.drilldown('OfficeKey') ? value : result.drilldown('OfficeId')),
           level: result.drilldown('Level'),
           office_code_identifier: result.drilldown('OfficeCode OfficeCodeId'),
           corporate_name: result.drilldown('CorporateName'),
