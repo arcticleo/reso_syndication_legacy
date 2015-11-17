@@ -495,6 +495,8 @@ module Mapper
           })
           participant
         end
+      else
+        []
       end
     end
 
