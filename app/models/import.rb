@@ -1,5 +1,6 @@
 class Import < ActiveRecord::Base
 
+  require "activerecord-import/base"
   require 'nokogiri'
   require 'open-uri'
   require 'open_uri_redirections'
@@ -127,7 +128,7 @@ class Import < ActiveRecord::Base
         listing_data = {}
         Hash.from_xml(o.to_xml)[import.repeating_element].each_pair{|key, value| listing_data[key] = value }
         queued_listing = QueuedListing.new(import: import, listing_data: listing_data)
-        queued_listing.save
+		QueuedListing.import Array(queued_listing), :validate => false
         return Mapper::unique_identifier(queued_listing)
       end
     rescue Exception => e

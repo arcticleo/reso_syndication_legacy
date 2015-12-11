@@ -20,7 +20,7 @@ class QueuedListing < ActiveRecord::Base
       Mapper::RESO_LISTING_ATTRIBUTES.each do |attribute|
         listing.send("#{attribute}=", mapper.send(attribute, self, listing))
       end
-      listing.save
+      Listing.import Array(listing), :validate => false
     end
   end
 
