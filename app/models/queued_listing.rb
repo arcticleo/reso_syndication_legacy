@@ -20,11 +20,11 @@ class QueuedListing < ActiveRecord::Base
       Mapper::RESO_LISTING_ATTRIBUTES.each do |attribute|
         listing.send("#{attribute}=", mapper.send(attribute, self, listing))
       end
-      if listing.id
+#      if listing.id
         listing.save
-      else
-        Listing.import Array(listing), :validate => false
-      end
+#      else
+#        Listing.import [listing], validate: false#, on_duplicate_key_update:  
+#      end
     end
   end
 
