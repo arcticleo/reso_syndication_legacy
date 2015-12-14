@@ -26,7 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails", '~> 4.0', '>= 4.0.0'
   spec.add_dependency "nokogiri", '~> 1'
   spec.add_dependency 'chronic', '~> 0'
-  spec.add_dependency 'activerecord-import', '>= 0.2.0'
   spec.add_dependency 'StreetAddress', '~> 1'
   spec.add_dependency 'open_uri_redirections', '~> 0'
 end

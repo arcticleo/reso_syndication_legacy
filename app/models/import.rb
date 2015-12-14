@@ -1,6 +1,5 @@
 class Import < ActiveRecord::Base
 
-  require "activerecord-import/base"
   require 'nokogiri'
   require 'open-uri'
   require 'open_uri_redirections'
