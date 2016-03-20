@@ -3,6 +3,7 @@ class Import < ActiveRecord::Base
   require 'nokogiri'
   require 'open-uri'
   require 'open_uri_redirections'
+	include ActionView::Helpers::TagHelper
 
   before_save :set_import_format
   belongs_to :import_format
@@ -107,7 +108,7 @@ class Import < ActiveRecord::Base
   end
 
   def get_open_and_closing_tag_for repeating_element
-    ApplicationController.helpers.content_tag(repeating_element, "\n").split
+    content_tag(repeating_element, "\n").split
   end
 
   def get_xml_header filepath, repeating_element
