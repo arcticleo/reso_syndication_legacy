@@ -1,6 +1,6 @@
 class Expense < ActiveRecord::Base
-  belongs_to :expense_category
-  belongs_to :currency_period
-  belongs_to :listing
+  belongs_to :expense_category, optional: true
+  belongs_to :currency_period, optional: true
+  belongs_to :listing, optional: true
   
 end

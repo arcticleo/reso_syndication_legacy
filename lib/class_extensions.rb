@@ -38,7 +38,6 @@ Object.class_eval do
   end
 end
 
-
 String.class_eval do
   def drilldown drillee
     []

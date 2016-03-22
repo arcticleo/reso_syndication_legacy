@@ -36,6 +36,7 @@ module Reso
            taxes
            join_tables].each do |name|
              migration_template "create_#{name}.rb", "db/migrate/create_#{name}.rb"
+             sleep 0.1
            end
       end
 

@@ -1,21 +1,21 @@
 class Listing < ActiveRecord::Base
 
-  belongs_to :architecture_style
-  belongs_to :brokerage
-  belongs_to :builder
-  belongs_to :community
-  belongs_to :county
-  belongs_to :foreclosure_status
-  belongs_to :franchise
-  belongs_to :import
-  belongs_to :listing_category
-  belongs_to :listing_provider
-  belongs_to :listing_status
-  belongs_to :multiple_listing_service
-  belongs_to :property_sub_type
-  belongs_to :property_type
-  belongs_to :office
-  belongs_to :zoning_type
+  belongs_to :architecture_style, optional: true
+  belongs_to :brokerage, optional: true
+  belongs_to :builder, optional: true
+  belongs_to :community, optional: true
+  belongs_to :county, optional: true
+  belongs_to :foreclosure_status, optional: true
+  belongs_to :franchise, optional: true
+  belongs_to :import, optional: true
+  belongs_to :listing_category, optional: true
+  belongs_to :listing_provider, optional: true
+  belongs_to :listing_status, optional: true
+  belongs_to :multiple_listing_service, optional: true
+  belongs_to :property_sub_type, optional: true
+  belongs_to :property_type, optional: true
+  belongs_to :office, optional: true
+  belongs_to :zoning_type, optional: true
 
   has_one :address, as: :addressable, dependent: :destroy
 

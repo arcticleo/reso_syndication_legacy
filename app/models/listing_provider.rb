@@ -1,5 +1,5 @@
 class ListingProvider < ActiveRecord::Base
-  belongs_to :source_provider_category
+  belongs_to :source_provider_category, optional: true
 
   has_many :listings
 

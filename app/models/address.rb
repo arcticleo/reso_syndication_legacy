@@ -1,7 +1,7 @@
 class Address < ActiveRecord::Base
 
-  belongs_to :address_type
-  belongs_to :addressable, polymorphic: true
+  belongs_to :address_type, optional: true
+  belongs_to :addressable, polymorphic: true, optional: true
 
   before_save :validate_and_sanitize_us_address
   
